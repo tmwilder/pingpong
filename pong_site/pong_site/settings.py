@@ -109,6 +109,7 @@ ROOT_URLCONF = 'pong_site.urls'
 WSGI_APPLICATION = 'pong_site.wsgi.application'
 
 TEMPLATE_DIRS = (
+	"/home/ubuntu/pingpong/pong_site/pong_app/templates/",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
