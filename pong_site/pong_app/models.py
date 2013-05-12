@@ -23,24 +23,25 @@ class Team(models.Model):
     class Meta:
         db_table = 'team'
         
-class TeamSport(models.Model):
+class TeamLeague(models.Model):
     team = models.ForeignKey('Team')
-    sport = models.ForeignKey('Sport')
+    league = models.ForeignKey('League')
     elo = models.IntegerField()
     page_rank = models.IntegerField()
     class Meta:
-        db_table = 'team_sport'
+        db_table = 'team_league'
 
-class Sport(models.Model):
+class League(models.Model):
     location = models.CharField(max_length="64")
+    sport = models.CharField(max_length="64")
     class Meta:
-        db_table = 'sports'
+        db_table = 'league'
     
 class Games(models.Model):
     team1 = models.ForeignKey('Team', related_name="team1")
     team2 = models.ForeignKey('Team', related_name="team2")
     match = models.ForeignKey('Match')
-    sport = models.ForeignKey('Sport')
+    league = models.ForeignKey('League')
     score1 = models.IntegerField()
     score2 = models.IntegerField()
     start_time = models.DateTimeField(auto_now_add=True)

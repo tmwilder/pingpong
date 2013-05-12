@@ -8,6 +8,14 @@ def index(request):
 def standings(request):
 	context = {}
 	return render(request, 'standings.html', context)
+	
+def team_profile(request):
+	context = {}
+	return render(request, 'team_profile.html', context)
+
+def player_profile(request):
+	context = {}
+	return render(request, 'player_profile.html', context)
 
 def enter_result(request):
 	context = {}
