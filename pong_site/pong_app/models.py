@@ -11,8 +11,6 @@ class Players(models.Model):
 class TeamPlayers(models.Model):
     team = models.ForeignKey('Team')
     player = models.ForeignKey('Players')
-    join_time = models.DateTimeField(auto_now_add=True)
-    quit_time = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'team_players'
 
@@ -22,7 +20,7 @@ class Team(models.Model):
     name = models.CharField(max_length="64")
     class Meta:
         db_table = 'team'
-        
+
 class TeamLeague(models.Model):
     team = models.ForeignKey('Team')
     league = models.ForeignKey('League')
@@ -36,21 +34,15 @@ class League(models.Model):
     sport = models.CharField(max_length="64")
     class Meta:
         db_table = 'league'
-    
-class Games(models.Model):
-    team1 = models.ForeignKey('Team', related_name="team1")
-    team2 = models.ForeignKey('Team', related_name="team2")
-    match = models.ForeignKey('Match')
-    league = models.ForeignKey('League')
-    score1 = models.IntegerField()
-    score2 = models.IntegerField()
-    start_time = models.DateTimeField(auto_now_add=True)
-    location = models.CharField(max_length="64")
-    conditions = models.CharField(max_length="64")
-    class Meta:
-        db_table = 'games'
 
 class Match(models.Model):
-    best_of = models.IntegerField()
+    team1 = models.ForeignKey('Team', related_name="team1")
+    team2 = models.ForeignKey('Team', related_name="team2")
+    score1 = models.IntegerField()
+    score2 = models.IntegerField()
+    start_elo1 = models.IntegerField()
+    start_elo2 =  models.IntegerField()
+    league = models.ForeignKey('League')
+    start_time = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'match'
