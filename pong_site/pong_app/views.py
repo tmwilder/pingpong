@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from pong_site.pong_app.models import Players
 
 def index(request):
 	context = {}
@@ -22,6 +23,13 @@ def enter_result(request):
 	return render(request, 'enter_result.html', context)
 
 def make_player(request):
+	if 'player_name' in request.POST:
+		playerName = request.POST['player_name']
+	if 'player_nick' in request.POST:
+		playerNick = request.POST['player_nick']
+
+	new_player = Players.objects.create(player_name=playerName, player_nick=playerNick)
+	
 	context = {}
 	return render(request, 'make_player.html', context)
 
