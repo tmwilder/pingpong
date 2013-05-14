@@ -1,21 +1,46 @@
 #Django imports.
 from django.http import HttpResponse
 from django.shortcuts import render
-from pong_site.pong_app.models import Players, Match, TeamLeague, Team, League
+from pong_site.pong_app.models import Players, Match, TeamLeague, Team, League, TeamPlayer
 
 def index(request):
 	context = {}
 	return render(request, 'index.html', context)
 
 def standings(request):
+	if request.method == 'POST':
+		form = pong_app.forms.StandingsForm(request.POST)
+		if form.is_valid():
+			league = request.POST['league']
+			teamSet = TeamLeague.objects.filter(league__exact=league).order_by('elo')
+			listforcontext = []
+			for teamins in teamSet:
+				listforcontext.append([Team.objects.get(pk=teamins.team).name,teamins.elo])
+			#return that shit for rendering
 	context = {}
 	return render(request, 'standings.html', context)
 	
 def team_profile(request):
+	if request.method == 'POST':
+		form = pong_app.forms.TeamForm(request.POST)
+		if form.is_valid():
+			teamID = request.POST['teamID']
+			eloset = TeamLeague.objects.filter(team__exact=teamID).order_by('elo')
+			demoinfo = Team.objects.get(pk=teamID)
+			#return this shit for rendering
 	context = {}
 	return render(request, 'team_profile.html', context)
 
 def player_profile(request):
+	if request.method == 'POST':
+		form = pong_app.forms.TeamForm(request.POST)
+		if form.is_valid():
+			playerID = request.POST['playerID']
+			teamset = TeamPlayer.objects.filter(player=playerID)
+			teamlist = []
+			for teamins in teamset:
+				listforcontext.append([Team.objects.get(pk=teamins.team)])
+				#think about this shit some more...it's not obvious what's going on here.
 	context = {}
 	return render(request, 'player_profile', context)
 
