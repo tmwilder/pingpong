@@ -24,7 +24,7 @@ class Team(models.Model):
 class TeamLeague(models.Model):
     team = models.ForeignKey('Team')
     league = models.ForeignKey('League')
-    elo = models.IntegerField()
+    elo = models.IntegerField(default=1500) #does this need to be a string? abstract this out to a constants file. Make sure people can't create teams with their own elo too. editable = false?
     page_rank = models.IntegerField()
     class Meta:
         db_table = 'team_league'
