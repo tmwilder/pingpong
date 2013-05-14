@@ -1,0 +1,21 @@
+<h1> Add a player </h1>
+<form action="/update_team/" method="post">
+{% csrf_token %}
+{{ add_player_form.as_p }}
+<input type="submit" value="Submit" />
+
+
+<h1> Drop a player </h1>
+<form action="/update_team/" method="post">
+{% for player in players %}
+	<option> {{ player.name }} </option>	
+{% endfor %}
+</form>
+
+
+<h1> Change Captain or Team name </h1>
+<form action="/update_team/" method="post">
+{% csrf_token %}
+{{ team_form.as_p }}
+<input type="submit" value="Submit" />
+</form>

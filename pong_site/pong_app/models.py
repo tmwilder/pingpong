@@ -1,21 +1,22 @@
 from django.db import models
 
-class Players(models.Model):
+class Player(models.Model):
     team = models.ForeignKey('Team')
     join_date = models.DateTimeField(auto_now_add=True)
     player_name = models.CharField(max_length="64")
     player_nick = models.CharField(max_length="64")
     class Meta:
-        db_table = 'players'
+        db_table = 'player'
 
 class TeamPlayers(models.Model):
     team = models.ForeignKey('Team')
-    player = models.ForeignKey('Players')
+    player = models.ForeignKey('Player')
     class Meta:
         db_table = 'team_players'
 
 class Team(models.Model):
-    captain = models.ForeignKey('Team')
+    captain = models.ForeignKey('Player',
+                                related_name = "captain")
     creation_date = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length="64")
     class Meta:
@@ -44,5 +45,6 @@ class Match(models.Model):
     start_elo2 =  models.IntegerField()
     league = models.ForeignKey('League')
     start_time = models.DateTimeField(auto_now_add=True)
+    match_info = models.CharField(max_length="2000")
     class Meta:
         db_table = 'match'
