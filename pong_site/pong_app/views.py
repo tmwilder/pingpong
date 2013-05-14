@@ -1,3 +1,4 @@
+#Django imports.
 from django.http import HttpResponse
 from django.shortcuts import render
 from pong_site.pong_app.models import Players, Match, TeamLeague, Team, League
@@ -17,7 +18,7 @@ def team_profile(request):
 
 def player_profile(request):
 	context = {}
-	return render(request, 'player_profile.html', context)
+	return render(request, 'player_profile', context)
 
 def enter_result(request):
 	if 'team1' in request.POST:
@@ -64,24 +65,46 @@ def enter_result(request):
 	return render(request, 'enter_result.html', context)
 
 def make_player(request):
+    if request.method == 'POST':
 	if 'player_name' in request.POST:
 		playerName = request.POST['player_name']
 	if 'player_nick' in request.POST:
 		playerNick = request.POST['player_nick']
-
 	new_player = Players.objects.create(player_name=playerName, player_nick=playerNick)
 	
 	context = {}
 	return render(request, 'make_player.html', context)
+    else:
+        form = pong_app.forms.PlayerForm()
+        return render(request, 'make_player.html', {'form': form,})
 
 def update_player(request):
 	context = {}
 	return render(request, 'update_player.html', context)
 
 def make_team(request):
-	context = {}
-	return render(request, 'make_team.html', context)
+    if request.method == 'POST':
+        form = pong_app.forms.TeamForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/make_team/')
+    else:
+        form = pong_app.forms.TeamForm()
+    return render(request, 'make_team.html', {'form': form,})
 	
-def update_team(request):
-	context = {}
-	return render(request, 'update_team.html', context)
+def update_team(request, team_id):
+    if request.method == 'POST':
+        add_player_form = pong_app.forms.AddPlayerToTeamForm(request.POST)
+        team_form = pong_app.forms.TeamForm(request.POST)
+        if add_player_form.is_valid():
+            return HttpResponseRedirect('/update_team/')
+        if team_form.is_valid():
+        	return HttpResponseRedirect('/update_team/')
+    else:
+        add_player_form = pong_app.forms.AddPlayerToTeamForm()
+        players = pong_app.models.Player.objects.filter("team__exact"=team_id)
+        team_form = pong_app.forms.TeamForm()
+    return render(request,
+                  'update_team.html',
+                  {'add_player_form': add_player_form,
+                   'players': players,
+                   'team_form': name_cap_form})
