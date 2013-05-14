@@ -8,11 +8,11 @@ class Player(models.Model):
     class Meta:
         db_table = 'player'
 
-class TeamPlayers(models.Model):
+class TeamPlayer(models.Model):
     team = models.ForeignKey('Team')
     player = models.ForeignKey('Player')
     class Meta:
-        db_table = 'team_players'
+        db_table = 'team_player'
 
 class Team(models.Model):
     captain = models.ForeignKey('Player',
@@ -39,8 +39,7 @@ class League(models.Model):
 class Match(models.Model):
     team1 = models.ForeignKey('Team', related_name="team1")
     team2 = models.ForeignKey('Team', related_name="team2")
-    score1 = models.IntegerField()
-    score2 = models.IntegerField()
+    result = models.DecimalField()
     start_elo1 = models.IntegerField()
     start_elo2 =  models.IntegerField()
     league = models.ForeignKey('League')
