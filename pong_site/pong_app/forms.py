@@ -2,7 +2,7 @@ from django import forms
 
 
 class PlayerForm(forms.Form):
-    player_name = forms.IntegerField()
+    player_name = forms.CharField(max_length="64")
     player_nick = forms.CharField(max_length="64")
 
     
@@ -18,6 +18,7 @@ class AddPlayerToTeamForm(forms.Form):
 class LeagueForm(forms.Form):
     location = forms.CharField(max_length="64")
     sport = forms.CharField(max_length="64")
+
 
 class AddTeamToLeagueForm(forms.Form):
     team_id = forms.IntegerField()

@@ -56,6 +56,7 @@ def make_player(request):
             context = {'form': form,}
             return render(request, 'make_player.html', context)
         else:
+            raise(Exception)
             form = pong_app.forms.PlayerForm()
             return render(request, 'make_player.html', {'form': form,})
     else:
