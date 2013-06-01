@@ -15,4 +15,6 @@ urlpatterns = patterns('',
 	url(r'^update_team/{0,1}$', pv.update_team),
 	url(r'^team_profile/{0,1}$', pv.player_profile),
 	url(r'^player_profile/{0,1}$', pv.team_profile),
+	url(r'^make_league/{0,1}$', pv.make_league),
+	url(r'^add_team_to_league/{0,1}$', pv.add_team_to_league),
 )
