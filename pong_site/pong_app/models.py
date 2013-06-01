@@ -1,7 +1,6 @@
 from django.db import models
 
 class Player(models.Model):
-    team = models.ForeignKey('Team')
     join_date = models.DateTimeField(auto_now_add=True)
     player_name = models.CharField(max_length="64")
     player_nick = models.CharField(max_length="64")
@@ -39,7 +38,7 @@ class League(models.Model):
 class Match(models.Model):
     team1 = models.ForeignKey('Team', related_name="team1")
     team2 = models.ForeignKey('Team', related_name="team2")
-    result = models.DecimalField()
+    result = models.IntegerField()
     start_elo1 = models.IntegerField()
     start_elo2 =  models.IntegerField()
     league = models.ForeignKey('League')
