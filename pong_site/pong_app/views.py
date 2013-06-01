@@ -51,7 +51,8 @@ def make_player(request):
         if form.is_valid():
             playerName = request.POST['player_name']
             playerNick = request.POST['player_nick']
-            new_player = Player.objects.create(player_name=playerName, player_nick=playerNick)
+            new_player = Player.objects.create(player_name=playerName,
+                                               player_nick=playerNick)
             context = {'form': form,}
             return render(request, 'make_player.html', context)
         else:
@@ -65,13 +66,18 @@ def update_player(request):
     return render(request, 'update_player.html', context)
 
 def make_team(request):
+    form = pong_app.forms.TeamForm(request.POST)
     if request.method == 'POST':
-        form = pong_app.forms.TeamForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/make_team/')
+        team_name = request.POST['team_name']
+        team_captain = request.POST['team_captain']
+        captain = Player.objects.get(pk=team_captain)
+        Team.objects.create(name=team_name,
+                            captain=captain)
+        context = {'form': form,}
+        return render(request, 'make_team.html', {'form': form,})
     else:
         form = pong_app.forms.TeamForm()
-    return render(request, 'make_team.html', {'form': form,})
+        return render(request, 'make_team.html', {'form': form,})
     
 def update_team(request, team_id):
     if request.method == 'POST':
