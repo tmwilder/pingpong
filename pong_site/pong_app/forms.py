@@ -14,3 +14,9 @@ class TeamForm(forms.Form):
 
 class AddPlayerToTeamForm(forms.Form):
     player_name = forms.CharField(max_length="64")
+
+
+class LeagueForm(forms.Form):
+    location = forms.CharField(max_length="64")
+    sport = forms.CharField(max_length="64")
+    

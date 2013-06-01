@@ -73,6 +73,21 @@ def make_team(request):
         form = pong_app.forms.TeamForm()
     return render(request, 'make_team.html', {'form': form,})
     
+def make_league(request):    
+    form = pong_app.forms.LeagueForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            location = request.POST['location']
+            sport = request.POST['sport']
+            new_league = League.objects.create(location=location, sport=sport)
+            context = {'form': form,}
+            return render(request, 'make_league.html', context)
+        else:
+            form = pong_app.forms.LeagueForm()
+            return render(request, 'make_league.html', {'form': form,})
+    else:
+        return render(request, 'make_league.html', {'form': form,})
+
 def update_team(request, team_id):
     if request.method == 'POST':
         add_player_form = pong_app.forms.AddPlayerToTeamForm(request.POST)
