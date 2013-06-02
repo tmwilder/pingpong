@@ -87,14 +87,15 @@ def add_player_to_team(request):
     if request.method == 'POST':
         player_id = request.POST['player_id']
         team_id = request.POST['team_id']
-        captain = Player.objects.get(pk=team_captain)
-        Team.objects.create(name=team_name,
-                            captain=captain)
+        team = Team.objects.get(pk=player_id)
+        player = Player.objects.get(pk=team_id)
+        new_team_player = TeamPlayer.objects.create(player=player,
+                                                    team=team)
         context = {'form': form,}
-        return render(request, 'make_team.html', {'form': form,})
+        return render(request, 'add_player_to_team.html', {'form': form,})
     else:
-        form = pong_app.forms.TeamForm()
-        return render(request, 'make_team.html', {'form': form,})
+        form = pong_app.forms.AddPlayerToTeamForm()
+        return render(request, 'add_player_to_team.html', {'form': form,})
    
     
 def make_league(request):    
