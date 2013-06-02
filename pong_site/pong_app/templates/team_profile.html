@@ -1,0 +1,23 @@
+<form action="/team_profile/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+
+{{team.name}}
+
+{{team.captain.player_nick}}
+
+<table>
+    <tr>
+        <th>Sport</th>
+        <th>Location </th>
+        <th>Elo</th>
+    </tr>
+    {% for item in teamleague %}
+    <tr> 
+        <td>{{ item.league.sport }}</td>
+        <td>{{ item.league.location }}</td>
+        <td>{{ item.elo}}</td>
+    </tr>
+    {% endfor %}
+</table>

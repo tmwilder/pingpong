@@ -8,6 +8,24 @@ def index(request):
     context = {}
     return render(request, 'index.html', context)
 
+def team_profile(request):
+    if request.method == 'POST':
+        form = pong_app.forms.TeamProfileForm(request.POST)
+        if form.is_valid():
+            team = request.POST['team']
+            team1 = Team.objects.get(pk=team)
+            teamleaguelist = TeamLeague.objects.filter(team=team)
+            context = {'team':team1, 'teamleague':teamleaguelist}
+            return render(request, 'team_profile.html', context)
+        else:
+            form = pong_app.forms.TeamProfileForm()
+            context = {'form':form,}
+            return render(request, 'team_profile.html', context)
+    else:
+        form = pong_app.forms.TeamProfileForm()
+        context = {'form':form,}
+        return render(request, 'team_profile.html', context)
+
 def standings(request):
     if request.method == 'POST':
         form = pong_app.forms.StandingsForm(request.POST)
@@ -24,17 +42,6 @@ def standings(request):
         context = {'form':form,}
         return render(request, 'standings.html', context)
     
-def team_profile(request):
-    if request.method == 'POST':
-        form = pong_app.forms.TeamForm(request.POST)
-        if form.is_valid():
-            teamID = request.POST['teamID']
-            eloset = TeamLeague.objects.filter(team__exact=teamID).order_by('elo')
-            demoinfo = Team.objects.get(pk=teamID)
-            #return this shit for rendering
-    context = {}
-    return render(request, 'team_profile.html', context)
-
 def player_profile(request):
     if request.method == 'POST':
         form = pong_app.forms.TeamForm(request.POST)

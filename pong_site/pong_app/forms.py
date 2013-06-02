@@ -1,5 +1,8 @@
 from django import forms
 
+class TeamProfileForm(forms.Form):
+    team = forms.IntegerField()
+
 class StandingsForm(forms.Form):
     league = forms.IntegerField()
 
