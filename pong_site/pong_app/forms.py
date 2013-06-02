@@ -29,6 +29,12 @@ class AddTeamToLeagueForm(forms.Form):
     team_id = forms.IntegerField()
     league_id = forms.IntegerField()
     
+class ResultForm(forms.Form):
+    team1 = forms.IntegerField()
+    team2 = forms.IntegerField()
+    result = forms.IntegerField()
+    league = forms.IntegerField()
+    match_info = forms.CharField(max_length="2000")
     
 class AddPlayerToTeamForm(forms.Form):
     player_id = forms.IntegerField()

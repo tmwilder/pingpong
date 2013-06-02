@@ -121,7 +121,7 @@ def add_team_to_league(request):
             league_id = request.POST['league_id']
             team_id = Team.objects.get(pk=team_id)
             league_id = League.objects.get(pk=league_id)
-            new_league = TeamLeague.objects.create(team=team_id, league=league_id)
+            new_team_league = TeamLeague.objects.create(team=team_id, league=league_id)
             context = {'form': form,}
             return render(request, 'add_team_to_league.html', context)
         else:
@@ -149,20 +149,25 @@ def update_team(request, team_id):
                    'team_form': name_cap_form})
 
 def enter_result(request):
+    form = pong_app.forms.ResultForm(request.POST)
     if request.method == 'POST':
-        form = pong_app.forms.ResultForm(request.POST)
         if form.is_valid():
             team1 = request.POST['team1']
             team2 = request.POST['team2']
             result = request.POST['result']
             league = request.POST['league']
+            match_info = request.POST['match_info']
+            team1 = Team.objects.get(pk=team1)
+            team2 = Team.objects.get(pk=team2)
+            league = League.objects.get(pk=league)
             
             #assuming team+league = composite primary key
-            team1elo = TeamLeague.objects.get(team__name__exact=team1,league__exact=league).elo
-            team2elo = TeamLeague.objects.get(team__name__exact=team2,league__exact=league).elo  #does this return ints or strings or what?
+            team1elo = TeamLeague.objects.get(team=team1,league=league).elo
+            team2elo = TeamLeague.objects.get(team=team2,league=league).elo  #does this return ints or strings or what?
             
             #temporary elo recalculation function
             def elocalc(elo1, elo2, result):
+                result = (int(result) + 1)/2.0
                 elo1 = float(elo1)
                 elo2 = float(elo2)
                 result = float(result)
@@ -177,18 +182,26 @@ def enter_result(request):
                 new_2 = elo2 + kfactor*(score_2 - expected_2)
                 return round(new_1), round(new_2)
             
-            team1newelo, team2newelo = elocalc(elo1, elo2, result)
+            team1newelo, team2newelo = elocalc(team1elo, team2elo, result)
             
-            t1 = TeamLeague.objects.get(team__name__exact=team1,league__exact=league)
+            t1 = TeamLeague.objects.get(team=team1,league=league)
             t1.elo = team1newelo
             t1.save()
             
-            t2 = TeamLeague.objects.get(team__name__exact=team2,league__exact=league)
+            t2 = TeamLeague.objects.get(team=team2,league=league)
             t2.elo = team2newelo
             t2.save()
-            
-            context = {}
+
+            new_match = Match.objects.create(team1=team1, team2=team2,result=result, start_elo1=team1elo, start_elo2=team2elo,league=league,match_info=match_info)
+
+            form = pong_app.forms.ResultForm()
+            context = {'form':form,}
             return render(request, 'enter_result.html', context)
+
         else:
             form = pong_app.forms.ResultForm()
+            return render(request, 'enter_result.html', {'form': form,})
+    else:
+        form = pong_app.forms.ResultForm()
+        return render(request, 'enter_result.html', {'form': form,})
             
