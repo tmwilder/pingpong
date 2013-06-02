@@ -41,7 +41,7 @@ def add_players_to_teams(no_teams, no_players, c):
 def add_teams_to_leagues(no_teams, no_leagues, c):
     league_size = int(no_teams/no_leagues)
     league_id = 1
-    for team_id in range(no_teams):
+    for team_id in range(1, no_teams+1):
         statement = ("INSERT INTO team_league (team_id, league_id, elo) "
                      "VALUES ({0}, {1}, {2})".format(team_id, league_id, 1500)
                     )
