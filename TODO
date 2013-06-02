@@ -1,0 +1,8 @@
+This document is a list of features we want, questions we need to answer, and minor bugs.
+
+Questions:
+How should we allow commissioners to add teams? The issue is that a string doesn't uniquely identify a team. Is there a slick page flow to solve this problem.
+
+Features:
+
+Bugs:

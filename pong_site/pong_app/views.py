@@ -44,7 +44,7 @@ def player_profile(request):
                 #think about this shit some more...it's not obvious what's going on here.
     context = {}
     return render(request, 'player_profile', context)
-    
+
 def make_player(request):
     form = pong_app.forms.PlayerForm(request.POST)
     if request.method == 'POST':
@@ -66,6 +66,7 @@ def update_player(request):
     context = {}
     return render(request, 'update_player.html', context)
 
+
 def make_team(request):
     form = pong_app.forms.TeamForm(request.POST)
     if request.method == 'POST':
@@ -79,6 +80,22 @@ def make_team(request):
     else:
         form = pong_app.forms.TeamForm()
         return render(request, 'make_team.html', {'form': form,})
+
+
+def add_player_to_team(request):
+    form = pong_app.forms.AddPlayerToTeamForm(request.POST)
+    if request.method == 'POST':
+        player_id = request.POST['player_id']
+        team_id = request.POST['team_id']
+        captain = Player.objects.get(pk=team_captain)
+        Team.objects.create(name=team_name,
+                            captain=captain)
+        context = {'form': form,}
+        return render(request, 'make_team.html', {'form': form,})
+    else:
+        form = pong_app.forms.TeamForm()
+        return render(request, 'make_team.html', {'form': form,})
+   
     
 def make_league(request):    
     form = pong_app.forms.LeagueForm(request.POST)

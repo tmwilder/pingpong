@@ -5,6 +5,11 @@ class PlayerForm(forms.Form):
     player_name = forms.CharField(max_length="64")
     player_nick = forms.CharField(max_length="64")
 
+
+class PlayerForm(forms.Form):
+    player_name = forms.CharField(max_length="64")
+    player_nick = forms.CharField(max_length="64")
+    
     
 class TeamForm(forms.Form):
     team_captain = forms.CharField(max_length="64")
@@ -24,3 +29,7 @@ class AddTeamToLeagueForm(forms.Form):
     team_id = forms.IntegerField()
     league_id = forms.IntegerField()
     
+    
+class AddPlayerToTeamForm(forms.Form):
+    player_id = forms.IntegerField()
+    team_id = forms.IntegerField()
