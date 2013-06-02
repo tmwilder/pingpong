@@ -1,3 +1,7 @@
+{% extends '_standings.html' %}
+
+
+{% block body %}
 <form action="/standings/" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Submit" />
@@ -15,3 +19,4 @@
     </tr>
     {% endfor %}
 </table>
+{% endblock %}

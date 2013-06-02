@@ -1,0 +1,5 @@
+<h3> Index Page </h3>
+
+{% for view_path, nice_name in urls %}
+    <p><a href='{% url view_path %}'> {{ nice_name }} </a></p>
+{% endfor %}

@@ -1,6 +1,10 @@
+{% extends '_base.html' %}
+
+
+{% block body %}
 <form action="/enter_result/" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </form>
-
+{% endblock %}
 
