@@ -13,13 +13,16 @@ def standings(request):
         form = pong_app.forms.StandingsForm(request.POST)
         if form.is_valid():
             league = request.POST['league']
-            teamSet = TeamLeague.objects.filter(league__exact=league).order_by('elo')
+            teamSet = TeamLeague.objects.filter(league=league).order_by('-elo')
             listforcontext = []
             for teamins in teamSet:
-                listforcontext.append([Team.objects.get(pk=teamins.team).name,teamins.elo])
-            #return that shit for rendering
-    context = {}
-    return render(request, 'standings.html', context)
+                listforcontext.append([teamins.team.name,teamins.elo])
+            context = {'query_results':listforcontext}
+            return render(request, 'standings.html', context)
+    else:
+        form = pong_app.forms.StandingsForm()
+        context = {'form':form,}
+        return render(request, 'standings.html', context)
     
 def team_profile(request):
     if request.method == 'POST':

@@ -1,0 +1,17 @@
+<form action="/standings/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+
+<table>
+    <tr>
+        <th>Team Name</th>
+        <th>Elo</th>
+    </tr>
+    {% for item in query_results %}
+    <tr> 
+        <td>{{ item.0 }}</td>
+        <td>{{ item.1}}</td>
+    </tr>
+    {% endfor %}
+</table>

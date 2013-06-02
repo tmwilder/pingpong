@@ -1,5 +1,7 @@
 from django import forms
 
+class StandingsForm(forms.Form):
+    league = forms.IntegerField()
 
 class PlayerForm(forms.Form):
     player_name = forms.CharField(max_length="64")
