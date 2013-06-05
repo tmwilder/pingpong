@@ -168,10 +168,7 @@ def update_team(request, team_id):
     else:
         add_player_form = pong_app.forms.AddPlayerToTeamForm()
         #players = pong_app.models.Player.objects.filter(id__exact=team_id)
-        
-        players = pong_app.models.TeamPlayer.objects.filter(team__exact=team_id)
-        players = pong_app.models.TeamPlayer.objects.all()
-        raise(Exception(repr(players)))
+        players = pong_app.models.Player.objects.filter(teamplayer__team_id__exact=team_id).values("player_name")
         team_form = pong_app.forms.TeamForm()
     return render(request,
                   'update_team.html',

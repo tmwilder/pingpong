@@ -10,9 +10,12 @@
 
 <h1> Drop a player </h1>
 <form action="/update_team/" method="post">
+<select>
 {% for player in players %}
-	<option> {{ player.name }} </option>	
+	<option value="{{ player.player_name }}"> {{ player.player_name }} </option>	
 {% endfor %}
+</select>
+<input type="submit" value="Submit" />
 </form>
 
 
