@@ -155,9 +155,12 @@ def add_team_to_league(request):
     else:
         return render(request, 'add_team_to_league.html', {'form': form,})
 
-def update_team(request, team_id):
-    if team_id == '':
-        raise(Exception("Dev Exception, you must specify a team ID"))
+def update_team(request, team_id=1):
+    try:
+        team_id = int(team_id)
+    except ValueError:
+        team_id = 1
+    #TODO consider default behavior for team_id.
     if request.method == 'POST':
         add_player_form = pong_app.forms.AddPlayerToTeamForm(request.POST)
         team_form = pong_app.forms.TeamForm(request.POST)
