@@ -1,8 +1,16 @@
-This document is a list of features we want, questions we need to answer, and minor bugs.
+This document is a list of features we want, questions we need to answer, and minor bugs. Ordering is arbitrary.
 
 Questions:
-How should we allow commissioners to add teams? The issue is that a string doesn't uniquely identify a team. Is there a slick page flow to solve this problem.
+1. How should we allow commissioners to add teams? The issue is that a string doesn't uniquely identify a team. Is there a slick page flow to solve this problem?
 
 Features:
+1. Make all table elements that refer to team, match, league, or player links to a profile page.
+2. Choose a suitable CSS skin and implement.
+3. Add javascript form validation.
+4. Spec out content management/authentication.
+5. Implement content management/authentication.
+6. Add unit tests.
+7. Planned refactor.
+8. Set up seperate dev, test, production environments.
 
 Bugs:
