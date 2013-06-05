@@ -34,6 +34,7 @@ def add_players_to_teams(no_teams, no_players, c):
     for player_id in range(1, no_players+1):
         statement = ("INSERT INTO team_player (team_id, player_id) "
                      "VALUES ({0}, {1})".format(team_id, player_id))
+        c.execute(statement)
         if player_id%team_size == 0:
             team_id += 1
         
