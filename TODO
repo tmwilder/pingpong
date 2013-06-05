@@ -12,5 +12,6 @@ Features:
 6. Add unit tests.
 7. Planned refactor.
 8. Set up seperate dev, test, production environments.
+9. Modify all post request pages to take their input as parameters and execute the post request. I.E. update_team.
 
 Bugs:
