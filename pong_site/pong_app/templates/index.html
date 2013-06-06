@@ -1,5 +1,14 @@
 <h3> Index Page </h3>
 
-{% for view_path, nice_name in urls %}
-    <p><a href='{% url view_path %}'> {{ nice_name }} </a></p>
-{% endfor %}
+<a href='{% url 'pong_app.views.index' %}'> index </a></p>
+<a href='{% url 'pong_app.views.standings' %}'> standings </a></p>
+<a href='{% url 'pong_app.views.enter_result' %}'> enter_result </a></p>
+<a href='{% url 'pong_app.views.make_player' %}'> make_player </a></p>
+<a href='{% url 'pong_app.views.update_player' %}'> update_player </a></p>
+<a href='{% url 'pong_app.views.make_team' %}'> make_team </a></p>
+<a href='{% url 'pong_app.views.update_team' team_id=1 %}'> update_team </a></p>
+<a href='{% url 'pong_app.views.team_profile' %}'> team_profile </a></p>
+<a href='{% url 'pong_app.views.player_profile' player_id=1 %}'> player_profile </a></p>
+<a href='{% url 'pong_app.views.make_league' %}'> make_league </a></p>
+<a href='{% url 'pong_app.views.add_team_to_league' %}'> add_team_to_league </a></p>
+<a href='{% url 'pong_app.views.add_player_to_team' %}'> add_player_to_team </a></p>

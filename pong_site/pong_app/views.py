@@ -21,7 +21,7 @@ def index(request):
     urls = zip(urls, nice_names)
     context = {'urls': urls}
     return render(request, 'index.html', context)
-
+    
 
 def team_profile(request):
     if request.method == 'POST':
@@ -57,18 +57,27 @@ def standings(request):
         context = {'form':form,}
         return render(request, 'standings.html', context)
     
-def player_profile(request):
-    if request.method == 'POST':
-        form = pong_app.forms.TeamForm(request.POST)
-        if form.is_valid():
-            playerID = request.POST['playerID']
-            teamset = TeamPlayer.objects.filter(player=playerID)
-            teamlist = []
-            for teamins in teamset:
-                listforcontext.append([Team.objects.get(pk=teamins.team)])
-                #think about this shit some more...it's not obvious what's going on here.
-    context = {}
-    return render(request, 'player_profile', context)
+def player_profile(request, player_id=0): #TODO refactor this monstrosity of a view.
+    try:
+        player_id=int(player_id)
+    except ValueError:
+        player_id=1 #TODO fix to required arg once index.html is improved.
+    team_players = TeamPlayer.objects.filter(player__exact=player_id)
+    team_leagues = [TeamLeague.objects.filter(team__exact=team_player.team) \
+                   for team_player in team_players]
+    final_team_leagues = []
+    #Aggregate league info.
+    for team_league_set in team_leagues:
+        for team_league in team_league_set:
+            final_team_leagues.append(team_league)
+    team_names = [team_player.team.name for player in team_players]
+    team_elos = [team_league.elo for team_league in final_team_leagues]
+    name_elos = zip(team_names, team_elos)
+    #Get the player.
+    player = Player.objects.get(pk=player_id)
+    context = {"player": player,
+               "name_elos": name_elos}
+    return render(request, 'player_profile.html', context)
 
 def make_player(request):
     form = pong_app.forms.PlayerForm(request.POST)

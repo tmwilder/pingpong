@@ -1,4 +1,20 @@
-{% extends 'base.html' %}
+{% extends '_base.html' %}
 
 {% block body %}
+    <h1>Player:</h1>
+    {{ player.player_name }}
+    <h1>Teams:</h1>
+    <table>
+        <tr>
+        <th>name</th>
+        <th>elo</th>
+        </tr>
+        {% for name_elo in name_elos %}
+            <tr>
+            <td>{{ name_elo.0 }}</td>
+            <td>{{ name_elo.1 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
+
