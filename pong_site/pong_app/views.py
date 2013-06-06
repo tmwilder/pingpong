@@ -5,21 +5,7 @@ from django.shortcuts import render
 from pong_app.models import Player, Match, TeamLeague, Team, League, TeamPlayer
 
 def index(request):
-    urls = 	['pong_app.views.index',
-	'pong_app.views.standings',
-    'pong_app.views.enter_result',
-    'pong_app.views.make_player',
-    'pong_app.views.update_player',
-    'pong_app.views.make_team',
-    'pong_app.views.update_team',
-    'pong_app.views.team_profile',
-    'pong_app.views.player_profile',
-    'pong_app.views.make_league',
-    'pong_app.views.add_team_to_league',
-    'pong_app.views.add_player_to_team']
-    nice_names = [path.replace('pong_app.views.', '') for path in urls]
-    urls = zip(urls, nice_names)
-    context = {'urls': urls}
+    context = {}
     return render(request, 'index.html', context)
     
 
