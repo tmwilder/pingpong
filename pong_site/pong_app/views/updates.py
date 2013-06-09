@@ -21,16 +21,16 @@ def update_team(request, team_id=1):
             return HttpResponseRedirect('/update_team/')
         if team_form.is_valid():
             return HttpResponseRedirect('/update_team/')
+        raise(Exception("DEV exception: It looks like we submitted an invalid form. Let's spec better behavior."))
     else:
         add_player_form = pong_app.forms.AddPlayerToTeamForm()
-        #players = pong_app.models.Player.objects.filter(id__exact=team_id)
         players = pong_app.models.Player.objects.filter(teamplayer__team_id__exact=team_id).values("player_name")
         team_form = pong_app.forms.TeamForm()
-    return render(request,
-                  'update_team.html',
-                  {'add_player_form': add_player_form,
-                   'players': players,
-                   'team_form': team_form})
+        return render(request,
+                      'update_team.html',
+                      {'add_player_form': add_player_form,
+                       'players': players,
+                       'team_form': team_form})
 
 def update_league(request):
     raise(Exception("Not implemented"))
