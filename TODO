@@ -3,6 +3,15 @@ This document is a list of features we want, questions we need to answer, and mi
 Questions:
 1. How should we allow commissioners to add teams? The issue is that a string doesn't uniquely identify a team. Is there a slick page flow to solve this problem?
 
+Pages to create:
+1. Sign up page/create player.
+2. player_profile/update_player page.
+3. team_profile/update_team.
+4. league_profile/update_league.
+5. view_matches.
+6. match_profile/update_matches.
+
+
 Features:
 1. Make all table elements that refer to team, match, league, or player links to a profile page.
 2. Choose a suitable CSS skin and implement.
@@ -13,5 +22,8 @@ Features:
 7. Planned refactor.
 8. Set up seperate dev, test, production environments.
 9. Modify all post request pages to take their input as parameters and execute the post request. I.E. update_team.
+10. Search bar for navigation.
+11. Email link invite system.
+12. Place on limits on user creation to prevent spam/cheating.
 
 Bugs:
