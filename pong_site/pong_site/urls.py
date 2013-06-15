@@ -12,6 +12,7 @@ import pong_app.views.updates as updates
 urlpatterns = patterns('',
 	url(r'^index/{0,1}.*$', misc.index),
 	url(r'^enter_result/{0,1}.*$', misc.enter_result),
+	url(r'^player_index/(?P<player_id>\d+)/{0,1}$', misc.player_index),
 	#Make
 	url(r'^make_player/{0,1}.*$', makes.make_player),
 	url(r'^make_team/{0,1}.*$', makes.make_team),
@@ -27,5 +28,5 @@ urlpatterns = patterns('',
 	url(r'^team_profile/{0,1}$', profiles.team_profile),
     url(r'^player_profile/{0,1}$', profiles.player_profile),
 	url(r'^player_profile/(?P<player_id>\d+).*$', profiles.player_profile),
-	url(r'^standings/{0,1}.*$', profiles.standings),
+	url(r'^league_standings/(?P<league_id>\d+)/{0,1}$', profiles.league_standings),
 )

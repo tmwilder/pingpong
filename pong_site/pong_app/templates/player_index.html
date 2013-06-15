@@ -1,0 +1,20 @@
+{% extends '_base.html' %}
+
+{% block body %}
+<table>
+    <tr>
+        <th>League Name</th>
+        <th>Sport</th>
+        <th>Location</th>
+        <th>Go to Leagues</th>
+    </tr>
+    {% for league in leagues %}
+    <tr> 
+        <td>{{ league.name }}</td>
+        <td>{{ league.sport }}</td>
+        <td>{{ league.location }}</td>
+        <td><a href='{% url 'pong_app.views.profiles.league_standings' league_id=league.id %}'>View League</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -4,6 +4,7 @@ class Player(models.Model):
     join_date = models.DateTimeField(auto_now_add=True)
     player_name = models.CharField(max_length="64")
     player_nick = models.CharField(max_length="64")
+    email = models.CharField(max_length="256")
     class Meta:
         db_table = 'player'
 
@@ -31,6 +32,7 @@ class TeamLeague(models.Model):
 class League(models.Model):
     location = models.CharField(max_length="64")
     sport = models.CharField(max_length="64")
+    name = models.CharField(max_length="64")
     class Meta:
         db_table = 'league'
 

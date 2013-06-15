@@ -1,7 +1,9 @@
 <h3> Index Page </h3>
 
 <a href='{% url 'pong_app.views.misc.index' %}'> index </a></p>
-<a href='{% url 'pong_app.views.profiles.standings' %}'> standings </a></p>
+<a href='{% url 'pong_app.views.misc.player_index' player_id=1 %}'> player_index </a></p>
+
+<a href='{% url 'pong_app.views.profiles.league_standings' league_id=1 %}'> standings </a></p>
 <a href='{% url 'pong_app.views.misc.enter_result' %}'> enter_result </a></p>
 <a href='{% url 'pong_app.views.makes.make_player' %}'> make_player </a></p>
 <a href='{% url 'pong_app.views.updates.update_player' %}'> update_player </a></p>

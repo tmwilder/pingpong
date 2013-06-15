@@ -4,21 +4,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from pong_app.models import Player, Match, TeamLeague, Team, League, TeamPlayer
 
-def standings(request):
-    if request.method == 'POST':
-        form = pong_app.forms.StandingsForm(request.POST)
-        if form.is_valid():
-            league = request.POST['league']
-            teamSet = TeamLeague.objects.filter(league=league).order_by('-elo')
-            listforcontext = []
-            for teamins in teamSet:
-                listforcontext.append([teamins.team.name,teamins.elo])
-            context = {'query_results':listforcontext}
-            return render(request, 'standings.html', context)
-    else:
-        form = pong_app.forms.StandingsForm()
-        context = {'form':form,}
-        return render(request, 'standings.html', context)
+def league_standings(request, league_id):
+    team_set = TeamLeague.objects.filter(league=league_id).order_by('-elo')
+    #TODO swap from ID to passing in the team name.
+    context = {'team_leagues': team_set}
+    return render(request, 'league_standings.html', context)
 
 def team_profile(request):
     if request.method == 'POST':

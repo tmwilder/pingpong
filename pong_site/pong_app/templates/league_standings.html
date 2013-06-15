@@ -1,0 +1,22 @@
+{% extends '_standings.html' %}
+
+
+{% block body %}
+<form action="/standings/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+
+<table>
+    <tr>
+        <th>Team Name</th>
+        <th>Elo</th>
+    </tr>
+    {% for tl in team_leagues %}
+    <tr> 
+        <td>{{ tl.id }}</td>
+        <td>{{ tl.elo }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
