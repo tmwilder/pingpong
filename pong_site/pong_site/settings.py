@@ -117,6 +117,9 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'pong_app',
+    'django.contrib.sessions',
+    'django.contrib.contenttypes',
+    'django.contrib.auth',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

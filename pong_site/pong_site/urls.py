@@ -4,6 +4,7 @@ import pong_app.views.makes as makes
 import pong_app.views.profiles as profiles
 import pong_app.views.add_x_to_y as add_x_to_y
 import pong_app.views.updates as updates
+import pong_app.views.test as test
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -29,4 +30,7 @@ urlpatterns = patterns('',
     url(r'^player_profile/{0,1}$', profiles.player_profile),
 	url(r'^player_profile/(?P<player_id>\d+).*$', profiles.player_profile),
 	url(r'^league_standings/(?P<league_id>\d+)/{0,1}$', profiles.league_standings),
+	#Test
+	url(r'^test/{0,1}.*$', test.test)
+
 )
