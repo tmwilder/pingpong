@@ -2,7 +2,7 @@
 import pong_app.forms
 from django.http import HttpResponse
 from django.shortcuts import render
-from pong_app.models import Player, Match, TeamLeague, Team, League, TeamPlayer
+from pong_app.models import Match, TeamLeague, Team, League, TeamPlayer
 
 def add_player_to_team(request):
     form = pong_app.forms.AddPlayerToTeamForm(request.POST)

@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.views import login, logout
 import pong_app.views.misc as misc
 import pong_app.views.makes as makes
 import pong_app.views.profiles as profiles
@@ -31,6 +32,9 @@ urlpatterns = patterns('',
     url(r'^player_profile/{0,1}$', profiles.player_profile),
 	url(r'^player_profile/(?P<player_id>\d+).*$', profiles.player_profile),
 	url(r'^league_standings/(?P<league_id>\d+)/{0,1}$', profiles.league_standings),
+	#Authentication
+    (r'^accounts/login/$',  login),
+    (r'^accounts/logout/$', logout),	
 	#Test
 	url(r'^test/{0,1}.*$', test.test)
 
