@@ -1,21 +1,14 @@
 from django.db import models
-
-class Player(models.Model):
-    join_date = models.DateTimeField(auto_now_add=True)
-    player_name = models.CharField(max_length="64")
-    player_nick = models.CharField(max_length="64")
-    email = models.CharField(max_length="256")
-    class Meta:
-        db_table = 'player'
+from django.contrib.auth.models import User
 
 class TeamPlayer(models.Model):
     team = models.ForeignKey('Team')
-    player = models.ForeignKey('Player')
+    player = models.ForeignKey(User)
     class Meta:
         db_table = 'team_player'
 
 class Team(models.Model):
-    captain = models.ForeignKey('Player',
+    captain = models.ForeignKey(User,
                                 related_name = "captain")
     creation_date = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length="64")
@@ -33,6 +26,7 @@ class League(models.Model):
     location = models.CharField(max_length="64")
     sport = models.CharField(max_length="64")
     name = models.CharField(max_length="64")
+    commissioner = models.ForeignKey(User)
     class Meta:
         db_table = 'league'
 
