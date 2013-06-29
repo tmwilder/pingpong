@@ -3,17 +3,17 @@
 {% block body %}
 <table>
     <tr>
+        <th>Team Name</th>
         <th>League Name</th>
+        <th>Elo</th>
         <th>Sport</th>
-        <th>Location</th>
-        <th>Go to Leagues</th>
     </tr>
-    {% for league in leagues %}
+    {% for tl in team_leagues %}
     <tr> 
-        <td>{{ league.name }}</td>
-        <td>{{ league.sport }}</td>
-        <td>{{ league.location }}</td>
-        <td><a href='{% url 'pong_app.views.profiles.league_standings' league_id=league.id %}'>View League</a></td>
+        <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=tl.team_id %}'>{{ tl.team_name }}</a></td>
+        <td><a href='{% url 'pong_app.views.profiles.league_standings' league_id=tl.league_id %}'>{{ tl.league_name }}</a></td>
+        <td>{{ tl.elo }}</td>
+        <td>{{ tl.league_sport }}</td>
     </tr>
     {% endfor %}
 </table>

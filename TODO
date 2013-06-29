@@ -27,3 +27,4 @@ Features:
 12. Place on limits on user creation to prevent spam/cheating.
 
 Bugs:
+1. The fixture generation script has no league name data.

@@ -27,6 +27,7 @@ urlpatterns = patterns('',
 	url(r'^add_player_to_team/{0,1}.*$', add_x_to_y.add_player_to_team),
 	#Profiles
 	url(r'^team_profile/{0,1}$', profiles.team_profile),
+	url(r'^team_profile/(?P<team_id>\d+)/{0,1}$', profiles.team_profile),
     url(r'^player_profile/{0,1}$', profiles.player_profile),
 	url(r'^player_profile/(?P<player_id>\d+).*$', profiles.player_profile),
 	url(r'^league_standings/(?P<league_id>\d+)/{0,1}$', profiles.league_standings),

@@ -11,22 +11,24 @@ def index(request):
 
 def player_index(request, player_id):
     """
-    This is the main entry point for signed in users.
-    It displays:
-    1. The leagues a player is in.
-    2. A link to create a league.
-    3. A link to create a team.
+    1. A record for each team elo that team has.
+    2. Links through these records to each team and league for the player.
 
     """
-    teams = TeamPlayer.objects.filter(id__exact=player_id).values("id")
-    team_ids = set([team["id"] for team in teams])
-    league_ids = []
-    for team_id in team_ids:
-        id_dict_list = TeamLeague.objects.filter(team__exact=team_id).values("id")
-        for league_id in id_dict_list:
-            league_ids.append(league_id["id"])
-    leagues = [League.objects.get(id__exact=league_id) for league_id in league_ids]
-    context = {'leagues': leagues}
+    team_leagues = []
+    team_players = TeamPlayer.objects.filter(id__exact=player_id).all()
+    name_and_ids = { team_player.team.name: team_player.team.id for team_player in team_players }
+    for team_name, team_id in name_and_ids.items():
+        team_league_dicts = TeamLeague.objects.filter(team__exact=team_id).values("id", "elo")
+        for team_league in team_league_dicts:
+            league = League.objects.get(pk=team_league["id"])
+            team_leagues.append({"team_name": team_name,
+                                 "team_id": team_id,
+                                 "elo": team_league["elo"],
+                                 "league_name": league.name,
+                                 "league_id": league.id,
+                                 "league_sport": league.sport})
+    context = {'team_leagues': team_leagues}
     return render(request, 'player_index.html', context)    
 
 
