@@ -1,0 +1,9 @@
+login
+
+we are using the default login/logout views provided by django.contrib.auth [so we don't have to implement our own.]
+
+That being said, here's what they do:
+
+Login renders a template at registration/login.html by default, and is urlconf-d for accounts/login by default. The redirect is handled with the next parameter.
+logout renders a template at registration/logged_out.html by default and the redirect is handled inside.
+registration is your own view by default, and renders a template at registration/register.html

@@ -34,8 +34,8 @@ urlpatterns = patterns('',
 	url(r'^player_profile/(?P<player_id>\d+).*$', profiles.player_profile),
 	url(r'^league_standings/(?P<league_id>\d+)/{0,1}$', profiles.league_standings),
 	#Authentication
-    (r'^accounts/login/$',  login),
-    (r'^accounts/logout/$', logout),
+    (r'^accounts/login/$',  login, {'redirect_field_name':'/index/'}),
+    (r'^accounts/logout/$', logout, {'next_page':'/index/'}),
     (r'^accounts/register/$', registration.register),
 	#Test
 	url(r'^test/{0,1}.*$', test.test)
