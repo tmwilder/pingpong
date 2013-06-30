@@ -6,6 +6,7 @@ import pong_app.views.profiles as profiles
 import pong_app.views.add_x_to_y as add_x_to_y
 import pong_app.views.updates as updates
 import pong_app.views.test as test
+import pong_app.views.registration as registration
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -34,7 +35,8 @@ urlpatterns = patterns('',
 	url(r'^league_standings/(?P<league_id>\d+)/{0,1}$', profiles.league_standings),
 	#Authentication
     (r'^accounts/login/$',  login),
-    (r'^accounts/logout/$', logout),	
+    (r'^accounts/logout/$', logout),
+    (r'^accounts/register/$', registration.register),
 	#Test
 	url(r'^test/{0,1}.*$', test.test)
 
