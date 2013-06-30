@@ -1,6 +1,8 @@
+{% extends "base/base.html" %}
 
-<html>
-<body>
+{% block title %}Log in{% endblock %}
+
+{% block content %}
 <form action="" method="post">{% csrf_token %}
   <label for="username">User name:</label>
   <input type="text" name="username" value="" id="username">
@@ -11,5 +13,6 @@
   <input type="hidden" name="next" value="{{ next|escape }}" />
 </form>
 
-</body>
-</html>
+<a href='{% url 'pong_app.views.registration.register' %}'>Need to register?</a>
+{% endblock %}
+

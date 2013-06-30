@@ -1,3 +1,10 @@
+{% extends "base/base.html" %}
+
+{% block title %}Index Page{% endblock %}
+
+{% block content %}
+
+
 <h3> Index Page </h3>
 
 <a href='{% url 'pong_app.views.misc.index' %}'> index </a></p>
@@ -14,3 +21,5 @@
 <a href='{% url 'pong_app.views.makes.make_league' %}'> make_league </a></p>
 <a href='{% url 'pong_app.views.add_x_to_y.add_team_to_league' %}'> add_team_to_league </a></p>
 <a href='{% url 'pong_app.views.add_x_to_y.add_player_to_team' %}'> add_player_to_team </a></p>
+
+{% endblock %}
