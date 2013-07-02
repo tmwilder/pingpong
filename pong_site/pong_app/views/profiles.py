@@ -2,7 +2,8 @@
 import pong_app.forms
 from django.http import HttpResponse
 from django.shortcuts import render
-from pong_app.models import Match, TeamLeague, Team, League, TeamPlayer
+from pong_app.models import Match, TeamLeague, Team, League, TeamUser
+from django.contrib.auth.models import User
 
 def league_standings(request, league_id):
     team_set = TeamLeague.objects.filter(league=league_id).order_by('-elo')
@@ -28,25 +29,25 @@ def team_profile(request):
         context = {'form':form,}
         return render(request, 'team_profile.html', context)
 
-def player_profile(request, player_id=0): #TODO refactor this monstrosity of a view.
+def user_profile(request, user_id=0): #TODO refactor this monstrosity of a view.
     try:
-        player_id=int(player_id)
+        user_id=int(user_id)
     except ValueError:
-        player_id=1 #TODO fix to required arg once index.html is improved.
-    team_players = TeamPlayer.objects.filter(player__exact=player_id)
-    team_leagues = [TeamLeague.objects.filter(team__exact=team_player.team) \
-                   for team_player in team_players]
+        user_id=1 #TODO fix to required arg once index.html is improved.
+    team_users = TeamUser.objects.filter(user__exact=user_id)
+    team_leagues = [TeamLeague.objects.filter(team__exact=team_user.team) \
+                   for team_user in team_users]
     final_team_leagues = []
     #Aggregate league info.
     for team_league_set in team_leagues:
         for team_league in team_league_set:
             final_team_leagues.append(team_league)
-    team_names = [team_player.team.name for player in team_players]
+    team_names = [team_user.team.name for user in team_users]
     team_elos = [team_league.elo for team_league in final_team_leagues]
     name_elos = zip(team_names, team_elos)
-    #Get the player.
-    player = Player.objects.get(pk=player_id)
-    context = {"player": player,
+    #Get the user.
+    user = User.objects.get(pk=user_id)
+    context = {"user": user,
                "name_elos": name_elos}
-    return render(request, 'player_profile.html', context)
+    return render(request, 'user_profile.html', context)
 

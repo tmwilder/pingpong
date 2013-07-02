@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class TeamPlayer(models.Model):
+class TeamUser(models.Model):
     team = models.ForeignKey('Team')
-    player = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     class Meta:
-        db_table = 'team_player'
+        db_table = 'team_user'
 
 class Team(models.Model):
     captain = models.ForeignKey(User,

@@ -2,31 +2,30 @@
 import pong_app.forms
 from django.http import HttpResponse
 from django.shortcuts import render
-from pong_app.models import Match, TeamLeague, Team, League, TeamPlayer
+from pong_app.models import Match, TeamLeague, Team, League, TeamUser
+from django.contrib.auth.models import User
 
-def make_player(request):
-    form = pong_app.forms.PlayerForm(request.POST)
+def make_user(request):
+    form = pong_app.forms.UserForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
-            playerName = request.POST['player_name']
-            playerNick = request.POST['player_nick']
-            new_player = Player.objects.create(player_name=playerName,
-                                               player_nick=playerNick)
+            userName = request.POST['user_name']
+            new_user = User.objects.create(user_name=userName)
             context = {'form': form,}
-            return render(request, 'make_player.html', context)
+            return render(request, 'make_user.html', context)
         else:
             raise(Exception)
-            form = pong_app.forms.PlayerForm()
-            return render(request, 'make_player.html', {'form': form,})
+            form = pong_app.forms.UserForm()
+            return render(request, 'make_user.html', {'form': form,})
     else:
-        return render(request, 'make_player.html', {'form': form,})
+        return render(request, 'make_user.html', {'form': form,})
 
 def make_team(request):
     form = pong_app.forms.TeamForm(request.POST)
     if request.method == 'POST':
         team_name = request.POST['team_name']
         team_captain = request.POST['team_captain']
-        captain = Player.objects.get(pk=team_captain)
+        captain = User.objects.get(pk=team_captain)
         Team.objects.create(name=team_name,
                             captain=captain)
         context = {'form': form,}

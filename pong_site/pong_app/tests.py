@@ -24,12 +24,12 @@ class StatusOkTests(TestCase):
         response = self.client.post("/enter_result/")
         self.assertEqual(response.status_code, 200)
     
-    def test_make_player_get(self):
-        response = self.client.get("/make_player/")
+    def test_make_user_get(self):
+        response = self.client.get("/make_user/")
         self.assertEqual(response.status_code, 200)
 
-    def test_make_player_post(self):
-        response = self.client.post("/make_player/")
+    def test_make_user_post(self):
+        response = self.client.post("/make_user/")
         self.assertEqual(response.status_code, 200)
 
     def test_make_team_get(self):
@@ -48,12 +48,12 @@ class StatusOkTests(TestCase):
         response = self.client.post("/make_league/")
         self.assertEqual(response.status_code, 200)
                           
-    def test_update_player_get(self):
-        response = self.client.get("/update_player/")
+    def test_update_user_get(self):
+        response = self.client.get("/update_user/")
         self.assertEqual(response.status_code, 200)
 
-    def test_update_player_post(self):
-        response = self.client.post("/update_player/")
+    def test_update_user_post(self):
+        response = self.client.post("/update_user/")
         self.assertEqual(response.status_code, 200)
 
     def test_update_team_get(self):
@@ -72,12 +72,12 @@ class StatusOkTests(TestCase):
         response = self.client.post("/update_league/")
         self.assertEqual(response.status_code, 200)
 
-    def test_add_player_to_team_get(self):
-        response = self.client.get("/add_player_to_team/")
+    def test_add_user_to_team_get(self):
+        response = self.client.get("/add_user_to_team/")
         self.assertEqual(response.status_code, 200)
 
-    def test_add_player_to_team_post(self):
-        response = self.client.post("/add_player_to_team/")
+    def test_add_user_to_team_post(self):
+        response = self.client.post("/add_user_to_team/")
         self.assertEqual(response.status_code, 200)
 
     def test_add_team_to_league_get(self):
@@ -96,12 +96,12 @@ class StatusOkTests(TestCase):
         response = self.client.post("/team_profile/")
         self.assertEqual(response.status_code, 200)
                 
-    def test_player_profile_get(self):
-        response = self.client.get("/player_profile/")
+    def test_user_profile_get(self):
+        response = self.client.get("/user_profile/")
         self.assertEqual(response.status_code, 200)
         
-    def test_player_profile_post(self):
-        response = self.client.post("/player_profile/")
+    def test_user_profile_post(self):
+        response = self.client.post("/user_profile/")
         self.assertEqual(response.status_code, 200)
                         
     def test_standings_get(self):

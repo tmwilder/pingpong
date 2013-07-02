@@ -1,7 +1,7 @@
 {% extends '_update.html' %}
 
 {% block body %}
-<form action="/update_player/" method="post">{% csrf_token %}
+<form action="/update_user/" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </form>

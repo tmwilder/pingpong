@@ -3,26 +3,22 @@ from django import forms
 class TeamProfileForm(forms.Form):
     team = forms.IntegerField()
 
+
 class StandingsForm(forms.Form):
     league = forms.IntegerField()
 
-class PlayerForm(forms.Form):
-    player_name = forms.CharField(max_length="64")
-    player_nick = forms.CharField(max_length="64")
 
+class UserForm(forms.Form):
+    user_name = forms.CharField(max_length="64")
 
-class PlayerForm(forms.Form):
-    player_name = forms.CharField(max_length="64")
-    player_nick = forms.CharField(max_length="64")
-    
     
 class TeamForm(forms.Form):
     team_captain = forms.CharField(max_length="64")
     team_name = forms.CharField(max_length="64")
 
 
-class AddPlayerToTeamForm(forms.Form):
-    player_name = forms.CharField(max_length="64")
+class AddUserToTeamForm(forms.Form):
+    user_name = forms.CharField(max_length="64")
 
 
 class LeagueForm(forms.Form):
@@ -33,7 +29,8 @@ class LeagueForm(forms.Form):
 class AddTeamToLeagueForm(forms.Form):
     team_id = forms.IntegerField()
     league_id = forms.IntegerField()
-    
+
+
 class ResultForm(forms.Form):
     team1 = forms.IntegerField()
     team2 = forms.IntegerField()
@@ -41,6 +38,7 @@ class ResultForm(forms.Form):
     league = forms.IntegerField()
     match_info = forms.CharField(max_length="2000")
     
-class AddPlayerToTeamForm(forms.Form):
-    player_id = forms.IntegerField()
+
+class AddUserToTeamForm(forms.Form):
+    user_id = forms.IntegerField()
     team_id = forms.IntegerField()

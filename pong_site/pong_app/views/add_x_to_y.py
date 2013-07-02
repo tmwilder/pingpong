@@ -2,22 +2,24 @@
 import pong_app.forms
 from django.http import HttpResponse
 from django.shortcuts import render
-from pong_app.models import Match, TeamLeague, Team, League, TeamPlayer
+from pong_app.models import Match, TeamLeague, Team, League, TeamUser
+from django.contrib.auth.models import User
 
-def add_player_to_team(request):
-    form = pong_app.forms.AddPlayerToTeamForm(request.POST)
+
+def add_user_to_team(request):
+    form = pong_app.forms.AddUserToTeamForm(request.POST)
     if request.method == 'POST':
-        player_id = request.POST['player_id']
+        user_id = request.POST['user_id']
         team_id = request.POST['team_id']
-        team = Team.objects.get(pk=player_id)
-        player = Player.objects.get(pk=team_id)
-        new_team_player = TeamPlayer.objects.create(player=player,
-                                                    team=team)
+        team = Team.objects.get(pk=user_id)
+        user = User.objects.get(pk=team_id)
+        new_team_user = TeamUser.objects.create(user=user,
+                                                team=team)
         context = {'form': form,}
-        return render(request, 'add_player_to_team.html', {'form': form,})
+        return render(request, 'add_user_to_team.html', {'form': form,})
     else:
-        form = pong_app.forms.AddPlayerToTeamForm()
-        return render(request, 'add_player_to_team.html', {'form': form,})
+        form = pong_app.forms.AddUserToTeamForm()
+        return render(request, 'add_user_to_team.html', {'form': form,})
         
 def add_team_to_league(request):
     form = pong_app.forms.AddTeamToLeagueForm(request.POST)
