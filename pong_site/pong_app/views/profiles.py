@@ -1,6 +1,5 @@
 #Django imports.
 import pong_app.forms
-from django.http import HttpResponse
 from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
@@ -9,7 +8,7 @@ from django.contrib.auth.models import User
 def league_profile(request, league_id):
     team_set = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
     context = {'team_leagues': team_set}
-    return render(request, 'league_profile.html', context)
+    return render(request, 'league_standings.html', context)
 
 
 def team_profile(request, team_id):
@@ -43,3 +42,4 @@ def user_profile(request, user_id):
                                  "league_sport": league.sport})
     context = {'team_leagues': team_leagues}
     return render(request, 'user_profile.html', context)
+

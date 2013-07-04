@@ -21,7 +21,7 @@ urlpatterns = patterns('',
 	url(r'^make_team/{0,1}.*$', makes.make_team),
 	url(r'^make_league/{0,1}.*$', makes.make_league),
     #Update
-	url(r'^update_user/{0,1}$', updates.update_user),
+    url(r'^update_user/{0,1}$', updates.update_user),
     url(r'^update_team/{0,1}$', updates.update_team),
 	url(r'^update_team/(?P<team_id>\d+).*$', updates.update_team),
 	#Add
@@ -37,6 +37,6 @@ urlpatterns = patterns('',
     (r'^accounts/login/$',  login),
     (r'^accounts/logout/$', logout, {'next_page':'/index/'}),
     (r'^accounts/register/$', registration.register),
-	#Test
-	url(r'^test/{0,1}.*$', test.test)
+    #Test
+url(r'^test/{0,1}.*$', test.test)
 )
