@@ -16,12 +16,11 @@ We need to figure out how to do the navbar properly and have all pages inherit f
 We need to construct all of the views properly.
 We need to figure out how to do the user_passes_test stuff.
 
-Right now:
-    I need to chat with tim in order to agree on what the pageflow is, so postpone that for now.
-    Let's do user_passes_test and user related stuff for now.
-
 Here's what we want to do:
     If you hit www.pingpong.com and you're not logged in, we want it to prompt for your login.
     In fact, if you hit any garbage page, we'll simply redirect you to / and it will ask you to login and prompt you to register
     Then it will redirect to your player profile.
+
+Right now:
+    Let's do user_passes_test and user related stuff for now.
 

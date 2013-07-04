@@ -36,9 +36,9 @@ urlpatterns = patterns('',
     url(r'^user_profile/(?P<user_id>\d+).*$', profiles.user_profile),
     url(r'^league_profile/(?P<league_id>\d+)/{0,1}$', profiles.league_profile),
     #Authentication
-    (r'^accounts/login/$',  login),
-    (r'^accounts/logout/$', logout, {'next_page': '/index/'}),
-    (r'^accounts/register/$', registration.register),
+    url(r'^accounts/login/$',  login),
+    url(r'^accounts/logout/$', logout, {'next_page': '/index/'}),
+    url(r'^accounts/register/$', registration.register),
     #Test
     url(r'^test/{0,1}.*$', test.test),
     #Catchall
