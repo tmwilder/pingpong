@@ -7,12 +7,14 @@ import pong_app.views.add_x_to_y as add_x_to_y
 import pong_app.views.updates as updates
 import pong_app.views.test as test
 import pong_app.views.registration as registration
+import pong_app.views.redirect as redirect
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^/{0,1}$', redirect.redirectToUserProfile),
     url(r'^index/{0,1}.*$', misc.index),
     url(r'^enter_result/{0,1}.*$', misc.enter_result),
     url(r'^team_matches/(?P<team_id>\d+)/{0,1}.*$', misc.team_matches),
@@ -28,9 +30,7 @@ urlpatterns = patterns('',
     url(r'^add_team_to_league/{0,1}.*$', add_x_to_y.add_team_to_league),
     url(r'^add_user_to_team/{0,1}.*$', add_x_to_y.add_user_to_team),
     #Profiles
-    url(r'^team_profile/{0,1}$', profiles.team_profile),
     url(r'^team_profile/(?P<team_id>\d+)/{0,1}$', profiles.team_profile),
-    url(r'^user_profile/{0,1}$', profiles.user_profile),
     url(r'^user_profile/(?P<user_id>\d+).*$', profiles.user_profile),
     url(r'^league_profile/(?P<league_id>\d+)/{0,1}$', profiles.league_profile),
     #Authentication
@@ -38,5 +38,7 @@ urlpatterns = patterns('',
     (r'^accounts/logout/$', logout, {'next_page': '/index/'}),
     (r'^accounts/register/$', registration.register),
     #Test
-    url(r'^test/{0,1}.*$', test.test)
+    url(r'^test/{0,1}.*$', test.test),
+    #Catchall
+    url(r'^.*$', redirect.redirectToHome)
 )

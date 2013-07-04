@@ -11,7 +11,7 @@ def index(request):
     """Development page to make it faster to navigate the site while prototyping."""
     context = {}
     return render(request, 'index.html', context)
- 
+
 
 def enter_result(request):
     form = pong_app.forms.ResultForm(request.POST)
@@ -25,11 +25,11 @@ def enter_result(request):
             team1 = Team.objects.get(pk=team1)
             team2 = Team.objects.get(pk=team2)
             league = League.objects.get(pk=league)
-            
+
             #assuming team+league = composite primary key
             team1elo = TeamLeague.objects.get(team=team1,league=league).elo
             team2elo = TeamLeague.objects.get(team=team2,league=league).elo  #does this return ints or strings or what?
-            
+
             #temporary elo recalculation function
             def elocalc(elo1, elo2, result):
                 result = (int(result) + 1)/2.0
@@ -46,13 +46,13 @@ def enter_result(request):
                 new_1 = elo1 + kfactor*(score_1 - expected_1)
                 new_2 = elo2 + kfactor*(score_2 - expected_2)
                 return round(new_1), round(new_2)
-            
+
             team1newelo, team2newelo = elocalc(team1elo, team2elo, result)
-            
+
             t1 = TeamLeague.objects.get(team=team1,league=league)
             t1.elo = team1newelo
             t1.save()
-            
+
             t2 = TeamLeague.objects.get(team=team2,league=league)
             t2.elo = team2newelo
             t2.save()
@@ -73,7 +73,7 @@ def enter_result(request):
 
 def team_matches(request, team_id):
     """
-    Shows all matches for one team. 
+    Shows all matches for one team.
     Left to only this functionality rather than more powerful search based on YAGNI.
 
     """

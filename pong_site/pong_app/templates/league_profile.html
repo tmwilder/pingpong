@@ -1,7 +1,8 @@
 {% extends '_standings.html' %}
 
+{% block title %} League Profile {% endblock %}
 
-{% block body %}
+{% block content %}
 
 <table>
     <tr>
@@ -9,7 +10,7 @@
         <th>Elo</th>
     </tr>
     {% for team_league in team_leagues %}
-    <tr> 
+    <tr>
         <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</td>
         <td>{{ team_league.elo }}</td>
     </tr>

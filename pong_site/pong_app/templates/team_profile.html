@@ -1,7 +1,8 @@
-{% extends '_base.html' %}
+{% extends 'base/base.html' %}
 
-{% block body %}
+{% block title %} Team Profile {% endblock %}
 
+{% block content %}
 
 <h2>Team Name</h2>
 {{ team.name }}
@@ -33,7 +34,7 @@
         <th>Player Name</th>
     </tr>
     {% for team_user in team_users %}
-    <tr> 
+    <tr>
         <td><a href='{% url 'pong_app.views.profiles.user_profile' user_id=team_user.user.id %}'>{{ team_user.user.username }}</a></td>
     </tr>
     {% endfor %}
