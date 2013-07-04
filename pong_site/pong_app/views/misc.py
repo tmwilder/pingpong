@@ -4,12 +4,15 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
+from django.db.models import Q #Django object to do logic in filtering.
 
 
 def index(request):
+    """Development page to make it faster to navigate the site while prototyping."""
     context = {}
     return render(request, 'index.html', context)
  
+
 def enter_result(request):
     form = pong_app.forms.ResultForm(request.POST)
     if request.method == 'POST':
@@ -66,3 +69,13 @@ def enter_result(request):
     else:
         form = pong_app.forms.ResultForm()
         return render(request, 'enter_result.html', {'form': form,})
+
+
+def team_matches(request, team_id):
+    """
+    Shows all matches for one team. 
+    Left to only this functionality rather than more powerful search based on YAGNI.
+
+    """
+    matches = Match.objects.filter(Q(team1__exact=team_id) | Q(team2__exact=team_id)).select_related()
+    return render(request, 'team_matches.html', { 'matches': matches })

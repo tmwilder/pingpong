@@ -2,21 +2,18 @@
 
 
 {% block body %}
-<form action="/standings/" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
 
 <table>
     <tr>
         <th>Team Name</th>
         <th>Elo</th>
     </tr>
-    {% for tl in team_leagues %}
+    {% for team_league in team_leagues %}
     <tr> 
-        <td>{{ tl.id }}</td>
-        <td>{{ tl.elo }}</td>
+        <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</td>
+        <td>{{ team_league.elo }}</td>
     </tr>
     {% endfor %}
 </table>
+
 {% endblock %}

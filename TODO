@@ -3,28 +3,24 @@ This document is a list of features we want, questions we need to answer, and mi
 Questions:
 1. How should we allow commissioners to add teams? The issue is that a string doesn't uniquely identify a team. Is there a slick page flow to solve this problem?
 
+
 Pages to create:
-1. Sign up page/create player.
-2. player_profile/update_player page.
-3. team_profile/update_team.
-4. league_profile/update_league.
-5. view_matches.
-6. match_profile/update_matches.
+1. player_profile/update_player page. Needs update player.
+2. team_profile/update_team. Needs update team.
+3. match_profile/update_matches.
 
 
 Features:
-1. Make all table elements that refer to team, match, league, or player links to a profile page.
-2. Choose a suitable CSS skin and implement.
-3. Add javascript form validation.
-4. Spec out content management/authentication.
-5. Implement content management/authentication.
-6. Add unit tests.
-7. Planned refactor.
-8. Set up seperate dev, test, production environments.
-9. Modify all post request pages to take their input as parameters and execute the post request. I.E. update_team.
-10. Search bar for navigation.
-11. Email link invite system.
-12. Place on limits on user creation to prevent spam/cheating.
+1. Choose a suitable CSS skin and implement.
+2. Add javascript form validation.
+3. Add unit tests.
+4. Planned refactor.
+5. Set up seperate dev, test, production environments.
+6. Modify all post request pages to take their input as parameters and execute the post request. I.E. update_team.
+7. Search bar for navigation.
+8. Email link invite system.
+9. Place on limits on user creation to prevent spam/cheating.
+
 
 Bugs:
-1. The fixture generation script has no league name data.
+1. The fixture generation script puts all matches in league1.

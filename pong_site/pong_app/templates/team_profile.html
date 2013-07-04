@@ -2,11 +2,14 @@
 
 {% block body %}
 
-{{team.name}}
 
-{{team.captain.user_name}}
+<h2>Team Name</h2>
+{{ team.name }}
 
-<h1> Leagues </h1>
+<h2>Team Captain</h2>
+{{ team.captain.username }}
+
+<h2> Leagues </h2>
 <table id='team_leagues'>
     <tr>
         <th>Name</th>
@@ -15,8 +18,8 @@
         <th>Elo</th>
     </tr>
     {% for team_league in team_leagues %}
-    <tr> 
-        <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=team_league.league.id %}'>{{ team_league.league.name }}
+    <tr>
+        <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=team_league.league.id %}'>{{ team_league.league.name }}</td>
         <td>{{ team_league.league.sport }}</td>
         <td>{{ team_league.league.location }}</td>
         <td>{{ team_league.elo }}</td>
@@ -24,7 +27,7 @@
     {% endfor %}
 </table>
 
-<h1> Members </h1>
+<h2> Members </h2>
 <table id='team_members'>
     <tr>
         <th>Player Name</th>
@@ -36,6 +39,9 @@
     {% endfor %}
 </table>
 
+<h2>
+    <a href='{% url 'pong_app.views.misc.team_matches' team_id=team.id %}'> Match History </a>
+</h2>
 
 
 {% endblock %}

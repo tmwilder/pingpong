@@ -7,18 +7,20 @@ from django.contrib.auth.models import User
 
 
 def league_profile(request, league_id):
-    team_set = TeamLeague.objects.filter(league=league_id).order_by('-elo')
-    #TODO swap from ID to passing in the team name.
+    team_set = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
     context = {'team_leagues': team_set}
-    return render(request, 'league_standings.html', context)
+    return render(request, 'league_profile.html', context)
 
 
 def team_profile(request, team_id):
+    team = Team.objects.get(pk=team_id)
     team_users = TeamUser.objects.filter(team__exact=team_id).select_related('user__id', 'user__username')
     team_leagues = TeamLeague.objects.filter(team__exact=team_id).select_related('elo', 'league__sport', 'league__elo', 'league__name', 'league__id')
     context = { 'team_users': team_users,
-                'team_leagues': team_leagues }
+                'team_leagues': team_leagues,
+                'team': team }
     return render(request,  'team_profile.html', context)
+
 
 def user_profile(request, user_id):
     """
@@ -40,5 +42,4 @@ def user_profile(request, user_id):
                                  "league_id": league.id,
                                  "league_sport": league.sport})
     context = {'team_leagues': team_leagues}
-    return render(request, 'user_profile.html', context)   
-
+    return render(request, 'user_profile.html', context)
