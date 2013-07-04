@@ -9,14 +9,15 @@
 
 <a href='{% url 'pong_app.views.misc.index' %}'> index </a></p>
 
-<a href='{% url 'pong_app.views.profiles.league_standings' league_id=1 %}'> standings </a></p>
+<a href='{% url 'pong_app.views.profiles.league_profile' league_id=1 %}'> league_profile </a></p>
+<a href='{% url 'pong_app.views.profiles.team_profile' %}'> team_profile </a></p>
+<a href='{% url 'pong_app.views.profiles.user_profile' user_id=1 %}'> user_profile </a></p>
+
 <a href='{% url 'pong_app.views.misc.enter_result' %}'> enter_result </a></p>
 <a href='{% url 'pong_app.views.makes.make_user' %}'> make_user </a></p>
 <a href='{% url 'pong_app.views.updates.update_user' %}'> update_user </a></p>
 <a href='{% url 'pong_app.views.makes.make_team' %}'> make_team </a></p>
 <a href='{% url 'pong_app.views.updates.update_team' team_id=1 %}'> update_team </a></p>
-<a href='{% url 'pong_app.views.profiles.team_profile' %}'> team_profile </a></p>
-<a href='{% url 'pong_app.views.profiles.user_profile' user_id=1 %}'> user_profile </a></p>
 <a href='{% url 'pong_app.views.makes.make_league' %}'> make_league </a></p>
 <a href='{% url 'pong_app.views.add_x_to_y.add_team_to_league' %}'> add_team_to_league </a></p>
 <a href='{% url 'pong_app.views.add_x_to_y.add_user_to_team' %}'> add_user_to_team </a></p>

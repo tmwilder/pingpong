@@ -11,7 +11,7 @@
     {% for tl in team_leagues %}
     <tr> 
         <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=tl.team_id %}'>{{ tl.team_name }}</a></td>
-        <td><a href='{% url 'pong_app.views.profiles.league_standings' league_id=tl.league_id %}'>{{ tl.league_name }}</a></td>
+        <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=tl.league_id %}'>{{ tl.league_name }}</a></td>
         <td>{{ tl.elo }}</td>
         <td>{{ tl.league_sport }}</td>
     </tr>

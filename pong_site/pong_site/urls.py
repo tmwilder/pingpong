@@ -31,7 +31,7 @@ urlpatterns = patterns('',
 	url(r'^team_profile/(?P<team_id>\d+)/{0,1}$', profiles.team_profile),
     url(r'^user_profile/{0,1}$', profiles.user_profile),
 	url(r'^user_profile/(?P<user_id>\d+).*$', profiles.user_profile),
-	url(r'^league_standings/(?P<league_id>\d+)/{0,1}$', profiles.league_standings),
+	url(r'^league_profile/(?P<league_id>\d+)/{0,1}$', profiles.league_profile),
 	#Authentication
     (r'^accounts/login/$',  login),
     (r'^accounts/logout/$', logout, {'next_page':'/index/'}),

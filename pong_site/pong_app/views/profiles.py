@@ -6,7 +6,7 @@ from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
 
 
-def league_standings(request, league_id):
+def league_profile(request, league_id):
     team_set = TeamLeague.objects.filter(league=league_id).order_by('-elo')
     #TODO swap from ID to passing in the team name.
     context = {'team_leagues': team_set}
@@ -15,7 +15,7 @@ def league_standings(request, league_id):
 
 def team_profile(request, team_id):
     team_users = TeamUser.objects.filter(team__exact=team_id).select_related('user__id', 'user__username')
-    team_leagues = TeamLeague.objects.filter(team__exact=team_id).select_related('elo', 'league__sport', 'league__elo')
+    team_leagues = TeamLeague.objects.filter(team__exact=team_id).select_related('elo', 'league__sport', 'league__elo', 'league__name', 'league__id')
     context = { 'team_users': team_users,
                 'team_leagues': team_leagues }
     return render(request,  'team_profile.html', context)

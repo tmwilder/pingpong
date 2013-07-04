@@ -9,12 +9,14 @@
 <h1> Leagues </h1>
 <table id='team_leagues'>
     <tr>
+        <th>Name</th>
         <th>Sport</th>
         <th>Location </th>
         <th>Elo</th>
     </tr>
     {% for team_league in team_leagues %}
     <tr> 
+        <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=team_league.league.id %}'>{{ team_league.league.name }}
         <td>{{ team_league.league.sport }}</td>
         <td>{{ team_league.league.location }}</td>
         <td>{{ team_league.elo }}</td>
