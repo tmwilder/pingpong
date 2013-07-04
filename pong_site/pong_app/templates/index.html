@@ -13,8 +13,9 @@
 <p><a href='{% url 'pong_app.views.profiles.team_profile' team_id=1 %}'> team_profile </a></p>
 <p><a href='{% url 'pong_app.views.profiles.user_profile' user_id=1 %}'> user_profile </a></p>
 
-<p><a href='{% url 'pong_app.views.updates.update_user' %}'> update_user </a></p>
+<p><a href='{% url 'pong_app.views.updates.update_user' user_id=1%}'> update_user </a></p>
 <p><a href='{% url 'pong_app.views.updates.update_team' team_id=1 %}'> update_team </a></p>
+<p><a href='{% url 'pong_app.views.updates.update_league' league_id=1 %}'> update_league </a></p>
 
 <p><a href='{% url 'pong_app.views.makes.make_user' %}'> make_user </a></p>
 <p><a href='{% url 'pong_app.views.makes.make_team' %}'> make_team </a></p>

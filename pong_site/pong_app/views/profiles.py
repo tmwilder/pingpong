@@ -40,5 +40,7 @@ def user_profile(request, user_id):
                                  "league_name": league.name,
                                  "league_id": league.id,
                                  "league_sport": league.sport})
-    context = {'team_leagues': team_leagues}
+    user = User.objects.get(pk=user_id)
+    context = {'user': user,
+               'team_leagues': team_leagues }
     return render(request, 'user_profile.html', context)

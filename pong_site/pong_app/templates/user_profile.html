@@ -3,6 +3,11 @@
 {% block title %} User Profile {% endblock %}
 
 {% block content %}
+{% block body %}
+
+<h1>Username</h1>
+{{user.username}}
+
 <table>
     <tr>
         <th>Team Name</th>
@@ -19,4 +24,10 @@
     </tr>
     {% endfor %}
 </table>
+
+<p>
+    <a href='{% url 'pong_app.views.profiles.update_user' user_id=user.id %}'>Update this User
+</p>
+
+{% endblock %}
 {% endblock %}

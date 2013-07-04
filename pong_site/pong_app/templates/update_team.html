@@ -1,28 +1,23 @@
 {% extends '_update.html' %}
 
 {% block body %}
-<h1> Add a user </h1>
-<form action="/update_team/" method="post">
-{% csrf_token %}
-{{ add_user_form.as_p }}
-<input type="submit" value="Submit" />
-
 
 <h1> Drop a user </h1>
-<form action="/update_team/" method="post">
-<select>
-{% for user in users %}
-	<option value="{{ user.user_name }}"> {{ user.user_name }} </option>	
-{% endfor %}
-</select>
-<input type="submit" value="Submit" />
+<form name="drop_user" action="/update_team/{{ team.id }}" method="post">
+    {% csrf_token %}
+    <select name="user" form="drop_user">
+        {% for team_user in team_users %}
+            <option value="{{ team_user.user.id }}"> {{ team_user.user.username }} </option>    
+        {% endfor %}
+    </select>
+    <input type="submit" value="Submit" />
 </form>
 
 
 <h1> Change captain or team name </h1>
-<form action="/update_team/" method="post">
-{% csrf_token %}
-{{ team_form.as_p }}
-<input type="submit" value="Submit" />
-</form>
+    <form action="/update_team/{{ team.id }}" method="post">
+        {% csrf_token %}
+        {{ team_form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
 {% endblock %}
