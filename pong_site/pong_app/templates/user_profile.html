@@ -1,20 +1,20 @@
 {% extends '_base.html' %}
 
 {% block body %}
-    <h1>User:</h1>
-    {{ user.username }}
-    <h1>Teams:</h1>
-    <table>
-        <tr>
-        <th>name</th>
-        <th>elo</th>
-        </tr>
-        {% for name_elo in name_elos %}
-            <tr>
-            <td>{{ name_elo.0 }}</td>
-            <td>{{ name_elo.1 }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+<table>
+    <tr>
+        <th>Team Name</th>
+        <th>League Name</th>
+        <th>Elo</th>
+        <th>Sport</th>
+    </tr>
+    {% for tl in team_leagues %}
+    <tr> 
+        <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=tl.team_id %}'>{{ tl.team_name }}</a></td>
+        <td><a href='{% url 'pong_app.views.profiles.league_standings' league_id=tl.league_id %}'>{{ tl.league_name }}</a></td>
+        <td>{{ tl.elo }}</td>
+        <td>{{ tl.league_sport }}</td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
-

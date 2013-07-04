@@ -5,49 +5,40 @@ from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
 
+
 def league_standings(request, league_id):
     team_set = TeamLeague.objects.filter(league=league_id).order_by('-elo')
     #TODO swap from ID to passing in the team name.
     context = {'team_leagues': team_set}
     return render(request, 'league_standings.html', context)
 
-def team_profile(request):
-    if request.method == 'POST':
-        form = pong_app.forms.TeamProfileForm(request.POST)
-        if form.is_valid():
-            team = request.POST['team']
-            team1 = Team.objects.get(pk=team)
-            teamleaguelist = TeamLeague.objects.filter(team=team)
-            context = {'team':team1, 'teamleague':teamleaguelist}
-            return render(request, 'team_profile.html', context)
-        else:
-            form = pong_app.forms.TeamProfileForm()
-            context = {'form':form,}
-            return render(request, 'team_profile.html', context)
-    else:
-        form = pong_app.forms.TeamProfileForm()
-        context = {'form':form,}
-        return render(request, 'team_profile.html', context)
 
-def user_profile(request, user_id=0): #TODO refactor this monstrosity of a view.
-    try:
-        user_id=int(user_id)
-    except ValueError:
-        user_id=1 #TODO fix to required arg once index.html is improved.
-    team_users = TeamUser.objects.filter(user__exact=user_id)
-    team_leagues = [TeamLeague.objects.filter(team__exact=team_user.team) \
-                   for team_user in team_users]
-    final_team_leagues = []
-    #Aggregate league info.
-    for team_league_set in team_leagues:
-        for team_league in team_league_set:
-            final_team_leagues.append(team_league)
-    team_names = [team_user.team.name for user in team_users]
-    team_elos = [team_league.elo for team_league in final_team_leagues]
-    name_elos = zip(team_names, team_elos)
-    #Get the user.
-    user = User.objects.get(pk=user_id)
-    context = {"user": user,
-               "name_elos": name_elos}
-    return render(request, 'user_profile.html', context)
+def team_profile(request, team_id):
+    team_users = TeamUser.objects.filter(team__exact=team_id).select_related('user__id', 'user__username')
+    team_leagues = TeamLeague.objects.filter(team__exact=team_id).select_related('elo', 'league__sport', 'league__elo')
+    context = { 'team_users': team_users,
+                'team_leagues': team_leagues }
+    return render(request,  'team_profile.html', context)
+
+def user_profile(request, user_id):
+    """
+    1. A record for each team elo that team has.
+    2. Links through these records to each team and league for the user.
+
+    """
+    team_leagues = []
+    team_users = TeamUser.objects.filter(id__exact=user_id).all()
+    name_and_ids = { team_user.team.name: team_user.team.id for team_user in team_users }
+    for team_name, team_id in name_and_ids.items():
+        team_league_dicts = TeamLeague.objects.filter(team__exact=team_id).values("id", "elo")
+        for team_league in team_league_dicts:
+            league = League.objects.get(pk=team_league["id"])
+            team_leagues.append({"team_name": team_name,
+                                 "team_id": team_id,
+                                 "elo": team_league["elo"],
+                                 "league_name": league.name,
+                                 "league_id": league.id,
+                                 "league_sport": league.sport})
+    context = {'team_leagues': team_leagues}
+    return render(request, 'user_profile.html', context)   
 

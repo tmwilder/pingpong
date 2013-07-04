@@ -9,31 +9,7 @@ from django.contrib.auth.models import User
 def index(request):
     context = {}
     return render(request, 'index.html', context)
-
-
-def user_index(request, user_id):
-    """
-    1. A record for each team elo that team has.
-    2. Links through these records to each team and league for the user.
-
-    """
-    team_leagues = []
-    team_users = TeamUser.objects.filter(id__exact=user_id).all()
-    name_and_ids = { team_user.team.name: team_user.team.id for team_user in team_users }
-    for team_name, team_id in name_and_ids.items():
-        team_league_dicts = TeamLeague.objects.filter(team__exact=team_id).values("id", "elo")
-        for team_league in team_league_dicts:
-            league = League.objects.get(pk=team_league["id"])
-            team_leagues.append({"team_name": team_name,
-                                 "team_id": team_id,
-                                 "elo": team_league["elo"],
-                                 "league_name": league.name,
-                                 "league_id": league.id,
-                                 "league_sport": league.sport})
-    context = {'team_leagues': team_leagues}
-    return render(request, 'user_index.html', context)    
-
-
+ 
 def enter_result(request):
     form = pong_app.forms.ResultForm(request.POST)
     if request.method == 'POST':

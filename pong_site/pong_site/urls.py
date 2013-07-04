@@ -15,7 +15,6 @@ import pong_app.views.registration as registration
 urlpatterns = patterns('',
 	url(r'^index/{0,1}.*$', misc.index),
 	url(r'^enter_result/{0,1}.*$', misc.enter_result),
-	url(r'^user_index/(?P<user_id>\d+)/{0,1}$', misc.user_index),
 	#Make
 	url(r'^make_user/{0,1}.*$', makes.make_user),
 	url(r'^make_team/{0,1}.*$', makes.make_team),

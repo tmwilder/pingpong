@@ -2,27 +2,38 @@
 
 {% block body %}
 
-<form action="/team_profile/" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
-
 {{team.name}}
 
 {{team.captain.user_name}}
 
-<table>
+<h1> Leagues </h1>
+<table id='team_leagues'>
     <tr>
         <th>Sport</th>
         <th>Location </th>
         <th>Elo</th>
     </tr>
-    {% for item in teamleague %}
+    {% for team_league in team_leagues %}
     <tr> 
-        <td>{{ item.league.sport }}</td>
-        <td>{{ item.league.location }}</td>
-        <td>{{ item.elo}}</td>
+        <td>{{ team_league.league.sport }}</td>
+        <td>{{ team_league.league.location }}</td>
+        <td>{{ team_league.elo }}</td>
     </tr>
     {% endfor %}
 </table>
+
+<h1> Members </h1>
+<table id='team_members'>
+    <tr>
+        <th>Player Name</th>
+    </tr>
+    {% for team_user in team_users %}
+    <tr> 
+        <td><a href='{% url 'pong_app.views.profiles.user_profile' user_id=team_user.user.id %}'>{{ team_user.user.username }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
 {% endblock %}
