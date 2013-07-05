@@ -4,7 +4,7 @@ from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from pong_app.decorators import user_passes_test_request
+from pong_app.decorators import user_passes_test_request, verify_user_id_in_url
 
 
 @login_required
@@ -25,12 +25,8 @@ def team_profile(request, team_id):
     return render(request,  'team_profile.html', context)
 
 
-def user_profile_auth(request):
-    return int(User.objects.get(username__exact=request.user.username).id) == int(request.path.split('/')[-1])
-
-
 @login_required
-@user_passes_test_request(user_profile_auth)
+@user_passes_test_request(verify_user_id_in_url)
 def user_profile(request, user_id):
     """
     1. A record for each team elo that team has.

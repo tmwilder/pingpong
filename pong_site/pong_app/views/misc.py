@@ -8,6 +8,11 @@ from django.db.models import Q #Django object to do logic in filtering.
 from django.contrib.auth.decorators import login_required
 
 
+def unauthorized(request):
+    context = {}
+    return render(request, 'unauthorized.html', context)
+
+
 @login_required
 def index(request):
     """Development page to make it faster to navigate the site while prototyping."""

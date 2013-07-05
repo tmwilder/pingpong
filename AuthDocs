@@ -1,0 +1,17 @@
+We are using the default login/logout views provided by django.contrib.auth
+
+Login renders a template at registration/login.html by default.
+It is urlconf-d for accounts/login by default. [login_required decorator expects it there]
+When you are routed to login, the current URL is passed to login within the next parameter, and will redirect there afterward.
+If you hit accounts/login directly, you will redirect according to the value set in settings.py [currently '/']
+
+logout renders a template at registration/logged_out.html by default.
+The redirect is handled by passing the 'next_page' parameter in urls.py
+
+Registration must be a custom written view.
+It renders a template at registration/register.html
+We use the django provided UserCreationForm to do our registration
+
+For authorization, we drop login_required decorators on all of our views.
+Moreover, we have written a custom user_passes_test decorator which utilizes the entire request.
+These are found in decorators.py

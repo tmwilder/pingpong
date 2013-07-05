@@ -3,7 +3,6 @@
 {% block title %} User Profile {% endblock %}
 
 {% block content %}
-{% block body %}
 
 <h1>Username</h1>
 {{user.username}}
@@ -29,5 +28,4 @@
     <a href='{% url 'pong_app.views.updates.update_user' user_id=user.id %}'>Update this User
 </p>
 
-{% endblock %}
 {% endblock %}

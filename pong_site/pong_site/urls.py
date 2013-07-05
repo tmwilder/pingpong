@@ -39,6 +39,8 @@ urlpatterns = patterns('',
     url(r'^accounts/register/$', registration.register),
     #Test
     url(r'^test/{0,1}.*$', test.test),
+    #Unauthorized
+    url(r'^unauthorized.*$', misc.unauthorized),
     #Catchall
     url(r'^.*$', redirect.redirectToHome)
 )

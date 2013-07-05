@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from functools import wraps
 from django.utils.decorators import available_attrs
+from django.contrib.auth.models import User
 
 
 def user_passes_test_request(test_func):
@@ -16,7 +17,7 @@ def user_passes_test_request(test_func):
     This decorator then takes the view function, uses wraps to ensure the namespace is correct.
 
     Within the wrapped function, if the test passes, the view is executed as is,
-    otherwise, it redirects to root.
+    otherwise, it redirects to the "unauthorized" page.
 
     """
 
@@ -26,6 +27,10 @@ def user_passes_test_request(test_func):
             if test_func(request):
                 return view_func(request, *args, **kwargs)
             else:
-                return HttpResponseRedirect("/")
+                return HttpResponseRedirect("/unauthorized")
         return _wrapped_view
     return decorator
+
+
+def verify_user_id_in_url(request):
+    return int(User.objects.get(username__exact=request.user.username).id) == int(request.path.split('/')[-1])
