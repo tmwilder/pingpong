@@ -5,14 +5,17 @@ from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
 from django.db.models import Q #Django object to do logic in filtering.
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def index(request):
     """Development page to make it faster to navigate the site while prototyping."""
     context = {}
     return render(request, 'index.html', context)
 
 
+@login_required
 def enter_result(request):
     form = pong_app.forms.ResultForm(request.POST)
     if request.method == 'POST':
@@ -71,6 +74,7 @@ def enter_result(request):
         return render(request, 'enter_result.html', {'form': form,})
 
 
+@login_required
 def team_matches(request, team_id):
     """
     Shows all matches for one team.

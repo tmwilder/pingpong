@@ -4,8 +4,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def add_user_to_team(request):
     form = pong_app.forms.AddUserToTeamForm(request.POST)
     if request.method == 'POST':
@@ -20,7 +22,9 @@ def add_user_to_team(request):
     else:
         form = pong_app.forms.AddUserToTeamForm()
         return render(request, 'add_user_to_team.html', {'form': form,})
-        
+
+
+@login_required
 def add_team_to_league(request):
     form = pong_app.forms.AddTeamToLeagueForm(request.POST)
     if request.method == 'POST':

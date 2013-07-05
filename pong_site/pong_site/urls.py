@@ -30,14 +30,12 @@ urlpatterns = patterns('',
     url(r'^add_team_to_league/{0,1}.*$', add_x_to_y.add_team_to_league),
     url(r'^add_user_to_team/{0,1}.*$', add_x_to_y.add_user_to_team),
     #Profiles
-    url(r'^team_profile/{0,1}$', profiles.team_profile),
     url(r'^team_profile/(?P<team_id>\d+)/{0,1}$', profiles.team_profile),
-    url(r'^user_profile/{0,1}$', profiles.user_profile),
     url(r'^user_profile/(?P<user_id>\d+).*$', profiles.user_profile),
     url(r'^league_profile/(?P<league_id>\d+)/{0,1}$', profiles.league_profile),
     #Authentication
     url(r'^accounts/login/$',  login),
-    url(r'^accounts/logout/$', logout, {'next_page': '/index/'}),
+    url(r'^accounts/logout/$', logout, {'next_page': '/'}),
     url(r'^accounts/register/$', registration.register),
     #Test
     url(r'^test/{0,1}.*$', test.test),

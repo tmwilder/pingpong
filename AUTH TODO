@@ -1,26 +1,18 @@
-login
-
 we are using the default login/logout views provided by django.contrib.auth [so we don't have to implement our own.]
 
-That being said, here's what they do:
+Here's what they do:
 
 Login renders a template at registration/login.html by default, and is urlconf-d for accounts/login by default. The redirect is handled with the next parameter.
 logout renders a template at registration/logged_out.html by default and the redirect is handled inside.
 registration is your own view by default, and renders a template at registration/register.html
 
 
-We need to decide on a pageflow: There isn't going to be an index anymore, if you try to hit our site, you'll be redirected to your player profile page.  That's auth required, so it will redirect to a login page if you aren't logged in.  Once you log-in successfully, that should redirect to YOUR player page.
+The main gaps atm are:
+    1) It's unclear that all of the views work as advertised for things that aren't profiles
+    2) For those that do, authorization does not exist to prevent access to views.
 
-So we need to figure out how to get all of these redirects right.
-We need to figure out how to do the navbar properly and have all pages inherit from it.
-We need to construct all of the views properly.
-We need to figure out how to do the user_passes_test stuff.
 
-Here's what we want to do:
-    If you hit www.pingpong.com and you're not logged in, we want it to prompt for your login.
-    In fact, if you hit any garbage page, we'll simply redirect you to / and it will ask you to login and prompt you to register
-    Then it will redirect to your player profile.
-
-Right now:
-    Let's do user_passes_test and user related stuff for now.
+Okay, so an auth decorator has been created.  We need to finish constructing views, and then we need to appropriately decorate all authorized views.
+An example is on the user_profile view, though it should be removed.
+We also might want to add a "you were not authorized page", so it's a bit more obvious that something happened.
 

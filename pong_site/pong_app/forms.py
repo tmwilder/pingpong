@@ -9,7 +9,7 @@ class UpdateUserInfo(forms.Form):
     #TODO move to seperate process.
     password = forms.CharField(max_length="64")
 
-    
+
 class UpdateTeamInfo(forms.Form):
     captain = forms.CharField(max_length="64")
     name = forms.CharField(max_length="64")

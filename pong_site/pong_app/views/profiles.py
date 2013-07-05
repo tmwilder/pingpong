@@ -3,14 +3,18 @@ import pong_app.forms
 from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from pong_app.decorators import user_passes_test_request
 
 
+@login_required
 def league_profile(request, league_id):
     team_set = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
     context = {'team_leagues': team_set}
     return render(request, 'league_profile.html', context)
 
 
+@login_required
 def team_profile(request, team_id):
     team = Team.objects.get(pk=team_id)
     team_users = TeamUser.objects.filter(team__exact=team_id).select_related('user__id', 'user__username')
@@ -21,6 +25,12 @@ def team_profile(request, team_id):
     return render(request,  'team_profile.html', context)
 
 
+def user_profile_auth(request):
+    return int(User.objects.get(username__exact=request.user.username).id) == int(request.path.split('/')[-1])
+
+
+@login_required
+@user_passes_test_request(user_profile_auth)
 def user_profile(request, user_id):
     """
     1. A record for each team elo that team has.

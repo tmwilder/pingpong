@@ -4,7 +4,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def make_user(request):
     form = pong_app.forms.UserForm(request.POST)
     if request.method == 'POST':
@@ -20,6 +23,8 @@ def make_user(request):
     else:
         return render(request, 'make_user.html', {'form': form,})
 
+
+@login_required
 def make_team(request):
     form = pong_app.forms.TeamForm(request.POST)
     if request.method == 'POST':
@@ -34,7 +39,9 @@ def make_team(request):
         form = pong_app.forms.TeamForm()
         return render(request, 'make_team.html', {'form': form,})
 
-def make_league(request):    
+
+@login_required
+def make_league(request):
     form = pong_app.forms.LeagueForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
