@@ -1,6 +1,7 @@
 #Django imports.
 import pong_app.forms
 from django.http import HttpResponse
+import pong_app.decorators as decor
 from django.shortcuts import render
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
@@ -8,8 +9,23 @@ from django.contrib.auth.decorators import login_required
 
 
 @login_required
+@decor.user_passes_test_request(decor.verify_user_id_in_url)
 def update_user(request, user_id):
-    context = {}
+    user = User.objects.get(pk=user_id)
+    if request.method == 'POST':
+        user_form = pong_app.forms.UpdateUserInfo(request.POST)
+        if user_form.is_valid():
+            fields_to_change = request.POST.items()
+            #Are we evil for using this private method?
+            user_fields = user_form.get_exposed_fields()
+            for key, value in fields_to_change:
+                if key in user_fields and key != '':
+                    setattr(user, key, value)
+            user.save()
+    else:
+        user_form = pong_app.forms.UpdateUserInfo()
+    user_form = pong_app.forms.pre_pop(form=user_form, model_instance=user)
+    context = {'user': user, 'user_form': user_form}
     return render(request, 'update_user.html', context)
 
 
@@ -35,7 +51,8 @@ def update_team(request, team_id):
         #When no form was submitted.
         team_form = pong_app.forms.UpdateTeamInfo()
     #Return page info regardless.
-    return render(request, 'update_team.html', {'team_users': team_users, 'team_form': team_form, 'team': team})
+    context = {'team_users': team_users, 'team_form': team_form, 'team': team}
+    return render(request, 'update_team.html', context)
 
 
 @login_required

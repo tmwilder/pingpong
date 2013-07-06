@@ -1,8 +1,14 @@
 {% extends '_update.html' %}
 
 {% block body %}
-<form action="/update_user/" method="post">{% csrf_token %}
-{{ form.as_p }}
+<form action="/update_user/{{ user.id }}" method="post">
+	{% csrf_token %}
+	{{ user_form.as_p }}
 <input type="submit" value="Submit" />
 </form>
+
+<h2>
+	<a href='{% url 'pong_app.views.profiles.user_profile' user_id=user.id %}'> Back to Profile </a>
+</h2>
+
 {% endblock %}

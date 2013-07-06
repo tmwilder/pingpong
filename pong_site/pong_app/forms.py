@@ -1,25 +1,44 @@
 from django import forms
 
+def pre_pop(form, model_instance):
+    """
+    Takes a form instance and a model instance representing one row of data.
+    Populates the form with that row's values using the django form initial
+    attribute.
+    When the form is rendered, the initial field values are set
+    using that dict.
+
+    """
+    initial_vals = {}
+    for field_name in form.get_exposed_fields():
+        field_val = getattr(model_instance, field_name)
+        initial_vals[field_name] = field_val
+    form.initial = initial_vals
+    return form
+
 
 class UpdateUserInfo(forms.Form):
-    user_name = forms.CharField(max_length="64")
-    email = forms.CharField(max_length="64")
-    first_name = forms.CharField(max_length="64")
-    last_name = forms.CharField(max_length="64")
+    username = forms.CharField(max_length="64", required=False)
+    email = forms.CharField(max_length="64", required=False)
+    first_name = forms.CharField(max_length="64", required=False)
+    last_name = forms.CharField(max_length="64", required=False)
     #TODO move to seperate process.
-    password = forms.CharField(max_length="64")
+    password = forms.CharField(max_length="64", required=False)
+
+    def get_exposed_fields(self):
+        return ['username', 'email', 'first_name', 'last_name', 'password']
 
 
 class UpdateTeamInfo(forms.Form):
-    captain = forms.CharField(max_length="64")
-    name = forms.CharField(max_length="64")
+    captain = forms.CharField(max_length="64", required=False)
+    name = forms.CharField(max_length="64", required=False)
 
 
 class UpdateLeagueInfo(forms.Form):
-    location = forms.CharField(max_length="64")
-    sport = forms.CharField(max_length="64")
-    name = forms.CharField(max_length="64")
-    comissioner = forms.CharField(max_length="64")
+    location = forms.CharField(max_length="64", required=False)
+    sport = forms.CharField(max_length="64", required=False)
+    name = forms.CharField(max_length="64", required=False)
+    comissioner = forms.CharField(max_length="64", required=False)
 
 
 class AddUserToTeam(forms.Form):

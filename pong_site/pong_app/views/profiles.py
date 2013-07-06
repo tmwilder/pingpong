@@ -26,7 +26,6 @@ def team_profile(request, team_id):
 
 
 @login_required
-@user_passes_test_request(verify_user_id_in_url)
 def user_profile(request, user_id):
     """
     1. A record for each team elo that team has.
