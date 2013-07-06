@@ -1,21 +1,5 @@
 from django import forms
 
-def pre_pop(form, model_instance):
-    """
-    Takes a form instance and a model instance representing one row of data.
-    Populates the form with that row's values using the django form initial
-    attribute.
-    When the form is rendered, the initial field values are set
-    using that dict.
-
-    """
-    initial_vals = {}
-    for field_name in form.get_exposed_fields():
-        field_val = getattr(model_instance, field_name)
-        initial_vals[field_name] = field_val
-    form.initial = initial_vals
-    return form
-
 
 class UpdateUserInfo(forms.Form):
     username = forms.CharField(max_length="64", required=False)
@@ -33,12 +17,18 @@ class UpdateTeamInfo(forms.Form):
     captain = forms.CharField(max_length="64", required=False)
     name = forms.CharField(max_length="64", required=False)
 
+    def get_exposed_fields(self):
+        return ['captain', 'name']
+
 
 class UpdateLeagueInfo(forms.Form):
     location = forms.CharField(max_length="64", required=False)
     sport = forms.CharField(max_length="64", required=False)
     name = forms.CharField(max_length="64", required=False)
     comissioner = forms.CharField(max_length="64", required=False)
+
+    def get_exposed_fields(self):
+        return ['location', 'sport', 'name', 'comissioner']
 
 
 class AddUserToTeam(forms.Form):
@@ -57,3 +47,20 @@ class InputResult(forms.Form):
     result = forms.IntegerField()
     league = forms.IntegerField()
     match_info = forms.CharField(max_length="2000")
+
+
+def pre_pop(form, model_instance):
+    """
+    Takes a form instance and a model instance representing one row of data.
+    Populates the form with that row's values using the django form initial
+    attribute.
+    When the form is rendered, the initial field values are set
+    using that dict.
+
+    """
+    initial_vals = {}
+    for field_name in form.get_exposed_fields():
+        field_val = getattr(model_instance, field_name)
+        initial_vals[field_name] = field_val
+    form.initial = initial_vals
+    return form

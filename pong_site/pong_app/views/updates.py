@@ -50,14 +50,26 @@ def update_team(request, team_id):
     else:
         #When no form was submitted.
         team_form = pong_app.forms.UpdateTeamInfo()
+    team_form = pong_app.forms.pre_pop(form=team_form, model_instance=team)
     #Return page info regardless.
     context = {'team_users': team_users, 'team_form': team_form, 'team': team}
     return render(request, 'update_team.html', context)
 
 
-@login_required
+@login_required #TODO finish/debug
 def update_league(request, league_id):
-    raise(Exception("Not implemented"))
-
-
-
+    league = League.objects.get(pk=league_id)
+    if request.method == 'POST':
+        team_to_drop = request.POST.get('team_to_drop')
+        if team_to_drop is not None:
+            TeamLeague.objects.filter("team__exact"=team_to_drop).filter("league__exact"=league_id).delete()
+        league_form = pong_app.forms.UpdateLeagueInfo(request.POST)
+        if league_form.is_valid():
+            for key, value in team_form.cleaned_data.items():
+                setattr(league, key, value)
+            league.save()
+    else:
+        league_form = pong_app.forms.UpdateLeagueInfo()
+    league_form = pong_app.forms.pre_pop(form=league_form, model_instance=league)
+    context = {'league': league, 'league_form': league_form}
+    return rendeR(request, "update_league.html", context)

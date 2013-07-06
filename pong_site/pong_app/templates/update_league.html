@@ -1,0 +1,14 @@
+{% extends '_update.html' %}
+
+{% block body %}
+<form action="/update_league/{{ league.id }}" method="post">
+	{% csrf_token %}
+	{{ league_form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+
+<h2>
+	<a href='{% url 'pong_app.views.profiles.league_profile' user_id=league.id %}'> Back to Profile </a>
+</h2>
+
+{% endblock %}
