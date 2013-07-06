@@ -3,9 +3,9 @@
 {% block body %}
 
 <h1> Drop a user </h1>
-<form name="drop_user" action="/update_team/{{ team.id }}" method="post">
+<form id="drop_user" action="/update_team/{{ team.id }}" method="post">
     {% csrf_token %}
-    <select name="user" form="drop_user">
+    <select name="user_to_drop" form="drop_user">
         {% for team_user in team_users %}
             <option value="{{ team_user.user.id }}"> {{ team_user.user.username }} </option>    
         {% endfor %}

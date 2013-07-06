@@ -18,10 +18,11 @@ def update_team(request, team_id):
     team_users = TeamUser.objects.filter(team__exact=team_id).select_related("user__name", "user__id")
     team = Team.objects.get(pk=team_id)
     if request.method == 'POST':
-        raise(Exception(str(request.POST["name"])))
-        #When a form was submitted.
+        #Delete a user if one was specified to be dropped.
+        user_to_drop = request.POST.get("user_to_drop")
+        if user_to_drop is not None:
+            User.objects.get(pk=user_to_drop).delete()
         team_form = pong_app.forms.UpdateTeamInfo(request.POST)
-        # drop_user_from_team_form = pong_app.forms.DropUserFromTeam(request.POST)
         if team_form.is_valid():#TODO swap to email + name or something user facing to identify captain.
             team_row = Team.objects.get(pk=team_id)
             name = team_form.cleaned_data['name']
@@ -30,11 +31,6 @@ def update_team(request, team_id):
             team_row.name = name
             team_row.captain = captain
             team_row.save()
-
-        # if drop_user_from_team_form.is_valid():
-        #     team = Team.objects.get(pk=team_id)
-        #     data = team_form.cleaned_data
-        #     raise(Exception(repr(data)))
     else:
         #When no form was submitted.
         team_form = pong_app.forms.UpdateTeamInfo()

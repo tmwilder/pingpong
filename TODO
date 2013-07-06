@@ -20,7 +20,7 @@ Features:
 7. Search bar for navigation.
 8. Email link invite system.
 9. Place on limits on user creation to prevent spam/cheating.
-
+10. Figure out a slick way to let captains add users to their teams.
 
 Bugs:
 1. The fixture generation script puts all matches in league1.
