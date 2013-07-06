@@ -10,7 +10,8 @@ from pong_app.decorators import user_passes_test_request, verify_user_id_in_url
 @login_required
 def league_profile(request, league_id):
     team_set = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
-    context = {'team_leagues': team_set}
+    league = League.objects.get(pk=league_id)
+    context = {'team_leagues': team_set, 'league': league}
     return render(request, 'league_profile.html', context)
 
 

@@ -7,8 +7,20 @@
 <input type="submit" value="Submit" />
 </form>
 
+<h1> Drop a team </h1>
+<form id="drop_team" action="/update_league/{{ league.id }}" method="post">
+    {% csrf_token %}
+    <select name="team_to_drop" form="drop_team">
+        {% for team_league in team_leagues %}
+            <option value="{{ team_league.team.id }}"> {{ team_league.team.name }} </option>    
+        {% endfor %}
+    </select>
+    <input type="submit" value="Submit" />
+</form>
+
+
 <h2>
-	<a href='{% url 'pong_app.views.profiles.league_profile' user_id=league.id %}'> Back to Profile </a>
+	<a href='{% url 'pong_app.views.profiles.league_profile' league_id=league.id %}'> Back to Profile </a>
 </h2>
 
 {% endblock %}

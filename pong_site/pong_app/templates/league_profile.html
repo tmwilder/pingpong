@@ -11,10 +11,14 @@
     </tr>
     {% for team_league in team_leagues %}
     <tr>
-        <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</td>
+        <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</a></td>
         <td>{{ team_league.elo }}</td>
     </tr>
     {% endfor %}
 </table>
+
+<h2>
+    <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}'> Update this league's info</a>
+</h2>
 
 {% endblock %}

@@ -65,11 +65,17 @@ def update_league(request, league_id):
             TeamLeague.objects.filter(team__exact=team_to_drop).filter(league__exact=league_id).delete()
         league_form = pong_app.forms.UpdateLeagueInfo(request.POST)
         if league_form.is_valid():
-            for key, value in team_form.cleaned_data.items():
-                setattr(league, key, value)
+            commissioner_id = league_form.cleaned_data["commissioner"]
+            if commissioner_id:
+                commissioner = User.objects.get(pk=commissioner_id)
+                league.commissioner = commissioner
+            league.name = league_form.cleaned_data["name"]
+            league.sport = league_form.cleaned_data["sport"]
+            league.location = league_form.cleaned_data["location"]
             league.save()
     else:
         league_form = pong_app.forms.UpdateLeagueInfo()
+    team_leagues = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
     league_form = pong_app.forms.pre_pop(form=league_form, model_instance=league)
-    context = {'league': league, 'league_form': league_form}
-    return rendeR(request, "update_league.html", context)
+    context = {'league': league, 'league_form': league_form, 'team_leagues': team_leagues}
+    return render(request, "update_league.html", context)

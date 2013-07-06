@@ -25,10 +25,10 @@ class UpdateLeagueInfo(forms.Form):
     location = forms.CharField(max_length="64", required=False)
     sport = forms.CharField(max_length="64", required=False)
     name = forms.CharField(max_length="64", required=False)
-    comissioner = forms.CharField(max_length="64", required=False)
+    commissioner = forms.CharField(max_length="64", required=False)
 
     def get_exposed_fields(self):
-        return ['location', 'sport', 'name', 'comissioner']
+        return ['location', 'sport', 'name', 'commissioner']
 
 
 class AddUserToTeam(forms.Form):
