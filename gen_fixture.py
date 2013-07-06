@@ -10,14 +10,13 @@ FALSE = 0
 def add_users(no_users, c):
     for user_id in range(1, no_users+1):
         s = "INSERT INTO auth_user ('password', 'last_login', 'is_superuser',"\
-                                    "'username', 'first_name', 'last_name', "\
-                                    "'email', 'is_staff', 'is_active', " \
-                                    "'date_joined') " \
+                                   "'username', 'first_name', 'last_name', "\
+                                   "'email', 'is_staff', 'is_active', " \
+                                   "'date_joined') " \
             "VALUES ('password', {1}, {2}, " \
                      "'user{0}', 'user{0}', 'user{0}', " \
                      "'test@test.com', {2}, {3}, " \
                      "{1})".format(user_id, DATETIME, FALSE, TRUE)
-        print s
         c.execute(s)
     
         
