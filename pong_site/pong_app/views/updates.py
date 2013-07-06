@@ -62,7 +62,7 @@ def update_league(request, league_id):
     if request.method == 'POST':
         team_to_drop = request.POST.get('team_to_drop')
         if team_to_drop is not None:
-            TeamLeague.objects.filter("team__exact"=team_to_drop).filter("league__exact"=league_id).delete()
+            TeamLeague.objects.filter(team__exact=team_to_drop).filter(league__exact=league_id).delete()
         league_form = pong_app.forms.UpdateLeagueInfo(request.POST)
         if league_form.is_valid():
             for key, value in team_form.cleaned_data.items():
