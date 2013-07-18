@@ -16,7 +16,7 @@ def update_user(request, user_id):
         user_form = pong_app.forms.UpdateUserInfo(request.POST)
         if user_form.is_valid():
             fields_to_change = request.POST.items()
-            #Are we evil for using this private method?
+            #Are we evil for using txxhis private method?
             user_fields = user_form.get_exposed_fields()
             for key, value in fields_to_change:
                 if key in user_fields and key != '':

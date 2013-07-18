@@ -52,6 +52,7 @@ def add_users_to_teams(no_teams, no_users, c):
 def add_teams_to_leagues(no_teams, no_leagues, c):
     league_size = int(no_teams/no_leagues)
     league_id = 1
+    counter = 0
     for team_id in range(1, no_teams+1):
         statement = ("INSERT INTO team_league (team_id, league_id, elo) "
                      "VALUES ({0}, {1}, {2})".format(team_id, league_id, 1500)
@@ -59,6 +60,10 @@ def add_teams_to_leagues(no_teams, no_leagues, c):
         c.execute(statement)
         if team_id%league_size == 0:
             team_id += 1
+        counter += 1
+        if counter == league_size:
+            league_id += 1
+            counter = 0
                      
     
 def add_matches(no_teams, no_leagues, c):
@@ -96,10 +101,6 @@ def main(no_users=81,
     #Cleanup.
     conn.commit()
     conn.close()
-    #TODO figure out '>' error.
-    #command = ["python", ".{0}pong_site{0}manage.py".format(os.sep),
-    #           "dumpdata", "--format=json", "pong_app", ">", target_file]
-    #subprocess.call(command)
 
 
 if __name__ == "__main__":
