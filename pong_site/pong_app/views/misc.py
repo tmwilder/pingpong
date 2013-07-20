@@ -38,24 +38,7 @@ def enter_result(request):
             team1elo = TeamLeague.objects.get(team=team1,league=league).elo
             team2elo = TeamLeague.objects.get(team=team2,league=league).elo  #does this return ints or strings or what?
 
-            #temporary elo recalculation function
-            def elocalc(elo1, elo2, result):
-                result = (int(result) + 1)/2.0
-                elo1 = float(elo1)
-                elo2 = float(elo2)
-                result = float(result)
-                base_elo = 1500  #use this when creating a new teamleague object - i.e. when you add a new team, give it a default elo
-                elo_spread = 400
-                kfactor = 20
-                expected_1 = 1/(1+10**((elo2-elo1)/elo_spread))
-                expected_2 = 1/(1+10**((elo1-elo2)/elo_spread))
-                score_1 = result
-                score_2 = 1-result
-                new_1 = elo1 + kfactor*(score_1 - expected_1)
-                new_2 = elo2 + kfactor*(score_2 - expected_2)
-                return round(new_1), round(new_2)
-
-            team1newelo, team2newelo = elocalc(team1elo, team2elo, result)
+            team1newelo, team2newelo = _elocalc(team1elo, team2elo, result)
 
             t1 = TeamLeague.objects.get(team=team1,league=league)
             t1.elo = team1newelo
@@ -88,3 +71,27 @@ def team_matches(request, team_id):
     """
     matches = Match.objects.filter(Q(team1__exact=team_id) | Q(team2__exact=team_id)).select_related()
     return render(request, 'team_matches.html', { 'matches': matches })
+
+
+def _elocalc(elo1, elo2, result):
+    """
+    Calculates elo for the two teams after a match is finished.
+
+    Result is -1, 0, or 1 to indicate team 2 wins, tie, team 1 wins
+    respectively.
+
+    """
+    result = (int(result) + 1)/2.0
+    elo1 = float(elo1)
+    elo2 = float(elo2)
+    result = float(result)
+    base_elo = 1500  #use this when creating a new teamleague object - i.e. when you add a new team, give it a default elo
+    elo_spread = 400
+    kfactor = 20
+    expected_1 = 1/(1+10**((elo2-elo1)/elo_spread))
+    expected_2 = 1/(1+10**((elo1-elo2)/elo_spread))
+    score_1 = result
+    score_2 = 1-result
+    new_1 = elo1 + kfactor*(score_1 - expected_1)
+    new_2 = elo2 + kfactor*(score_2 - expected_2)
+    return round(new_1), round(new_2)
