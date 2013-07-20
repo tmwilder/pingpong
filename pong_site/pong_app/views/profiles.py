@@ -37,9 +37,9 @@ def user_profile(request, user_id):
     team_users = TeamUser.objects.filter(id__exact=user_id).all()
     name_and_ids = {team_user.team.name: team_user.team.id for team_user in team_users}
     for team_name, team_id in name_and_ids.items():
-        team_league_dicts = TeamLeague.objects.filter(team__exact=team_id).values("id", "elo")
+        team_league_dicts = TeamLeague.objects.filter(team__exact=team_id).values("league", "elo")
         for team_league in team_league_dicts:
-            league = League.objects.get(pk=team_league["id"])
+            league = League.objects.get(pk=team_league["league"])
             team_leagues.append({"team_name": team_name,
                                  "team_id": team_id,
                                  "elo": team_league["elo"],

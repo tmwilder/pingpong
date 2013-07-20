@@ -22,7 +22,7 @@ def index(request):
 
 @login_required
 def enter_result(request):
-    form = pong_app.forms.ResultForm(request.POST)
+    form = pong_app.forms.InputResult(request.POST)
     if request.method == 'POST':
         if form.is_valid():
             team1 = request.POST['team1']
@@ -67,15 +67,15 @@ def enter_result(request):
 
             new_match = Match.objects.create(team1=team1, team2=team2,result=result, start_elo1=team1elo, start_elo2=team2elo,league=league,match_info=match_info)
 
-            form = pong_app.forms.ResultForm()
+            form = pong_app.forms.InputResult()
             context = {'form':form,}
             return render(request, 'enter_result.html', context)
 
         else:
-            form = pong_app.forms.ResultForm()
+            form = pong_app.forms.InputResult()
             return render(request, 'enter_result.html', {'form': form,})
     else:
-        form = pong_app.forms.ResultForm()
+        form = pong_app.forms.InputResult()
         return render(request, 'enter_result.html', {'form': form,})
 
 
