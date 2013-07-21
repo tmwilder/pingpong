@@ -4,21 +4,33 @@
 
 {% block content %}
 
-<table>
-    <tr>
-        <th>Team Name</th>
-        <th>Elo</th>
-    </tr>
-    {% for team_league in team_leagues %}
-    <tr>
-        <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</a></td>
-        <td>{{ team_league.elo }}</td>
-    </tr>
-    {% endfor %}
-</table>
-
-<h2>
-    <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}'> Update this league's info</a>
-</h2>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+      <h3>Teams</h3>
+    </div>
+  </div><!--/row-->
+  <div class="row-fluid">
+    <div class="span12">
+      <table class="table table-bordered table-striped table-condensed table-hover">
+        <tr>
+          <th>Team Name</th>
+          <th>Elo</th>
+        </tr>
+        {% for team_league in team_leagues %}
+        <tr>
+          <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</a></td>
+          <td>{{ team_league.elo }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div><!--/row-->
+  <div class="row-fluid">
+    <div class="span6">
+      <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}'> Update this league's info</a>
+    </div>
+  </div><!--/row-->
+</div><!--/container-->
 
 {% endblock %}
