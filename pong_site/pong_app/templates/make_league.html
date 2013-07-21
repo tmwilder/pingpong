@@ -2,9 +2,12 @@
 
 
 {% block body %}
+{% block content %}
+
 <form action="/make_league/" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </form>
-{% endblock %}
 
+{% endblock %}
+{% endblock %}

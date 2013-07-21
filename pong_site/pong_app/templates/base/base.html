@@ -3,18 +3,23 @@
 <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
 <html lang="en">
 
-<div class="navbar">
+<div class="navbar"  id="navbar">
   <div class="navbar-inner">
-    <a class="brand" href="#">Ping Pong</a>
-    <Ul  class = "nav" >
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Create a League</a></li>
-      <li><a href="#">Create a Team</a></li>
-      <li><a href="#">Find a League</a></li>
-      <li><a href="#">Find a Team</a></li>
-      <form class="navbar-search pull-left">
-        <input type="text" class="search-query" placeholder="Search">
-      </form>
+    <a class="brand" href="/">Ping Pong</a>
+    <Ul  class = "nav">
+      {% if user.is_authenticated %}
+        <li><a href="/">{{ user.username }}</a></li>
+        <li><a href="{% url 'pong_app.views.makes.make_league' %}">Make a League</a></li>
+        <li><a href="{% url 'pong_app.views.makes.make_team' %}">Make a Team</a></li>
+        <li><a href="#">Find a League</a></li>
+        <li><a href="#">Find a Team</a></li>
+        <li><a href="/accounts/logout/">Log Out</a></li>
+        <form class="navbar-search pull-left">
+          <input type="text" class="search-query" placeholder="Search">
+        </form>
+      {% else %}
+        <li><a href="/">Log In</a></li>
+      {% endif %}
     </Ul>
   </div>
 </div>
@@ -24,17 +29,6 @@
 </head>
 
 <body>
-    {% if user.is_authenticated %}
-    <div id="navbar">
-        <a href="/">{{user.username}}</a>
-        <a href="/accounts/logout/">Log Out</a>
-    </div>
-    {% else %}
-    <div id="navbar">
-        <a href="/">Log In</a>
-    </div>
-    {% endif %}
-
     {% block content %}{% endblock %}
 </body>
 

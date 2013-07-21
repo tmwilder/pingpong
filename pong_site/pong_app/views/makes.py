@@ -26,32 +26,37 @@ def make_user(request):
 
 @login_required
 def make_team(request):
-    form = pong_app.forms.TeamForm(request.POST)
+    form = pong_app.forms.MakeTeam(request.POST)
     if request.method == 'POST':
-        team_name = request.POST['team_name']
-        team_captain = request.POST['team_captain']
-        captain = User.objects.get(pk=team_captain)
-        Team.objects.create(name=team_name,
+        name = request.POST['name']
+        captain = request.POST['captain']
+        captain = User.objects.get(pk=captain)
+        Team.objects.create(name=name,
                             captain=captain)
         context = {'form': form,}
         return render(request, 'make_team.html', {'form': form,})
     else:
-        form = pong_app.forms.TeamForm()
+        form = pong_app.forms.MakeTeam()
         return render(request, 'make_team.html', {'form': form,})
 
 
 @login_required
 def make_league(request):
-    form = pong_app.forms.LeagueForm(request.POST)
+    form = pong_app.forms.MakeLeague(request.POST)
     if request.method == 'POST':
         if form.is_valid():
             location = request.POST['location']
             sport = request.POST['sport']
-            new_league = League.objects.create(location=location, sport=sport)
+            comissioner = request.POST['comissioner']
+            name = request.POST['name']
+            new_league = League.objects.create(location=location,
+                                               sport=sport,
+                                               comissioner=comissioner,
+                                               name=name)
             context = {'form': form,}
             return render(request, 'make_league.html', context)
         else:
-            form = pong_app.forms.LeagueForm()
+            form = pong_app.forms.MakeLeague()
             return render(request, 'make_league.html', {'form': form,})
     else:
         return render(request, 'make_league.html', {'form': form,})
