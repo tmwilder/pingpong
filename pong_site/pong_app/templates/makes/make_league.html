@@ -1,13 +1,18 @@
 {% extends 'makes/_make.html' %}
 
-
-{% block body %}
 {% block content %}
 
-<form action="/make_league/" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
 
-{% endblock %}
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12">
+      <form action="/make_league/" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
