@@ -1,8 +1,0 @@
-{% extends 'makes/_make.html' %}
-
-{% block body %}
-<form action="/make_player/" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
-{% endblock %}
