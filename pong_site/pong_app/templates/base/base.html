@@ -1,10 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
-
+<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
 <html lang="en">
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#">Ping Pong</a>
+    <Ul  class = "nav" >
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Create a League</a></li>
+      <li><a href="#">Create a Team</a></li>
+      <li><a href="#">Find a League</a></li>
+      <li><a href="#">Find a Team</a></li>
+      <form class="navbar-search pull-left">
+        <input type="text" class="search-query" placeholder="Search">
+      </form>
+    </Ul>
+  </div>
+</div>
+
 <head>
     <title>{% block title %}{% endblock %}</title>
 </head>
+
 <body>
     {% if user.is_authenticated %}
     <div id="navbar">
@@ -19,4 +37,5 @@
 
     {% block content %}{% endblock %}
 </body>
+
 </html>
