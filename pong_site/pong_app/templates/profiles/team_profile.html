@@ -7,7 +7,9 @@
     <div class="row-fluid">
       <div class="span6">
         <h3>Team Name: {{ team.name }}</h3>
-      </div><!--/span-->
+      </div>
+    </div>
+    <div class="row-fluid">
       <div class="span6">
         <h3>Team Captain: {{ team.captain.username }}</h3>
       </div><!--/span-->
@@ -47,15 +49,11 @@
       </div><!--/span-->
     </div><!--/row-->
     <div class="row-fluid">
-      <div class="span6">
-        <h3>
-            <a href='{% url 'pong_app.views.misc.team_matches' team_id=team.id %}'> Match History </a>
-        </h3>
+      <div class="span2">
+          <a href='{% url 'pong_app.views.misc.team_matches' team_id=team.id %}' class="btn"> Match History </a>
       </div><!--/span-->
-      <div class="span6">
-        <h3>
-            <a href='{% url 'pong_app.views.updates.update_team' team_id=team.id %}'> Update Team </a>
-        </h3>
+      <div class="span2">
+          <a href='{% url 'pong_app.views.updates.update_team' team_id=team.id %}' class="btn"> Update Team </a>
       </div><!--/span-->
     </div><!--/row-->
   </div><!--/container-->
