@@ -10,14 +10,14 @@ from django.contrib.auth.decorators import login_required
 
 def unauthorized(request):
     context = {}
-    return render(request, 'unauthorized.html', context)
+    return render(request, 'misc/unauthorized.html', context)
 
 
 @login_required
 def index(request):
     """Development page to make it faster to navigate the site while prototyping."""
     context = {}
-    return render(request, 'index.html', context)
+    return render(request, 'misc/index.html', context)
 
 
 @login_required
@@ -58,14 +58,14 @@ def enter_result(request):
 
             form = pong_app.forms.InputResult()
             context = {'form':form,}
-            return render(request, 'enter_result.html', context)
+            return render(request, 'misc/enter_result.html', context)
 
         else:
             form = pong_app.forms.InputResult()
-            return render(request, 'enter_result.html', {'form': form,})
+            return render(request, 'misc/enter_result.html', {'form': form,})
     else:
         form = pong_app.forms.InputResult()
-        return render(request, 'enter_result.html', {'form': form,})
+        return render(request, 'misc/enter_result.html', {'form': form,})
 
 
 @login_required
@@ -76,19 +76,19 @@ def team_matches(request, team_id):
 
     """
     matches = Match.objects.filter(Q(team1__exact=team_id) | Q(team2__exact=team_id)).select_related()
-    return render(request, 'team_matches.html', { 'matches': matches })
+    return render(request, 'misc/team_matches.html', { 'matches': matches })
 
 
 @login_required
 def leagues(request):
     leagues = League.objects.all()
-    return render(request, 'leagues.html', { 'leagues': leagues })
+    return render(request, 'misc/leagues.html', { 'leagues': leagues })
 
 
 @login_required
 def teams(request):
     teams = Team.objects.all()
-    return render(request, 'teams.html', { 'teams': teams })
+    return render(request, 'misc/teams.html', { 'teams': teams })
 
 
 def _elocalc(elo1, elo2, result):

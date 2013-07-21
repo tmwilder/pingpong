@@ -15,13 +15,13 @@ def make_user(request):
             userName = request.POST['user_name']
             new_user = User.objects.create(user_name=userName)
             context = {'form': form,}
-            return render(request, 'make_user.html', context)
+            return render(request, 'makes/make_user.html', context)
         else:
             raise(Exception)
             form = pong_app.forms.UserForm()
-            return render(request, 'make_user.html', {'form': form,})
+            return render(request, 'makes/make_user.html', {'form': form,})
     else:
-        return render(request, 'make_user.html', {'form': form,})
+        return render(request, 'makes/make_user.html', {'form': form,})
 
 
 @login_required
@@ -34,10 +34,10 @@ def make_team(request):
         Team.objects.create(name=name,
                             captain=captain)
         context = {'form': form,}
-        return render(request, 'make_team.html', {'form': form,})
+        return render(request, 'makes/make_team.html', {'form': form,})
     else:
         form = pong_app.forms.MakeTeam()
-        return render(request, 'make_team.html', {'form': form,})
+        return render(request, 'makes/make_team.html', {'form': form,})
 
 
 @login_required
@@ -54,9 +54,9 @@ def make_league(request):
                                                comissioner=comissioner,
                                                name=name)
             context = {'form': form,}
-            return render(request, 'make_league.html', context)
+            return render(request, 'makes/make_league.html', context)
         else:
             form = pong_app.forms.MakeLeague()
-            return render(request, 'make_league.html', {'form': form,})
+            return render(request, 'makes/make_league.html', {'form': form,})
     else:
-        return render(request, 'make_league.html', {'form': form,})
+        return render(request, 'makes/make_league.html', {'form': form,})

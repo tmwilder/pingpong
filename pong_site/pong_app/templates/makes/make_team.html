@@ -1,6 +1,5 @@
-{% extends '_make.html' %}
+{% extends 'makes/_make.html' %}
 
-{% block body %}
 {% block content %}
 
 <form action="/make_team/" method="post">{% csrf_token %}
@@ -8,5 +7,4 @@
 <input type="submit" value="Submit" />
 </form>
 
-{% endblock %}
 {% endblock %}

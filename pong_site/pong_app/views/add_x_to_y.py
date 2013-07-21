@@ -18,10 +18,10 @@ def add_user_to_team(request):
         new_team_user = TeamUser.objects.create(user=user,
                                                 team=team)
         context = {'form': form,}
-        return render(request, 'add_user_to_team.html', {'form': form,})
+        return render(request, 'add_x_to_y/add_user_to_team.html', {'form': form,})
     else:
         form = pong_app.forms.AddUserToTeamForm()
-        return render(request, 'add_user_to_team.html', {'form': form,})
+        return render(request, 'add_x_to_y/add_user_to_team.html', {'form': form,})
 
 
 @login_required
@@ -35,9 +35,9 @@ def add_team_to_league(request):
             league_id = League.objects.get(pk=league_id)
             new_team_league = TeamLeague.objects.create(team=team_id, league=league_id)
             context = {'form': form,}
-            return render(request, 'add_team_to_league.html', context)
+            return render(request, 'add_x_to_y/add_team_to_league.html', context)
         else:
             form = pong_app.forms.AddTeamToLeagueForm()
-            return render(request, 'add_team_to_league.html', {'form': form,})
+            return render(request, 'add_x_to_y/add_team_to_league.html', {'form': form,})
     else:
-        return render(request, 'add_team_to_league.html', {'form': form,})
+        return render(request, 'add_x_to_y/add_team_to_league.html', {'form': form,})

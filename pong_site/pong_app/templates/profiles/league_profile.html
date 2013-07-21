@@ -1,4 +1,4 @@
-{% extends '_standings.html' %}
+{% extends 'base/base.html' %}
 
 {% block title %} League Profile {% endblock %}
 
@@ -28,7 +28,7 @@
   </div><!--/row-->
   <div class="row-fluid">
     <div class="span6">
-      <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}'> Update this league's info</a>
+      <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}' class="btn"> Update this League's Info</a>
     </div>
   </div><!--/row-->
 </div><!--/container-->

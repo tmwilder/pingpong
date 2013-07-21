@@ -12,7 +12,7 @@ def league_profile(request, league_id):
     team_set = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
     league = League.objects.get(pk=league_id)
     context = {'team_leagues': team_set, 'league': league}
-    return render(request, 'league_profile.html', context)
+    return render(request, 'profiles/league_profile.html', context)
 
 
 @login_required
@@ -23,7 +23,7 @@ def team_profile(request, team_id):
     context = {'team_users': team_users,
                'team_leagues': team_leagues,
                'team': team}
-    return render(request,  'team_profile.html', context)
+    return render(request,  'profiles/team_profile.html', context)
 
 
 @login_required
@@ -49,4 +49,4 @@ def user_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     context = {'user': user,
                'team_leagues': team_leagues }
-    return render(request, 'user_profile.html', context)
+    return render(request, 'profiles/user_profile.html', context)

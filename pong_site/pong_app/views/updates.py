@@ -26,7 +26,7 @@ def update_user(request, user_id):
         user_form = pong_app.forms.UpdateUserInfo()
     user_form = pong_app.forms.pre_pop(form=user_form, model_instance=user)
     context = {'user': user, 'user_form': user_form}
-    return render(request, 'update_user.html', context)
+    return render(request, 'updates/update_user.html', context)
 
 
 @login_required
@@ -53,7 +53,7 @@ def update_team(request, team_id):
     team_form = pong_app.forms.pre_pop(form=team_form, model_instance=team)
     #Return page info regardless.
     context = {'team_users': team_users, 'team_form': team_form, 'team': team}
-    return render(request, 'update_team.html', context)
+    return render(request, 'updates/update_team.html', context)
 
 
 @login_required #TODO finish/debug
@@ -78,4 +78,4 @@ def update_league(request, league_id):
     team_leagues = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
     league_form = pong_app.forms.pre_pop(form=league_form, model_instance=league)
     context = {'league': league, 'league_form': league_form, 'team_leagues': team_leagues}
-    return render(request, "update_league.html", context)
+    return render(request, "updates/update_league.html", context)
