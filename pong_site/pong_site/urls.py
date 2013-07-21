@@ -1,3 +1,4 @@
+import os
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout
 import pong_app.views.misc as misc
@@ -13,7 +14,10 @@ import pong_app.views.redirect as redirect
 # from django.contrib import admin
 # admin.autodiscover()
 
+STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
+
 urlpatterns = patterns('',
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': STATIC_PATH}),
     url(r'^/{0,1}$', redirect.redirectToUserProfile),
     url(r'^index/{0,1}.*$', misc.index),
     url(r'^enter_result/{0,1}.*$', misc.enter_result),

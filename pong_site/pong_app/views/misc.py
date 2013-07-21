@@ -35,20 +35,26 @@ def enter_result(request):
             league = League.objects.get(pk=league)
 
             #assuming team+league = composite primary key
-            team1elo = TeamLeague.objects.get(team=team1,league=league).elo
-            team2elo = TeamLeague.objects.get(team=team2,league=league).elo  #does this return ints or strings or what?
+            team1elo = TeamLeague.objects.get(team=team1, league=league).elo
+            team2elo = TeamLeague.objects.get(team=team2, league=league).elo  #does this return ints or strings or what?
 
             team1newelo, team2newelo = _elocalc(team1elo, team2elo, result)
 
-            t1 = TeamLeague.objects.get(team=team1,league=league)
+            t1 = TeamLeague.objects.get(team=team1, league=league)
             t1.elo = team1newelo
             t1.save()
 
-            t2 = TeamLeague.objects.get(team=team2,league=league)
+            t2 = TeamLeague.objects.get(team=team2, league=league)
             t2.elo = team2newelo
             t2.save()
 
-            new_match = Match.objects.create(team1=team1, team2=team2,result=result, start_elo1=team1elo, start_elo2=team2elo,league=league,match_info=match_info)
+            new_match = Match.objects.create(team1=team1,
+                                             team2=team2,
+                                             result=result,
+                                             start_elo1=team1elo,
+                                             start_elo2=team2elo,
+                                             league=league,
+                                             match_info=match_info)
 
             form = pong_app.forms.InputResult()
             context = {'form':form,}

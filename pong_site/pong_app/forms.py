@@ -8,7 +8,7 @@ class UpdateUserInfo(forms.Form):
     last_name = forms.CharField(max_length="64", required=False)
     #TODO move to seperate process.
     password = forms.CharField(max_length="64", required=False)
-
+    
     def get_exposed_fields(self):
         return ['username', 'email', 'first_name', 'last_name', 'password']
 
