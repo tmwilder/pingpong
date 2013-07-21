@@ -79,6 +79,18 @@ def team_matches(request, team_id):
     return render(request, 'team_matches.html', { 'matches': matches })
 
 
+@login_required
+def leagues(request):
+    leagues = League.objects.all()
+    return render(request, 'leagues.html', { 'leagues': leagues })
+
+
+@login_required
+def teams(request):
+    teams = Team.objects.all()
+    return render(request, 'teams.html', { 'teams': teams })
+
+
 def _elocalc(elo1, elo2, result):
     """
     Calculates elo for the two teams after a match is finished.

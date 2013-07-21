@@ -17,11 +17,11 @@ import pong_app.views.redirect as redirect
 STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
 
 urlpatterns = patterns('',
+    #Misc
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': STATIC_PATH}),
     url(r'^/{0,1}$', redirect.redirectToUserProfile),
     url(r'^index/{0,1}.*$', misc.index),
     url(r'^enter_result/{0,1}.*$', misc.enter_result),
-    url(r'^team_matches/(?P<team_id>\d+)/{0,1}.*$', misc.team_matches),
     #Make
     url(r'^make_user/{0,1}.*$', makes.make_user),
     url(r'^make_team/{0,1}.*$', makes.make_team),
@@ -45,6 +45,10 @@ urlpatterns = patterns('',
     url(r'^test/{0,1}.*$', test.test),
     #Unauthorized
     url(r'^unauthorized.*$', misc.unauthorized),
+    #Aggregate pages
+    url(r'^team_matches/(?P<team_id>\d+)/{0,1}.*$', misc.team_matches),
+    url(r'^teams.*$', misc.teams),
+    url(r'^leagues.*$', misc.leagues),
     #Catchall
     url(r'^.*$', redirect.redirectToHome)
 )
