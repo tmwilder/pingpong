@@ -7,7 +7,7 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span4">
-      <h3>Username: {{ user.username }}</h3>
+      <h3>Username: {{ target_user.username }}</h3>
     </div>
   </div>
   <div class="row-fluid">
@@ -32,7 +32,7 @@
   </div><!--/row-->
   <div class="row-fluid">
     <div class="span2">
-      <a href='{% url 'pong_app.views.updates.update_user' user_id=user.id %}' class="btn">Update this User  </a>
+      <a href='{% url 'pong_app.views.updates.update_user' user_id=target_user.id %}' class="btn">Update this User  </a>
     </div>
   </div>
 </div><!--/container-->
