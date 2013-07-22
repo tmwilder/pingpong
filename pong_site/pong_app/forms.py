@@ -1,4 +1,5 @@
 from django import forms
+from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 
 
 class UpdateUserInfo(forms.Form):
@@ -54,10 +55,15 @@ class AddTeamToLeague(forms.Form):
 
 
 class InputResult(forms.Form):
-    team1 = forms.IntegerField()
-    team2 = forms.IntegerField()
-    result = forms.IntegerField()
-    league = forms.IntegerField()
+
+    def __init__(self, league_id, *args, **kwargs):
+        super(InputResult, self).__init__(*args, **kwargs)
+        team_leagues = TeamLeague.objects.filter(league__exact=league_id).select_related("team__name")
+        teams = [(team_league.team.id, team_league.team.name) for team_league in team_leagues]
+        self.fields["team1"] = forms.ChoiceField(choices=teams)
+        self.fields["team2"] = forms.ChoiceField(choices=teams)
+
+    result = forms.ChoiceField(choices=[(-1, "Team 1 Won"), (0, "Tie"), (1, "Team 2 Won")])
     match_info = forms.CharField(max_length="2000")
 
 

@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': STATIC_PATH}),
     url(r'^/{0,1}$', redirect.redirectToUserProfile),
     url(r'^index/{0,1}.*$', misc.index),
-    url(r'^enter_result/{0,1}.*$', misc.enter_result),
+    url(r'^enter_result/(?P<league_id>\d+)/{0,1}$', misc.enter_result),
     #Make
     url(r'^make_user/{0,1}.*$', makes.make_user),
     url(r'^make_team/{0,1}.*$', makes.make_team),

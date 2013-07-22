@@ -27,8 +27,11 @@
     </div>
   </div><!--/row-->
   <div class="row-fluid">
-    <div class="span6">
-      <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}' class="btn"> Update this League's Info</a>
+    <div class="span2">
+      <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}' class="btn"> Update League Info</a>
+    </div>
+    <div class="span2">
+      <a href='{% url 'pong_app.views.misc.enter_result' league_id=league.id %}' class="btn"> Enter Match Result </a>
     </div>
   </div><!--/row-->
 </div><!--/container-->

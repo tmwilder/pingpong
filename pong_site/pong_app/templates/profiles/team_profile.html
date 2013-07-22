@@ -16,22 +16,22 @@
     </div><!--/row-->
     <div class="row-fluid">
       <div class="span6">
-        <h2> Leagues </h2>
+        <h3> Leagues </h3>
         <table id='team_leagues'  class="table table-bordered table-striped table-condensed table-hover">
-            <tr>
-                <th>Name</th>
-                <th>Sport</th>
-                <th>Location </th>
-                <th>Elo</th>
-            </tr>
-            {% for team_league in team_leagues %}
-            <tr>
-                <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=team_league.league.id %}'>{{ team_league.league.name }}</td>
-                <td>{{ team_league.league.sport }}</td>
-                <td>{{ team_league.league.location }}</td>
-                <td>{{ team_league.elo }}</td>
-            </tr>
-            {% endfor %}
+          <tr>
+              <th>Name</th>
+              <th>Sport</th>
+              <th>Location </th>
+              <th>Elo</th>
+          </tr>
+          {% for team_league in team_leagues %}
+          <tr>
+              <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=team_league.league.id %}'>{{ team_league.league.name }}</td>
+              <td>{{ team_league.league.sport }}</td>
+              <td>{{ team_league.league.location }}</td>
+              <td>{{ team_league.elo }}</td>
+          </tr>
+          {% endfor %}
         </table>
       </div><!--/span-->
       <div class="span6">

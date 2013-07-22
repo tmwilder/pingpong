@@ -21,18 +21,18 @@ def index(request):
 
 
 @login_required
-def enter_result(request):
-    form = pong_app.forms.InputResult(request.POST)
+def enter_result(request, league_id):
+    league = League.objects.get(pk=league_id)
+    form = pong_app.forms.InputResult(data=request.POST, league_id=league_id)
     if request.method == 'POST':
         if form.is_valid():
             team1 = request.POST['team1']
             team2 = request.POST['team2']
             result = request.POST['result']
-            league = request.POST['league']
             match_info = request.POST['match_info']
             team1 = Team.objects.get(pk=team1)
             team2 = Team.objects.get(pk=team2)
-            league = League.objects.get(pk=league)
+            league = League.objects.get(pk=league_id)
 
             #assuming team+league = composite primary key
             team1elo = TeamLeague.objects.get(team=team1, league=league).elo
@@ -56,16 +56,16 @@ def enter_result(request):
                                              league=league,
                                              match_info=match_info)
 
-            form = pong_app.forms.InputResult()
-            context = {'form':form,}
+            form = pong_app.forms.InputResult(league_id=league_id)
+            context = {'form': form, 'league': league}
             return render(request, 'misc/enter_result.html', context)
 
         else:
-            form = pong_app.forms.InputResult()
-            return render(request, 'misc/enter_result.html', {'form': form,})
+            form = pong_app.forms.InputResult(league_id=league_id)
+            return render(request, 'misc/enter_result.html', {'form': form, 'league': league})
     else:
-        form = pong_app.forms.InputResult()
-        return render(request, 'misc/enter_result.html', {'form': form,})
+        form = pong_app.forms.InputResult(league_id=league_id)
+        return render(request, 'misc/enter_result.html', {'form': form, 'league': league})
 
 
 @login_required
@@ -95,7 +95,7 @@ def _elocalc(elo1, elo2, result):
     """
     Calculates elo for the two teams after a match is finished.
 
-    Result is -1, 0, or 1 to indicate team 2 wins, tie, team 1 wins
+    Result is -1, 0, or 1 to indicate team 2 wins, a tie, or team 1 wins
     respectively.
 
     """
