@@ -5,14 +5,31 @@ from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from pong_app.decorators import user_passes_test_request, verify_user_id_in_url
+from django.db.models import Q #Django object to do logic in filtering.
 
 
 @login_required
 def league_profile(request, league_id):
     team_set = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
+    for index, team in enumerate(team_set):
+        team.rank = index + 1
+        wins, draws, losses = _get_record(team.id)
+        team.wins = wins
+        team.draws = draws
+        team.losses = losses
     league = League.objects.get(pk=league_id)
     context = {'team_leagues': team_set, 'league': league}
     return render(request, 'profiles/league_profile.html', context)
+
+
+def _get_record(team_id):
+    wins = Match.objects.filter((Q(team1__exact=team_id) & Q(result__exact=1)) | \
+                                (Q(team2__exact=team_id) & Q(result__exact=-1))).count()
+    draws = Match.objects.filter((Q(team1__exact=team_id) | Q(team2__exact=team_id)) & \
+                                  Q(result__exact=0)).count()
+    losses = Match.objects.filter((Q(team1__exact=team_id) & Q(result__exact=-1)) | \
+                                  (Q(team2__exact=team_id) & Q(result__exact=1))).count()
+    return wins, draws, losses
 
 
 @login_required
