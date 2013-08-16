@@ -7,7 +7,7 @@
 <h3> Index Page </h3>
 
 <p><a href='{% url 'pong_app.views.misc.index' %}'> index </a></p>
-<p><a href='{% url 'pong_app.views.misc.enter_result' %}'> enter_result </a></p>
+<p><a href='{% url 'pong_app.views.misc.enter_result' league_id=1%}'> enter_result </a></p>
 
 <p><a href='{% url 'pong_app.views.profiles.league_profile' league_id=1 %}'> league_profile </a></p>
 <p><a href='{% url 'pong_app.views.profiles.team_profile' team_id=1 %}'> team_profile </a></p>

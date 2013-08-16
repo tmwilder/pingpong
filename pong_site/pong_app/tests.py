@@ -102,20 +102,4 @@ class StatusOkTests(TestCase):
         
     def test_user_profile_post(self):
         response = self.client.post("/user_profile/")
-        self.assertEqual(response.status_code, 200)
-                        
-    def test_standings_get(self):
-        response = self.client.get("/standings/")
-        self.assertEqual(response.status_code, 200)
-        
-    def test_standings_post(self):
-        response = self.client.post("/standings/")
-        self.assertEqual(response.status_code, 200)
-               
-    def test_match_profile_get(self):
-        response = self.client.get("/match_profile/")
-        self.assertEqual(response.status_code, 200)  
-        
-    def test_match_profile_post(self):
-        response = self.client.post("/match_profile/")
-        self.assertEqual(response.status_code, 200)                
+        self.assertEqual(response.status_code, 200)          

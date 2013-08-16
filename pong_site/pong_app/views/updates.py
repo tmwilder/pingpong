@@ -1,11 +1,12 @@
 #Django imports.
-import pong_app.forms
 from django.http import HttpResponse
-import pong_app.decorators as decor
 from django.shortcuts import render
-from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+#Our app
+import pong_app.forms
+import pong_app.decorators as decor
+from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 
 
 @login_required
@@ -30,6 +31,7 @@ def update_user(request, user_id):
 
 
 @login_required
+@decor.user_passes_test_request(decor.verify_user_is_captain)
 def update_team(request, team_id):
     team_users = TeamUser.objects.filter(team__exact=team_id).select_related("user__name", "user__id")
     team = Team.objects.get(pk=team_id)
@@ -57,6 +59,7 @@ def update_team(request, team_id):
 
 
 @login_required #TODO finish/debug
+@decor.user_passes_test_request(decor.verify_user_is_comissioner)
 def update_league(request, league_id):
     league = League.objects.get(pk=league_id)
     if request.method == 'POST':
