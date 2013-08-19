@@ -48,7 +48,6 @@ class AddUserToTeam(forms.Form):
 class AddTeamToLeague(forms.Form):
     team_name = forms.CharField(max_length="64")
     team_captain_name = forms.CharField(max_length="64")
-    league_name = forms.CharField(max_length="64")
 
 
 class InputResult(forms.Form):

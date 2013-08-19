@@ -66,9 +66,10 @@ def update_team(request, team_id):
 
 
 @login_required #TODO finish/debug
-@decor.user_passes_test_request(decor.verify_user_is_comissioner)
+@decor.user_passes_test_request(decor.verify_user_is_commissioner)
 def update_league(request, league_id):
     league = League.objects.get(pk=league_id)
+    add_team_to_league_form = pong_app.forms.AddTeamToLeague()
     if request.method == 'POST':
         team_to_drop = request.POST.get('team_to_drop')
         if team_to_drop is not None:
@@ -83,9 +84,13 @@ def update_league(request, league_id):
             league.sport = league_form.cleaned_data["sport"]
             league.location = league_form.cleaned_data["location"]
             league.save()
+        add_x_to_y.add_team_to_league(request, league.id)
     else:
         league_form = pong_app.forms.UpdateLeagueInfo()
     team_leagues = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
     league_form = pong_app.forms.pre_pop(form=league_form, model_instance=league)
-    context = {'league': league, 'league_form': league_form, 'team_leagues': team_leagues}
+    context = {'league': league,
+               'league_form': league_form,
+               'team_leagues': team_leagues,
+               'add_team_to_league_form': add_team_to_league_form}
     return render(request, "updates/update_league.html", context)

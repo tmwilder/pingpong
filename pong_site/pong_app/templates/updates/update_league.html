@@ -1,10 +1,10 @@
 {% extends 'updates/_update.html' %}
 
-{% block body %}
+{% block content %}
 <form action="/update_league/{{ league.id }}" method="post">
-	{% csrf_token %}
-	{{ league_form.as_p }}
-<input type="submit" value="Submit" />
+    {% csrf_token %}
+    {{ league_form.as_p }}
+    <input type="submit" value="Submit" />
 </form>
 
 <h1> Drop a team </h1>
@@ -18,9 +18,15 @@
     <input type="submit" value="Submit" />
 </form>
 
+<h1> Add a team </h1>
+<form action="/update_league/{{ league.id }}" method="post">
+    {% csrf_token %}
+    {{ add_team_to_league_form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
 
 <h2>
-	<a href='{% url 'pong_app.views.profiles.league_profile' league_id=league.id %}'> Back to Profile </a>
+    <a href='{% url 'pong_app.views.profiles.league_profile' league_id=league.id %}'> Back to Profile </a>
 </h2>
 
 {% endblock %}

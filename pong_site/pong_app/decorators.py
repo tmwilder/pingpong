@@ -47,7 +47,7 @@ def verify_user_is_captain(request, args, kwargs):
     return user_id == captain_id
 
 
-def verify_user_is_comissioner(request, args, kwargs):
+def verify_user_is_commissioner(request, args, kwargs):
     league_id = kwargs["league_id"]
     user_id = int(User.objects.get(username__exact=request.user.username).id)
     captain_id = int(League.objects.get(pk=league_id).commissioner.id)

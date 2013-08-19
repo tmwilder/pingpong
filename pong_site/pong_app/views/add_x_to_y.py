@@ -28,16 +28,15 @@ def add_user_to_team(request, team_id):
         return False
 
 
-@login_required
-def add_team_to_league(request):
-    form = pong_app.forms.AddTeamToLeagueForm(request.POST)
+def add_team_to_league(request, league_id):
+    form = pong_app.forms.AddTeamToLeague(request.POST)
     if request.method == 'POST':
         if form.is_valid():
+            league = League.objects.get(pk=league_id)
             team_name = request.POST['team_name']
-            league_name = request.POST['league_name']
             team_captain_name = request.POST['team_captain_name']
-            team = Team.objects.filter(name__exact=team_name).filter(captain__name__exact=team_captain_name)
-            league = League.objects.get(name__exact=league_name)
+            captain_id = User.objects.get(username__exact=team_captain_name).id
+            team = Team.objects.filter(name__exact=team_name).filter(captain__exact=captain_id)[0]
             if not decor.verify_user_is_commissioner(request,
                                                      args=(),
                                                      kwargs={"league_id": league.id}):
