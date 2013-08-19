@@ -11,11 +11,6 @@
     </div>
     <div class="row-fluid">
       <div class="span6">
-        <h3>Team Captain: {{ team.captain.username }}</h3>
-      </div><!--/span-->
-    </div><!--/row-->
-    <div class="row-fluid">
-      <div class="span6">
         <h3> Leagues </h3>
         <table id='team_leagues'  class="table table-bordered table-striped table-condensed table-hover">
           <tr>
@@ -25,12 +20,12 @@
               <th>Elo</th>
           </tr>
           {% for team_league in team_leagues %}
-          <tr>
-              <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=team_league.league.id %}'>{{ team_league.league.name }}</td>
-              <td>{{ team_league.league.sport }}</td>
-              <td>{{ team_league.league.location }}</td>
-              <td>{{ team_league.elo }}</td>
-          </tr>
+            <tr>
+                <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=team_league.league.id %}'>{{ team_league.league.name }}</td>
+                <td>{{ team_league.league.sport }}</td>
+                <td>{{ team_league.league.location }}</td>
+                <td>{{ team_league.elo }}</td>
+            </tr>
           {% endfor %}
         </table>
       </div><!--/span-->
@@ -41,10 +36,13 @@
                 <th>Player Name</th>
             </tr>
             {% for team_user in team_users %}
-            <tr>
-                <td><a href='{% url 'pong_app.views.profiles.user_profile' user_id=team_user.user.id %}'>{{ team_user.user.username }}</a></td>
-            </tr>
+              <tr>
+                  <td><a href='{% url 'pong_app.views.profiles.user_profile' user_id=team_user.user.id %}'>{{ team_user.user.username }}</a></td>
+              </tr>
             {% endfor %}
+            <tr>
+              <td><a href='{% url 'pong_app.views.profiles.user_profile' user_id=team.captain.id %}'>{{ team.captain.username }}</a> * Captain</td>
+            </tr>
         </table>
       </div><!--/span-->
     </div><!--/row-->

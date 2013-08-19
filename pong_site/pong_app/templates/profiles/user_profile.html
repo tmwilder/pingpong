@@ -20,12 +20,20 @@
           <th>Sport</th>
         </tr>
         {% for tl in team_leagues %}
-        <tr>
-          <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=tl.team_id %}'>{{ tl.team_name }}</a></td>
-          <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=tl.league_id %}'>{{ tl.league_name }}</a></td>
-          <td>{{ tl.elo }}</td>
-          <td>{{ tl.league_sport }}</td>
-        </tr>
+          <tr>
+            <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=tl.team_id %}'>{{ tl.team_name }}</a></td>
+            <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=tl.league_id %}'>{{ tl.league_name }}</a></td>
+            <td>{{ tl.elo }}</td>
+            <td>{{ tl.league_sport }}</td>
+          </tr>
+        {% endfor %}
+        {% for twl in teams_without_leagues %}
+          <tr>
+            <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=twl.team_id %}'>{{ twl.team_name }}</a></td>
+            <td>No leagues joined.</td>
+            <td></td>
+            <td></td>
+          </tr>
         {% endfor %}
       </table>
     </div><!--/span-->

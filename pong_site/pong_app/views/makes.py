@@ -1,10 +1,11 @@
-#Django imports.
-import pong_app.forms
-from django.http import HttpResponse
+#Django
 from django.shortcuts import render
-from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+
+#Our app
+import pong_app.forms
+from pong_app.models import Team, League
 
 
 @login_required
@@ -14,6 +15,7 @@ def make_user(request):
         if form.is_valid():
             userName = request.POST['user_name']
             new_user = User.objects.create(user_name=userName)
+            new_user.save()
             context = {'form': form,}
             return render(request, 'makes/make_user.html', context)
         else:
@@ -29,11 +31,11 @@ def make_team(request):
     form = pong_app.forms.MakeTeam(request.POST)
     if request.method == 'POST':
         name = request.POST['name']
-        captain = request.POST['captain']
-        captain = User.objects.get(pk=captain)
-        Team.objects.create(name=name,
-                            captain=captain)
-        context = {'form': form,}
+        user_id = int(User.objects.get(username__exact=request.user.username).id)
+        captain = User.objects.get(pk=user_id)
+        new_team = Team.objects.create(name=name,
+                                       captain=captain)
+        new_team.save()
         return render(request, 'makes/make_team.html', {'form': form,})
     else:
         form = pong_app.forms.MakeTeam()
@@ -47,12 +49,13 @@ def make_league(request):
         if form.is_valid():
             location = request.POST['location']
             sport = request.POST['sport']
-            comissioner = request.POST['comissioner']
+            user = User.objects.get(username__exact=request.user.username)
             name = request.POST['name']
             new_league = League.objects.create(location=location,
                                                sport=sport,
-                                               comissioner=comissioner,
+                                               commissioner=user,
                                                name=name)
+            new_league.save()
             context = {'form': form,}
             return render(request, 'makes/make_league.html', context)
         else:

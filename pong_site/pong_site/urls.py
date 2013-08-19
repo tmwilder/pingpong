@@ -1,6 +1,9 @@
+#Standard Library
 import os
-from django.conf.urls import patterns, include, url
+#Django
+from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
+#Our app
 import pong_app.views.misc as misc
 import pong_app.views.makes as makes
 import pong_app.views.profiles as profiles
@@ -10,9 +13,6 @@ import pong_app.views.test as test
 import pong_app.views.registration as registration
 import pong_app.views.redirect as redirect
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
 
 STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
 
@@ -30,6 +30,8 @@ urlpatterns = patterns('',
     url(r'^update_user/(?P<user_id>\d+)/{0,1}$', updates.update_user),
     url(r'^update_team/(?P<team_id>\d+)/{0,1}$', updates.update_team),
     url(r'^update_league/(?P<league_id>\d+)/{0,1}$', updates.update_league),
+    #Add x to y
+
     #Add
     url(r'^add_team_to_league/{0,1}.*$', add_x_to_y.add_team_to_league),
     url(r'^add_user_to_team/{0,1}.*$', add_x_to_y.add_user_to_team),

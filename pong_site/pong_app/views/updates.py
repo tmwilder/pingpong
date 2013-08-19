@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 #Our app
 import pong_app.forms
+import pong_app.views.add_x_to_y as add_x_to_y
 import pong_app.decorators as decor
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 
@@ -40,21 +42,26 @@ def update_team(request, team_id):
         user_to_drop = request.POST.get("user_to_drop")
         if user_to_drop is not None:
             User.objects.get(pk=user_to_drop).delete()
+
         team_form = pong_app.forms.UpdateTeamInfo(request.POST)
         if team_form.is_valid():#TODO swap to email + name or something user facing to identify captain.
             team_row = Team.objects.get(pk=team_id)
             name = team_form.cleaned_data['name']
-            captain_id = team_form.cleaned_data['captain']
-            captain = User.objects.get(pk=captain_id)
             team_row.name = name
-            team_row.captain = captain
             team_row.save()
+
+        user_form = pong_app.forms.AddUserToTeam(request.POST)
+        if user_form.is_valid():
+            user_success = add_x_to_y.add_user_to_team(request, team_id)
+            if user_success == "unauthorized":
+                return HttpResponseRedirect("/unauthorized")
     else:
         #When no form was submitted.
         team_form = pong_app.forms.UpdateTeamInfo()
+    user_form = pong_app.forms.AddUserToTeam()
     team_form = pong_app.forms.pre_pop(form=team_form, model_instance=team)
     #Return page info regardless.
-    context = {'team_users': team_users, 'team_form': team_form, 'team': team}
+    context = {'team_users': team_users, 'team_form': team_form, 'add_user_form': user_form, 'team': team}
     return render(request, 'updates/update_team.html', context)
 
 

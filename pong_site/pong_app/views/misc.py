@@ -98,7 +98,6 @@ def _elocalc(elo1, elo2, result):
     elo1 = float(elo1)
     elo2 = float(elo2)
     result = float(result)
-    base_elo = 1500  #use this when creating a new teamleague object - i.e. when you add a new team, give it a default elo
     elo_spread = 400
     kfactor = 20
     expected_1 = 1/(1+10**((elo2-elo1)/elo_spread))

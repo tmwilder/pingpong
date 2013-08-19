@@ -18,20 +18,17 @@ class MakeLeague(forms.Form):
     location = forms.CharField(max_length="64", required=False)
     sport = forms.CharField(max_length="64", required=False)
     name = forms.CharField(max_length="64", required=False)
-    commissioner = forms.IntegerField()
 
 
 class MakeTeam(forms.Form):
     name = forms.CharField(max_length="64", required=False)
-    captain = forms.IntegerField()
 
 
 class UpdateTeamInfo(forms.Form):
-    captain = forms.CharField(max_length="64", required=False)
     name = forms.CharField(max_length="64", required=False)
 
     def get_exposed_fields(self):
-        return ['captain', 'name']
+        return ['name']
 
 
 class UpdateLeagueInfo(forms.Form):
@@ -45,13 +42,13 @@ class UpdateLeagueInfo(forms.Form):
 
 
 class AddUserToTeam(forms.Form):
-    user_id = forms.IntegerField()
-    team_id = forms.IntegerField()
+    user_name = forms.CharField(max_length="64")
 
 
 class AddTeamToLeague(forms.Form):
-    team_id = forms.IntegerField()
-    league_id = forms.IntegerField()
+    team_name = forms.CharField(max_length="64")
+    team_captain_name = forms.CharField(max_length="64")
+    league_name = forms.CharField(max_length="64")
 
 
 class InputResult(forms.Form):
