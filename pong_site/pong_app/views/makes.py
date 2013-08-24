@@ -29,37 +29,45 @@ def make_user(request):
 @login_required
 def make_team(request):
     form = pong_app.forms.MakeTeam(request.POST)
+    context = {}
     if request.method == 'POST':
         name = request.POST['name']
         user_id = int(User.objects.get(username__exact=request.user.username).id)
         captain = User.objects.get(pk=user_id)
-        new_team = Team.objects.create(name=name,
-                                       captain=captain)
-        new_team.save()
-        return render(request, 'makes/make_team.html', {'form': form,})
+        if len(Team.objects.filter(name__exact=name)) == 0:
+            new_team = Team.objects.create(name=name,
+                                           captain=captain)
+            new_team.save()
+            context["make_team_msg"] = "You're now the captain of a team named {0}!".format(name)
+        else:
+            context["make_team_msg"] = "Someone already snagged the team name {0}!".format(name)
+        context['form'] = form
+        return render(request, 'makes/make_team.html', context)
     else:
-        form = pong_app.forms.MakeTeam()
-        return render(request, 'makes/make_team.html', {'form': form,})
+        context['form'] = pong_app.forms.MakeTeam()
+        return render(request, 'makes/make_team.html', context)
 
 
 @login_required
 def make_league(request):
-    form = pong_app.forms.MakeLeague(request.POST)
+    context = {}
     if request.method == 'POST':
+        form = pong_app.forms.MakeLeague(request.POST)
         if form.is_valid():
             location = request.POST['location']
             sport = request.POST['sport']
             user = User.objects.get(username__exact=request.user.username)
             name = request.POST['name']
-            new_league = League.objects.create(location=location,
-                                               sport=sport,
-                                               commissioner=user,
-                                               name=name)
-            new_league.save()
-            context = {'form': form,}
+            if len(League.objects.filter(name__exact=name)) == 0:
+                new_league = League.objects.create(location=location,
+                                                   sport=sport,
+                                                   commissioner=user,
+                                                   name=name)
+                new_league.save()
+                context["make_league_msg"] = "You're now the commissioner of a league named {0}!".format(name)
+            else:
+                context["make_league_msg"] = "Someone already snagged the league name {0}!".format(name)
+            context['form'] = form
             return render(request, 'makes/make_league.html', context)
-        else:
-            form = pong_app.forms.MakeLeague()
-            return render(request, 'makes/make_league.html', {'form': form,})
-    else:
-        return render(request, 'makes/make_league.html', {'form': form,})
+    form = pong_app.forms.MakeLeague()
+    return render(request, 'makes/make_league.html', {'form': form,})
