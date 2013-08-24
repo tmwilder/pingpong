@@ -1,5 +1,4 @@
 import sqlite3
-import subprocess
 import os
 
 DATETIME = "'1900-01-01 00:00:00'"
@@ -15,7 +14,7 @@ def add_users(no_users, c):
                                    "'date_joined') " \
             "VALUES ('password', {1}, {2}, " \
                      "'user{0}', 'user{0}', 'user{0}', " \
-                     "'test@test.com', {2}, {3}, " \
+                     "'test{0}@test.com', {2}, {3}, " \
                      "{1})".format(user_id, DATETIME, FALSE, TRUE)
         c.execute(s)
     

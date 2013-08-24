@@ -5,6 +5,7 @@
 
 <h1> Add a user </h1>
 <form action="/update_team/{{ team.id }}" method="post">
+    {{ add_user_msg }}
     {% csrf_token %}
     {{ add_user_form.as_p }}
     <input type="submit" value="Submit" />
@@ -13,6 +14,7 @@
 
 <h1> Drop a user </h1>
 <form id="drop_user" action="/update_team/{{ team.id }}" method="post">
+    {{ drop_user_msg }}
     {% csrf_token %}
     <select name="user_to_drop" form="drop_user">
         {% for team_user in team_users %}
@@ -26,9 +28,14 @@
 
 <h1> Change team name </h1>
 <form action="/update_team/{{ team.id }}" method="post">
+    {{ change_name_msg }}
     {% csrf_token %}
     {{ team_form.as_p }}
     <input type="submit" value="Submit" />
 </form>
+
+<h2>
+    <a href='{% url 'pong_app.views.profiles.team_profile' team_id=team.id %}'> Back to Team Profile </a>
+</h2>
 
 {% endblock %}

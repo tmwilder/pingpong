@@ -35,33 +35,44 @@ def update_user(request, user_id):
 @login_required
 @decor.user_passes_test_request(decor.verify_user_is_captain)
 def update_team(request, team_id):
+    context = {}
     team_users = TeamUser.objects.filter(team__exact=team_id).select_related("user__name", "user__id")
     team = Team.objects.get(pk=team_id)
     if request.method == 'POST':
         #Delete a user if one was specified to be dropped.
         user_to_drop = request.POST.get("user_to_drop")
         if user_to_drop is not None:
-            User.objects.get(pk=user_to_drop).delete()
+            team_user = TeamUser.objects.filter(user__exact=user_to_drop, team__exact=team_id)[0]
+            context['drop_user_msg'] = "Removed user {0} from your team!".format(team_user.user.username)
+            team_user.delete()
 
         team_form = pong_app.forms.UpdateTeamInfo(request.POST)
-        if team_form.is_valid():#TODO swap to email + name or something user facing to identify captain.
+        if team_form.is_valid(): #TODO swap to email + name or something user facing to identify captain.
             team_row = Team.objects.get(pk=team_id)
             name = team_form.cleaned_data['name']
-            team_row.name = name
-            team_row.save()
+            if name not in ['', team_row.name]:
+                if len(Team.objects.filter(name__exact=name)) == 0:
+                    team_row.name = name
+                    team_row.save()
+                    context["change_name_msg"] = "You've changed team name to {0}!".format(name)
+                else:
+                    context["change_name_msg"] = "Someone else already grabbed the name {0}!".format(name)
 
         user_form = pong_app.forms.AddUserToTeam(request.POST)
         if user_form.is_valid():
-            user_success = add_x_to_y.add_user_to_team(request, team_id)
-            if user_success == "unauthorized":
-                return HttpResponseRedirect("/unauthorized")
+            user_status = add_x_to_y.add_user_to_team(request, team_id)
+            if type(user_status) is str:
+                context['add_user_msg'] = user_status
     else:
         #When no form was submitted.
         team_form = pong_app.forms.UpdateTeamInfo()
     user_form = pong_app.forms.AddUserToTeam()
     team_form = pong_app.forms.pre_pop(form=team_form, model_instance=team)
     #Return page info regardless.
-    context = {'team_users': team_users, 'team_form': team_form, 'add_user_form': user_form, 'team': team}
+    context['team_users'] = team_users
+    context['team_form'] = team_form
+    context['add_user_form'] = user_form
+    context['team'] = team
     return render(request, 'updates/update_team.html', context)
 
 

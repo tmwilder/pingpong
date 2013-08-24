@@ -14,16 +14,22 @@ def add_user_to_team(request, team_id):
     Internal method that processes a post request to add a user to a team.
     Don't route to this.
 
+    Return a user friendly error message on failure.
+
     """
     if request.method == 'POST':
         user_name = request.POST['user_name']
-        user_id = int(User.objects.get(username__exact=user_name).id)
+        matching_user = User.objects.filter(username__exact=user_name)
+        if len(matching_user) == 0:
+            return "We couldn't find a user matching the name {0} in our records.".format(user_name)
+        user = matching_user[0]
         team = Team.objects.get(pk=team_id)
-        user = User.objects.get(pk=user_id)
+        if user.id in [team_user.user.id for team_user in TeamUser.objects.filter(team__exact=team_id)]:
+            return "User {0} is already on your team!".format(user_name)
         new_team_user = TeamUser.objects.create(user=user,
                                                 team=team)
         new_team_user.save()
-        return True
+        return "Added user {0} to your team.".format(user_name)
     else:
         return False
 
