@@ -35,18 +35,18 @@ def add_user_to_team(request, team_id):
 
 
 def add_team_to_league(request, league_id):
-    form = pong_app.forms.AddTeamToLeague(request.POST)
     if request.method == 'POST':
-        if form.is_valid():
-            league = League.objects.get(pk=league_id)
-            team_name = request.POST['team_name']
-            team_captain_name = request.POST['team_captain_name']
-            captain_id = User.objects.get(username__exact=team_captain_name).id
-            team = Team.objects.filter(name__exact=team_name).filter(captain__exact=captain_id)[0]
-            if not decor.verify_user_is_commissioner(request,
-                                                     args=(),
-                                                     kwargs={"league_id": league.id}):
-                return HttpResponseRedirect("/unauthorized")
-            new_team_league = TeamLeague.objects.create(team=team, league=league)
-            new_team_league.save()
-    return render(request, 'add_x_to_y/add_team_to_league.html', {'form': form})
+        team_name = request.POST['team_name']
+        matching_team = Team.objects.filter(name__exact=team_name)
+        if len(matching_team) == 0:
+            return "We couldn't find a team matching the name {0} in our records.".format(team_name)
+        team = matching_team[0]
+        league = League.objects.get(pk=league_id)
+        if team.id in [team_league.team.id for team_league in TeamLeague.objects.filter(league__exact=league_id)]:
+            return "Team {0} is already in your league!".format(team_name)
+        new_team_league = TeamLeague.objects.create(league=league,
+                                                    team=team)
+        new_team_league.save()
+        return "Added team {0} to your league.".format(team_name)
+    else:
+        return False

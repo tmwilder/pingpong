@@ -2,6 +2,7 @@
 
 {% block content %}
 <form action="/update_league/{{ league.id }}" method="post">
+    {{ update_league_msg }}
     {% csrf_token %}
     {{ league_form.as_p }}
     <input type="submit" value="Submit" />
@@ -9,6 +10,7 @@
 
 <h1> Drop a team </h1>
 <form id="drop_team" action="/update_league/{{ league.id }}" method="post">
+    {{ drop_team_msg }}
     {% csrf_token %}
     <select name="team_to_drop" form="drop_team">
         {% for team_league in team_leagues %}
@@ -20,6 +22,7 @@
 
 <h1> Add a team </h1>
 <form action="/update_league/{{ league.id }}" method="post">
+    {{ add_team_msg }}
     {% csrf_token %}
     {{ add_team_to_league_form.as_p }}
     <input type="submit" value="Submit" />

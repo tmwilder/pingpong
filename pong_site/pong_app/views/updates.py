@@ -79,29 +79,54 @@ def update_team(request, team_id):
 @login_required #TODO finish/debug
 @decor.user_passes_test_request(decor.verify_user_is_commissioner)
 def update_league(request, league_id):
+    context = {}
     league = League.objects.get(pk=league_id)
-    add_team_to_league_form = pong_app.forms.AddTeamToLeague()
+    context['league'] = league
     if request.method == 'POST':
         team_to_drop = request.POST.get('team_to_drop')
         if team_to_drop is not None:
-            TeamLeague.objects.filter(team__exact=team_to_drop).filter(league__exact=league_id).delete()
+            team_league = TeamLeague.objects.filter(team__exact=team_to_drop).filter(league__exact=league_id)[0]
+            context['drop_team_msg'] = "Dropped team {0} from your league!".format(team_league.team.name)
+            team_league.delete()
+
         league_form = pong_app.forms.UpdateLeagueInfo(request.POST)
         if league_form.is_valid():
-            commissioner_id = league_form.cleaned_data["commissioner"]
-            if commissioner_id:
-                commissioner = User.objects.get(pk=commissioner_id)
-                league.commissioner = commissioner
-            league.name = league_form.cleaned_data["name"]
-            league.sport = league_form.cleaned_data["sport"]
-            league.location = league_form.cleaned_data["location"]
-            league.save()
-        add_x_to_y.add_team_to_league(request, league.id)
+            update_items = \
+                {'commissioner_name': league_form.cleaned_data["commissioner"],
+                 'name': league_form.cleaned_data["name"],
+                 'sport': league_form.cleaned_data["sport"],
+                 'location': league_form.cleaned_data["location"]}
+            update = False
+            for item_name, item_val in update_items.items():
+                if item_name != "commissioner_name":
+                    old_val = getattr(league, item_name)
+                    if item_val not in [old_val, '']:
+                        update = True
+                        setattr(league, item_name, item_val)
+                else:
+                    old_comm = getattr(league, 'commissioner')
+                    if item_val != '':
+                        commissioner = User.objects.filter(username__exact=update_items['commissioner_name'])[0]
+                        if commissioner.id != old_comm:
+                            league.commissioner = commissioner
+                            update = True
+
+            if update is True:
+                league.save()
+                context['update_league_msg'] = "Updated league info."
+
+        add_team_form = pong_app.forms.AddTeamToLeague(request.POST)
+        if add_team_form.is_valid():
+            team_status = add_x_to_y.add_team_to_league(request, league_id)
+            if type(team_status) is str:
+                context['add_team_msg'] = team_status
+
     else:
         league_form = pong_app.forms.UpdateLeagueInfo()
+        add_team_form = pong_app.forms.AddTeamToLeague()
     team_leagues = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
     league_form = pong_app.forms.pre_pop(form=league_form, model_instance=league)
-    context = {'league': league,
-               'league_form': league_form,
-               'team_leagues': team_leagues,
-               'add_team_to_league_form': add_team_to_league_form}
+    context['league_form'] = league_form
+    context['team_leagues'] = team_leagues
+    context['add_team_to_league_form'] = add_team_form
     return render(request, "updates/update_league.html", context)
