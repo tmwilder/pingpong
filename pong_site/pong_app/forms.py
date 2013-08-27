@@ -58,7 +58,7 @@ class InputResult(forms.Form):
         self.fields["team1"] = forms.ChoiceField(choices=teams)
         self.fields["team2"] = forms.ChoiceField(choices=teams)
 
-    result = forms.ChoiceField(choices=[(-1, "Team 1 Won"), (0, "Tie"), (1, "Team 2 Won")])
+    result = forms.ChoiceField(choices=[(1, "Team 1 Won"), (0, "Tie"), (-1, "Team 2 Won")])
     match_info = forms.CharField(max_length="2000")
 
 

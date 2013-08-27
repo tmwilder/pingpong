@@ -7,6 +7,7 @@
   <div class="row-fluid">
     <div class="span12">
       <form action="/enter_result/{{ league.id }}" method="post">
+        {{ result_msg }}
         {% csrf_token %}
         {{ form.as_p }}
       <input type="submit" value="Submit" class="btn-primary" />

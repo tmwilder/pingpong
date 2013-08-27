@@ -13,25 +13,27 @@ from pong_app.decorators import user_passes_test_request, verify_user_id_in_url
 
 @login_required
 def league_profile(request, league_id):
-    team_set = TeamLeague.objects.filter(league=league_id).select_related('elo', 'team__id', 'team__name').order_by('-elo')
-    for index, team in enumerate(team_set):
-        team.rank = index + 1
-        wins, draws, losses = _get_record(team.id)
-        team.wins = wins
-        team.draws = draws
-        team.losses = losses
+    team_league_set = TeamLeague.objects.filter(league__exact=league_id).order_by('-elo')
+    for index, team_league in enumerate(team_league_set):
+        team_league.rank = index + 1
+        wins, draws, losses = _get_record(team_league.team.id, league_id)
+        # raise(Exception(team_league.team.id))
+        # raise(Exception(repr((wins, draws, losses))))
+        setattr(team_league, 'wins', wins)
+        setattr(team_league, 'draws', draws)
+        setattr(team_league, 'losses', losses)
     league = League.objects.get(pk=league_id)
-    context = {'team_leagues': team_set, 'league': league}
+    context = {'team_leagues': team_league_set, 'league': league}
     return render(request, 'profiles/league_profile.html', context)
 
 
-def _get_record(team_id):
+def _get_record(team_id, league_id):
     wins = Match.objects.filter((Q(team1__exact=team_id) & Q(result__exact=1)) | \
-                                (Q(team2__exact=team_id) & Q(result__exact=-1))).count()
+                                (Q(team2__exact=team_id) & Q(result__exact=-1))).filter(league__exact=league_id).count()
     draws = Match.objects.filter((Q(team1__exact=team_id) | Q(team2__exact=team_id)) & \
-                                  Q(result__exact=0)).count()
+                                  Q(result__exact=0)).filter(league__exact=league_id).count()
     losses = Match.objects.filter((Q(team1__exact=team_id) & Q(result__exact=-1)) | \
-                                  (Q(team2__exact=team_id) & Q(result__exact=1))).count()
+                                  (Q(team2__exact=team_id) & Q(result__exact=1))).filter(league__exact=league_id).count()
     return wins, draws, losses
 
 

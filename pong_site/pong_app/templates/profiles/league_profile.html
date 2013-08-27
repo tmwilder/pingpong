@@ -38,7 +38,7 @@
           <td> {{ team_league.rank }} </td>
           <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</a></td>
           <td>{{ team_league.elo }}</td>
-          <td>{{team_league.wins}} - {{team_league.draws}} - {{team_league.losses}}</td>
+          <td>{{ team_league.wins }} - {{ team_league.losses }} - {{ team_league.draws }}</td>
         </tr>
         {% endfor %}
       </table>
