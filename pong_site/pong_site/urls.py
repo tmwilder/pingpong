@@ -48,7 +48,7 @@ urlpatterns = patterns('',
     #Unauthorized
     url(r'^unauthorized.*$', misc.unauthorized),
     #Aggregate pages
-    url(r'^team_matches/(?P<team_id>\d+)/{0,1}.*$', misc.team_matches),
+    url(r'^team_league_matches/(?P<team_id>\d+)/(?P<league_id>\d+)/{0,1}.*$', misc.team_league_matches),
     url(r'^teams.*$', misc.teams),
     url(r'^leagues.*$', misc.leagues),
     #Catchall

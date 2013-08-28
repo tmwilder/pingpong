@@ -68,14 +68,14 @@ def enter_result(request, league_id):
 
 
 @login_required
-def team_matches(request, team_id):
+def team_league_matches(request, team_id, league_id):
     """
     Shows all matches for one team.
     Left to only this functionality rather than more powerful search based on YAGNI.
 
     """
-    matches = Match.objects.filter(Q(team1__exact=team_id) | Q(team2__exact=team_id)).select_related()
-    return render(request, 'misc/team_matches.html', { 'matches': matches })
+    matches = Match.objects.filter(Q(team1__exact=team_id) | Q(team2__exact=team_id)).filter(league__exact=league_id).select_related()
+    return render(request, 'misc/team_league_matches.html', { 'matches': matches })
 
 
 @login_required

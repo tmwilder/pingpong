@@ -18,6 +18,7 @@
               <th>Sport</th>
               <th>Location </th>
               <th>Elo</th>
+              <tH>Match History</th>
           </tr>
           {% for team_league in team_leagues %}
             <tr>
@@ -25,6 +26,7 @@
                 <td>{{ team_league.league.sport }}</td>
                 <td>{{ team_league.league.location }}</td>
                 <td>{{ team_league.elo }}</td>
+                <td><a href='{% url 'pong_app.views.misc.team_league_matches' team_id=team.id league_id=team_league.league.id %}' class="btn"> View Matches </a></td>
             </tr>
           {% endfor %}
         </table>
@@ -47,9 +49,6 @@
       </div><!--/span-->
     </div><!--/row-->
     <div class="row-fluid">
-      <div class="span2">
-          <a href='{% url 'pong_app.views.misc.team_matches' team_id=team.id %}' class="btn"> Match History </a>
-      </div><!--/span-->
       <div class="span2">
           <a href='{% url 'pong_app.views.updates.update_team' team_id=team.id %}' class="btn"> Update Team </a>
       </div><!--/span-->
