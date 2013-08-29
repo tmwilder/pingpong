@@ -1,7 +1,9 @@
 {% extends 'updates/_update.html' %}
 
-{% block body %}
+{% block content %}
 <form action="/update_user/{{ user.id }}" method="post">
+    {{ update_user_msg }} <br>
+    {{ update_user_pass_msg }}
     {% csrf_token %}
     {{ user_form.as_p }}
 <input type="submit" value="Submit" />

@@ -17,8 +17,6 @@ def league_profile(request, league_id):
     for index, team_league in enumerate(team_league_set):
         team_league.rank = index + 1
         wins, draws, losses = _get_record(team_league.team.id, league_id)
-        # raise(Exception(team_league.team.id))
-        # raise(Exception(repr((wins, draws, losses))))
         setattr(team_league, 'wins', wins)
         setattr(team_league, 'draws', draws)
         setattr(team_league, 'losses', losses)
@@ -41,7 +39,6 @@ def _get_record(team_id, league_id):
 def team_profile(request, team_id):
     team = Team.objects.get(pk=team_id)
     team_users = TeamUser.objects.filter(team__exact=team_id).select_related('user__id', 'user__username')
-    # captain = User.objects.filter(username__exact=request.user.username)
     team_leagues = TeamLeague.objects.filter(team__exact=team_id).select_related('elo', 'league__sport', 'league__elo', 'league__name', 'league__id')
     context = {'team_users': team_users,
                'team_leagues': team_leagues,

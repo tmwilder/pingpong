@@ -15,19 +15,29 @@ from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 @decor.user_passes_test_request(decor.verify_user_id_in_url)
 def update_user(request, user_id):
     user = User.objects.get(pk=user_id)
+    context = {}
     if request.method == 'POST':
         user_form = pong_app.forms.UpdateUserInfo(request.POST)
         if user_form.is_valid():
             fields_to_change = request.POST.items()
             user_fields = user_form.get_exposed_fields()
             for key, value in fields_to_change:
-                if key in user_fields and key != '':
-                    setattr(user, key, value)
+                if value != '':
+                    if key in user_fields and key != 'password':
+                        setattr(user, key, value)
+                        context["update_user_msg"] = "Changed your user information."
+                    elif key == "password":
+                        if value == request.POST['confirm_password']:
+                            setattr(user, key, value)
+                            context["update_user_pass_msg"] = "Changed your password."
+                        else:
+                            context["update_user_pass_msg"] = "The provided passwords did not match, password not changed."
             user.save()
     else:
         user_form = pong_app.forms.UpdateUserInfo()
     user_form = pong_app.forms.pre_pop(form=user_form, model_instance=user)
-    context = {'user': user, 'user_form': user_form}
+    context['user'] = user
+    context['user_form'] = user_form
     return render(request, 'updates/update_user.html', context)
 
 

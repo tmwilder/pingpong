@@ -7,11 +7,11 @@ class UpdateUserInfo(forms.Form):
     email = forms.CharField(max_length="64", required=False)
     first_name = forms.CharField(max_length="64", required=False)
     last_name = forms.CharField(max_length="64", required=False)
-    #TODO move to seperate process.
-    password = forms.CharField(max_length="64", required=False)
+    password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
 
     def get_exposed_fields(self):
-        return ['username', 'email', 'first_name', 'last_name', 'password']
+        return ['username', 'email', 'first_name', 'last_name']
 
 
 class MakeLeague(forms.Form):
