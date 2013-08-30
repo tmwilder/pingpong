@@ -1,8 +1,33 @@
 {% extends 'base/base.html' %}
-
 {% block content %}
 
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/jqplot/excanvas.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/jqplot/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/jqplot/jquery.jqplot.min.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/jqplot/plugins/jqplot.dateAxisRenderer.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/jqplot/jquery.jqplot.css" />
+
 <div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span10 offset1">
+      <div id="chart1" style="height:20%;width:80%; "></div>
+      <script>
+        $(document).ready(function(){
+          var elo_time_data = [ {% for match in matches %} [new Date('{{ match.start_time.isoformat }}'), {{ match.start_elo1 }}], {% endfor %} ] ;
+          $.jqplot('chart1', [elo_time_data], {
+            title:'Matches for {{ team.name }} in league {{ league.name }}',
+            axes: {xaxis: { renderer: $.jqplot.DateAxisRenderer,
+                            tickOptions: {formatString:'%b %#d, %y'},
+                            label: 'Match Date'},
+                   yaxis: { label: 'Elo'},
+                  },
+            series: [{lineWidth: 4,
+                      markerOptions: {style: 'square'}}]
+          });
+        });
+      </script>
+    </div>
+  </div>
   <div class="row-fluid">
     <div class="span1">
       <h3> Matches </h3>

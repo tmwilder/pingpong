@@ -75,7 +75,11 @@ def team_league_matches(request, team_id, league_id):
 
     """
     matches = Match.objects.filter(Q(team1__exact=team_id) | Q(team2__exact=team_id)).filter(league__exact=league_id).select_related()
-    return render(request, 'misc/team_league_matches.html', { 'matches': matches })
+    team = Team.objects.get(pk=team_id)
+    league = League.objects.get(pk=league_id)
+    return render(request, 'misc/team_league_matches.html', {'matches': matches,
+                                                             'team': team,
+                                                             'league': league})
 
 
 @login_required
