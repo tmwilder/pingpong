@@ -37,7 +37,9 @@ def user_passes_test_request(test_func):
 
 
 def verify_user_id_in_url(request, args, kwargs):
-    return int(User.objects.get(username__exact=request.user.username).id) == int(request.path.split('/')[-1])
+    view_user_id = kwargs['user_id']
+    logged_in_user_id = int(User.objects.get(username__exact=request.user.username).id)
+    return view_user_id == logged_in_user_id
 
 
 def verify_user_is_captain(request, args, kwargs):
