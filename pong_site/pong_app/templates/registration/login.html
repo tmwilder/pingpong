@@ -1,18 +1,23 @@
 {% extends "base/base.html" %}
 
-{% block title %}Log in{% endblock %}
+  {% block title %}Log in{% endblock %}
 
 {% block content %}
-<form action="{{ ROOT_URL }}/accounts/login/" method="post">{% csrf_token %}
-  <label for="username">User name:</label>
-  <input type="text" name="username" value="" id="username">
-  <label for="password">Password:</label>
-  <input type="password" name="password" value="" id="password">
 
-  <input type="submit" value="login" />
-  <input type="hidden" name="next" value="{{ next|escape }}" />
-</form>
+<div class="row-fluid">
+  <div class="span3">
+    <form action="{{ ROOT_URL }}/accounts/login/" method="post">{% csrf_token %}
+      <label for="username">User name:</label>
+      <input type="text" name="username" value="" id="username">
+      <label for="password">Password:</label>
+      <input type="password" name="password" value="" id="password">
 
-<a href='{% url 'pong_app.views.registration.register' %}'>Need to register?</a>
+      <input type="submit" value="login" />
+      <input type="hidden" name="next" value="{{ next|escape }}" />
+    </form>
+
+    <a href='{% url 'pong_app.views.registration.register' %}'>Need to register?</a>
+  </div>
+</div>
+
 {% endblock %}
-

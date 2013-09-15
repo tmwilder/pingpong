@@ -7,69 +7,68 @@
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/jqplot/plugins/jqplot.dateAxisRenderer.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/jqplot/jquery.jqplot.css" />
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span10 offset1">
-      <div id="chart1" style="height:20%;width:80%; "></div>
-      <script>
-        $(document).ready(function(){
-          var elo_time_data = [ {% for match in matches %} [new Date('{{ match.start_time.isoformat }}'), {{ match.start_elo1 }}], {% endfor %} ] ;
-          $.jqplot('chart1', [elo_time_data], {
-            title:'Matches for {{ team.name }} in league {{ league.name }}',
-            axes: {xaxis: { renderer: $.jqplot.DateAxisRenderer,
-                            tickOptions: {formatString:'%b %#d, %y'},
-                            label: 'Match Date'},
-                   yaxis: { label: 'Elo'},
-                  },
-            series: [{lineWidth: 4,
-                      markerOptions: {style: 'square'}}]
-          });
+<div class="row-fluid">
+  <div class="span10 offset1">
+    <div id="chart1" style="height:20%;width:80%; "></div>
+    <script>
+      $(document).ready(function(){
+        var elo_time_data = [ {% for match in matches %} [new Date('{{ match.start_time.isoformat }}'), {{ match.start_elo1 }}], {% endfor %} ] ;
+        $.jqplot('chart1', [elo_time_data], {
+          title:'Matches for {{ team.name }} in league {{ league.name }}',
+          axes: {xaxis: { renderer: $.jqplot.DateAxisRenderer,
+                          tickOptions: {formatString:'%b %#d, %y'},
+                          label: 'Match Date'},
+                 yaxis: { label: 'Elo'},
+                },
+          series: [{lineWidth: 4,
+                    markerOptions: {style: 'square'}}]
         });
-      </script>
-    </div>
+      });
+    </script>
   </div>
-  <div class="row-fluid">
-    <div class="span1">
-      <h3> Matches </h3>
-    </div>
+</div>
+<div class="row-fluid">
+  <div class="span1">
+    <h3> Matches </h3>
   </div>
-  <div class="row-fluid">
-    <div class="span12">
-      <table id='matches' class="table table-bordered table-striped table-condensed table-hover">
+</div>
+<div class="row-fluid">
+  <div class="span12">
+    <table id='matches' class="table table-bordered table-striped table-condensed table-hover">
+      <tr>
+        <th>Team 1</th>
+        <th>Team 1 Starting Elo</th>
+        <th>Team 2</th>
+        <th>Team 2 Starting Elo</th>
+        <th>Winner</th>
+        <th>League</th>
+        <th>Start time</th>
+        <th>Extra info</th>
+      </tr>
+      {% for match in matches %}
         <tr>
-          <th>Team 1</th>
-          <th>Team 1 Starting Elo</th>
-          <th>Team 2</th>
-          <th>Team 2 Starting Elo</th>
-          <th>Winner</th>
-          <th>League</th>
-          <th>Start time</th>
-          <th>Extra info</th>
+          <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=match.team1.id %}'>{{ match.team1.name }}</td>
+          <td>{{ match.start_elo1 }}</td>
+          <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=match.team2.id %}'>{{ match.team2.name }}</td>
+          <td>{{ match.start_elo2 }}</td>
+          <td>
+            {% if match.result == 1 %}
+              {{ match.team1.name }}
+            {% elif match.result == 0 %}
+              Draw
+            {% elif match.result == -1 %}
+              {{ match.team2.name }}
+            {% else %}
+              Error, invalid value: {{ match.result }}
+            {% endif %}
+          </td>
+          <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=match.league.id %}'>{{ match.league.name }}</td>
+          <td>{{ match.start_time }}</td>
+          <td>{{ match.match_info }}</td>
         </tr>
-        {% for match in matches %}
-          <tr>
-            <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=match.team1.id %}'>{{ match.team1.name }}</td>
-            <td>{{ match.start_elo1 }}</td>
-            <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=match.team2.id %}'>{{ match.team2.name }}</td>
-            <td>{{ match.start_elo2 }}</td>
-            <td>
-              {% if match.result == 1 %}
-                {{ match.team1.name }}
-              {% elif match.result == 0 %}
-                Draw
-              {% elif match.result == -1 %}
-                {{ match.team2.name }}
-              {% else %}
-                Error, invalid value: {{ match.result }}
-              {% endif %}
-            </td>
-            <td><a href='{% url 'pong_app.views.profiles.league_profile' league_id=match.league.id %}'>{{ match.league.name }}</td>
-            <td>{{ match.start_time }}</td>
-            <td>{{ match.match_info }}</td>
-          </tr>
-        {% endfor %}
-      </table>
-    </div><!--/span-->
-  </div><!--/row-->
-</div><!--/container-->
+      {% endfor %}
+    </table>
+  </div><!--/span-->
+</div><!--/row-->
+
 {% endblock %}

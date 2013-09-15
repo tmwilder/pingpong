@@ -4,54 +4,52 @@
 
 {% block content %}
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span2">
-      <b> League Name: </b> {{ league.name }}
-    </div>
-    <div class="span2">
-      <b> Sport: </b> {{ league.sport }}
-    </div>
-    <div class="span2">
-      <b> Location: </b> {{ league.location }}
-    </div>
-    <div class="span2">
-      <b> Commissioner: </b> {{ league.commissioner.username }}
-    </div>
+<div class="row-fluid">
+  <div class="span2">
+    <b> League Name: </b> {{ league.name }}
   </div>
-  <div class="row-fluid">
-    <div class="span2">
-      <h3>Teams</h3>
-    </div>
-  </div><!--/row-->
-  <div class="row-fluid">
-    <div class="span6">
-      <table class="table table-bordered table-striped table-condensed table-hover">
-        <tr>
-          <th>League Rank</th>
-          <th>Team Name</th>
-          <th>Elo</th>
-          <th>Record</th>
-        </tr>
-        {% for team_league in team_leagues %}
-        <tr>
-          <td> {{ team_league.rank }} </td>
-          <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</a></td>
-          <td>{{ team_league.elo }}</td>
-          <td>{{ team_league.wins }} - {{ team_league.losses }} - {{ team_league.draws }}</td>
-        </tr>
-        {% endfor %}
-      </table>
-    </div>
-  </div><!--/row-->
-  <div class="row-fluid">
-    <div class="span2">
-      <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}' class="btn"> Update League Info</a>
-    </div>
-    <div class="span2">
-      <a href='{% url 'pong_app.views.misc.enter_result' league_id=league.id %}' class="btn"> Enter Match Result </a>
-    </div>
-  </div><!--/row-->
-</div><!--/container-->
+  <div class="span2">
+    <b> Sport: </b> {{ league.sport }}
+  </div>
+  <div class="span2">
+    <b> Location: </b> {{ league.location }}
+  </div>
+  <div class="span2">
+    <b> Commissioner: </b> {{ league.commissioner.username }}
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="span2">
+    <h3>Teams</h3>
+  </div>
+</div><!--/row-->
+<div class="row-fluid">
+  <div class="span6">
+    <table class="table table-bordered table-striped table-condensed table-hover">
+      <tr>
+        <th>League Rank</th>
+        <th>Team Name</th>
+        <th>Elo</th>
+        <th>Record</th>
+      </tr>
+      {% for team_league in team_leagues %}
+      <tr>
+        <td> {{ team_league.rank }} </td>
+        <td><a href='{% url 'pong_app.views.profiles.team_profile' team_id=team_league.team.id %}'> {{ team_league.team.name }}</a></td>
+        <td>{{ team_league.elo }}</td>
+        <td>{{ team_league.wins }} - {{ team_league.losses }} - {{ team_league.draws }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div><!--/row-->
+<div class="row-fluid">
+  <div class="span2">
+    <a href='{% url 'pong_app.views.updates.update_league' league_id=league.id %}' class="btn"> Update League Info</a>
+  </div>
+  <div class="span2">
+    <a href='{% url 'pong_app.views.misc.enter_result' league_id=league.id %}' class="btn"> Enter Match Result </a>
+  </div>
+</div><!--/row-->
 
 {% endblock %}
