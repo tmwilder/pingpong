@@ -49,6 +49,14 @@ class AddTeamToLeague(forms.Form):
     team_name = forms.CharField(max_length="64")
 
 
+class FindTeamForm(forms.Form):
+    team_name = forms.CharField(max_length="64", required=False)
+
+
+class FindLeagueForm(forms.Form):
+    team_name = forms.CharField(max_length="64", required=False)
+
+
 class InputResult(forms.Form):
 
     def __init__(self, league_id, *args, **kwargs):

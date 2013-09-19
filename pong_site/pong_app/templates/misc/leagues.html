@@ -3,11 +3,16 @@
 {% block content %}
 
 <div class="row-fluid">
-  <div class="span2">
-    <h3>Leagues</h3>
+  <div class="span3 offset1">
+    <h2>Leagues</h2>
   </div>
-</div>
-<div class="row-fluid">
+  <div class="span4 offset4">
+    <form action="/leagues/" class="form-inline" method="post">
+      {% csrf_token %}
+      <input id="id_league_name" maxlength="64" name="league_name" type="text" class="search-query" placeholder="League Name"></input>
+      <button type="submit" class="btn" value="Submit">Submit</button>
+    </form>
+  </div>
   <div class="span12">
     <table id="leagues" class="table table-bordered table-striped table-condensed table-hover">
       <th>Name</th>
@@ -27,3 +32,10 @@
 </div><!--/row-->
 
 {% endblock %}
+
+<form action="/leagues/" class="form-search" method="post">
+    <input type="hidden" name="csrfmiddlewaretoken" value="wlW9rNRgItz0ifcrwZBlUxWUTYZ0V8Y0">
+    <p><label for="id_team_name">Team name:</label> <input id="id_team_name" maxlength="64" name="team_name" type="text"></p>
+    <input type="submit" class="btn" value="Submit">
+</form>
+

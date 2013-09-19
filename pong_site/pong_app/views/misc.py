@@ -84,14 +84,38 @@ def team_league_matches(request, team_id, league_id):
 
 @login_required
 def leagues(request):
-    leagues = League.objects.all()
-    return render(request, 'misc/leagues.html', { 'leagues': leagues })
+    find_league_form = pong_app.forms.FindLeagueForm(request.POST)
+    if request.method == 'POST':
+        if find_league_form.is_valid():
+            team_name = request.POST["league_name"]
+            leagues = League.objects.filter(name__contains=team_name)
+        else:
+            leagues = League.objects.all()    
+    else:
+        leagues = League.objects.all()
+    context = {
+        "leagues": leagues,
+        "find_league_form": find_league_form
+    }
+    return render(request, 'misc/leagues.html', context)
 
 
 @login_required
 def teams(request):
-    teams = Team.objects.all()
-    return render(request, 'misc/teams.html', { 'teams': teams })
+    find_team_form = pong_app.forms.FindTeamForm(request.POST)
+    if request.method == 'POST':
+        if find_team_form.is_valid():
+            team_name = request.POST["team_name"]
+            teams = Team.objects.filter(name__contains=team_name)
+        else:
+            teams = Team.objects.all()    
+    else:
+        teams = Team.objects.all()
+    context = {
+        "teams": teams,
+        "find_team_form": find_team_form
+    }
+    return render(request, 'misc/teams.html', context)
 
 
 def _elocalc(elo1, elo2, result):

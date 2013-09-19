@@ -14,9 +14,6 @@
         <li><a href="{% url 'pong_app.views.misc.leagues' %}">Find a League</a></li>
         <li><a href="{% url 'pong_app.views.misc.teams' %}">Find a Team</a></li>
         <li><a href="/accounts/logout/">Log Out</a></li>
-        <form class="navbar-search pull-left">
-          <input type="text" class="search-query" placeholder="Search">
-        </form>
       {% else %}
         <li><a href="/">Log In</a></li>
       {% endif %}
