@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 
 
@@ -55,6 +58,25 @@ class FindTeamForm(forms.Form):
 
 class FindLeagueForm(forms.Form):
     team_name = forms.CharField(max_length="64", required=False)
+
+
+class CustomUserCreationForm(UserCreationForm):
+    """
+    Largely borrowed from:  http://stackoverflow.com/questions/6682978/modifying-django-usercreationform
+
+    """
+    email = forms.EmailField(label="Email")
+
+    class Meta:
+        model = User
+        fields = ("username",)
+
+    def save(self, commit=True):
+        user = super(CustomUserCreationForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
 
 
 class InputResult(forms.Form):

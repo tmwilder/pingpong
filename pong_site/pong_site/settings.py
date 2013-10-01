@@ -158,3 +158,6 @@ LOGGING = {
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
+
+# TODO - move to dev/test/prod settings file setup.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -30,8 +30,6 @@ urlpatterns = patterns('',
     url(r'^update_user/(?P<user_id>\d+)/{0,1}$', updates.update_user),
     url(r'^update_team/(?P<team_id>\d+)/{0,1}$', updates.update_team),
     url(r'^update_league/(?P<league_id>\d+)/{0,1}$', updates.update_league),
-    #Add x to y
-
     #Add
     url(r'^add_team_to_league/{0,1}.*$', add_x_to_y.add_team_to_league),
     url(r'^add_user_to_team/{0,1}.*$', add_x_to_y.add_user_to_team),
@@ -43,6 +41,11 @@ urlpatterns = patterns('',
     url(r'^accounts/login/$',  login),
     url(r'^accounts/logout/$', logout, {'next_page': '/'}),
     url(r'^accounts/register/$', registration.register),
+    url(r'^accounts/password_reset/$', registration.password_reset),
+    url(r'^accounts/password_reset_confirm/(?P<uidb36>[0-9A-Za-z]+)/(?P<token>[\d\w-]+)$', registration.password_reset_confirm),
+    url(r'^accounts/password_reset_confirm/$', registration.password_reset_confirm),
+    url(r'^accounts/password_reset_done/$', registration.password_reset_done),
+    url(r'^accounts/password_reset_complete/$', registration.password_reset_complete),
     #Test
     url(r'^test/{0,1}.*$', test.test),
     #Unauthorized
