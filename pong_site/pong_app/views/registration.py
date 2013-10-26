@@ -46,7 +46,7 @@ def password_reset_confirm(request, uidb36=None, token=None):
         uidb36=uidb36,
         token=token,
         template_name='registration/password_reset_confirm.html',
-        post_reset_redirect='/accountsgl/password_reset_complete/',
+        post_reset_redirect='/accounts/password_reset_complete/',
         extra_context=extra_context
     )
 
