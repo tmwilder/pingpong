@@ -35,3 +35,7 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Settings files
+local.py
+production.py
