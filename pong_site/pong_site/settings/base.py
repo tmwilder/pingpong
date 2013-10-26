@@ -70,7 +70,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(__file__), "static"),
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), "static"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -159,5 +159,4 @@ LOGGING = {
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
 
-# TODO - move to dev/test/prod settings file setup.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
