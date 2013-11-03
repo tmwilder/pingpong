@@ -1,7 +1,7 @@
 {% extends 'updates/_update.html' %}
 
 {% block content %}
-<form action="/update_user/{{ user.id }}" method="post">
+<form action="{% url 'pong_app.views.updates.update_user' user_id=user.id %}" method="post">
     {{ update_user_msg }} <br>
     {{ update_user_pass_msg }}
     {% csrf_token %}
@@ -10,7 +10,7 @@
 </form>
 
 <h2>
-    <a href='{% url 'pong_app.views.profiles.user_profile' user_id=user.id %}'> Back to Profile </a>
+    <a href="{% url 'pong_app.views.profiles.user_profile' user_id=user.id %}"> Back to Profile </a>
 </h2>
 
 {% endblock %}

@@ -7,7 +7,7 @@
     <h2>Leagues</h2>
   </div>
   <div class="span4 offset4">
-    <form action="/leagues/" class="form-inline" method="post">
+    <form action="{% url 'pong_app.views.misc.leagues' %}" class="form-inline" method="post">
       {% csrf_token %}
       <input id="id_league_name" maxlength="64" name="league_name" type="text" class="search-query" placeholder="League Name"></input>
       <button type="submit" class="btn" value="Submit">Submit</button>
@@ -33,7 +33,7 @@
 
 {% endblock %}
 
-<form action="/leagues/" class="form-search" method="post">
+<form action="{% url 'pong_app.views.misc.leagues' %}" class="form-search" method="post">
     <input type="hidden" name="csrfmiddlewaretoken" value="wlW9rNRgItz0ifcrwZBlUxWUTYZ0V8Y0">
     <p><label for="id_team_name">Team name:</label> <input id="id_team_name" maxlength="64" name="team_name" type="text"></p>
     <input type="submit" class="btn" value="Submit">

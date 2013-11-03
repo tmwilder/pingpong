@@ -58,16 +58,6 @@ MEDIA_ROOT = ''
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = ''
 
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
-
-# URL prefix for static files.
-# Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
-
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(os.path.dirname(os.path.dirname(__file__)), "static"),
@@ -121,10 +111,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.contenttypes',
     'django.contrib.auth',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -156,7 +142,20 @@ LOGGING = {
     }
 }
 
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/accounts/login/'
+BASE_URL = "pingpong"
+
+LOGIN_REDIRECT_URL = '/%s/' % BASE_URL
+LOGIN_URL = '/%s/accounts/login/' % BASE_URL
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = ''
+
+# URL prefix for static files.
+# Example: "http://example.com/static/", "http://static.example.com/"
+STATIC_URL = '/%s/static/' % BASE_URL
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

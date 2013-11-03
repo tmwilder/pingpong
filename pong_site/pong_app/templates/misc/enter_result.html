@@ -5,12 +5,12 @@
 
 <div class="row-fluid">
   <div class="span12">
-    <form action="/enter_result/{{ league.id }}" method="post">
+    <form action="{% url 'pong_app.views.misc.enter_result' league_id=league.id %}" method="post">
       {{ result_msg }}
       {% csrf_token %}
       {{ form.as_p }}
     <input type="submit" value="Submit" class="btn-primary" />
-    <a href="{% url "pong_app.views.profiles.league_profile" league_id=league.id %}" class="btn">Back to {{ league.name }}</a>
+    <a href="{% url 'pong_app.views.profiles.league_profile' league_id=league.id %}" class="btn">Back to {{ league.name }}</a>
     </form>
   </div>
 </div>

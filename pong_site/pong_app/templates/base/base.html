@@ -1,3 +1,5 @@
+{% load util_tags %}
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
 <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
@@ -5,17 +7,17 @@
 
 <div class="navbar"  id="navbar">
   <div class="navbar-inner">
-    <a class="brand" href="/">Ping Pong</a>
+    <a class="brand" href="{% BASE_URL %}">Ping Pong</a>
     <Ul  class = "nav">
       {% if user.is_authenticated %}
-        <li><a href="/">{{ user.username }}</a></li>
+        <li><a href="{% BASE_URL %}">{{ user.username }}</a></li>
         <li><a href="{% url 'pong_app.views.makes.make_league' %}">Make a League</a></li>
         <li><a href="{% url 'pong_app.views.makes.make_team' %}">Make a Team</a></li>
         <li><a href="{% url 'pong_app.views.misc.leagues' %}">Find a League</a></li>
         <li><a href="{% url 'pong_app.views.misc.teams' %}">Find a Team</a></li>
-        <li><a href="/accounts/logout/">Log Out</a></li>
+        <li><a href="{% url 'django.contrib.auth.views.logout' %}">Log Out</a></li>
       {% else %}
-        <li><a href="/">Log In</a></li>
+        <li><a href="{% BASE_URL %}">Log In</a></li>
       {% endif %}
     </Ul>
   </div>

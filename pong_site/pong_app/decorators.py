@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.utils.decorators import available_attrs
 from django.contrib.auth.models import User
 #Our app
+from django.conf import settings
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
 
 
@@ -31,7 +32,7 @@ def user_passes_test_request(test_func):
             if test_func(request, args, kwargs):
                 return view_func(request, *args, **kwargs)
             else:
-                return HttpResponseRedirect("/unauthorized")
+                return HttpResponseRedirect("/%s/unauthorized" % settings.BASE_URL)
         return _wrapped_view
     return decorator
 

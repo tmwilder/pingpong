@@ -5,7 +5,7 @@
 <div class="row-fluid">
   <div class="span12">
     {{ make_team_msg }}
-    <form action="/make_team/" method="post">{% csrf_token %}
+    <form action="{% url 'pong_app.views.makes.make_team' %}" method="post">{% csrf_token %}
       {{ form.as_p }}
       <input type="submit" value="Submit" />
     </form>
