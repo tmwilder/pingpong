@@ -1,11 +1,6 @@
-#Django Imports
-from django.shortcuts import render
+#Django
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 #Our App
-import pong_app.forms
-import pong_app.decorators as decor
 from pong_app.models import TeamLeague, Team, League, TeamUser
 
 

@@ -4,7 +4,6 @@ import os
 from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
 #Our app
-from django.conf import settings
 import pong_app.views.misc as misc
 import pong_app.views.makes as makes
 import pong_app.views.profiles as profiles
@@ -13,10 +12,10 @@ import pong_app.views.updates as updates
 import pong_app.views.test as test
 import pong_app.views.registration as registration
 import pong_app.views.redirect as redirect
+from django.core.urlresolvers import reverse
 
 
 STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
-BASE_URL = settings.BASE_URL
 
 urlpatterns = patterns('',
     #Misc
@@ -39,8 +38,8 @@ urlpatterns = patterns('',
     url(r'^user_profile/(?P<user_id>\d+)/$', profiles.user_profile),
     url(r'^league_profile/(?P<league_id>\d+)/$', profiles.league_profile),
     #Authentication
-    url(r'^accounts/login/$',  login),
-    url(r'^accounts/logout/$', logout, {'next_page': '/'}),
+    url(r'^accounts/login/$', login),
+    url(r'^accounts/logout/$', logout, {'next_page': '/')}),
     url(r'^accounts/register/$', registration.register),
     url(r'^accounts/password_reset/$', registration.password_reset),
     url(r'^accounts/password_reset_confirm/(?P<uidb36>[0-9A-Za-z]+)/(?P<token>[\d\w-]+)$', registration.password_reset_confirm),

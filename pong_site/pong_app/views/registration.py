@@ -5,10 +5,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
 #Our app
-from django.conf import settings
 import pong_app.forms
-
-BASE_URL = settings.BASE_URL
 
 def register(request):
     if request.method == 'POST':
