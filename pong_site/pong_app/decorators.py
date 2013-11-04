@@ -4,6 +4,7 @@ from functools import wraps
 from django.http import HttpResponseRedirect
 from django.utils.decorators import available_attrs
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 #Our app
 from django.conf import settings
 from pong_app.models import Match, TeamLeague, Team, League, TeamUser
@@ -25,14 +26,13 @@ def user_passes_test_request(test_func):
     otherwise, it redirects to the "unauthorized" page.
 
     """
-
     def decorator(view_func):
         @wraps(view_func, assigned=available_attrs(view_func))
         def _wrapped_view(request, *args, **kwargs):
             if test_func(request, args, kwargs):
                 return view_func(request, *args, **kwargs)
             else:
-                return HttpResponseRedirect("/%s/unauthorized" % settings.BASE_URL)
+                return HttpResponseRedirect(reverse('pong_app.views.misc.unauthorized'))
         return _wrapped_view
     return decorator
 

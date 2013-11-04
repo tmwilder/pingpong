@@ -3,6 +3,7 @@ import django.contrib.auth.views as views
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse
 #Our app
 from django.conf import settings
 import pong_app.forms
@@ -17,7 +18,7 @@ def register(request):
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password1'])
             login(request, new_user)
-            return HttpResponseRedirect("/%s/" % BASE_URL)
+            return HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
     else:
         form = pong_app.forms.CustomUserCreationForm()
     return render(request, "registration/register.html", {'form': form} )
@@ -28,7 +29,7 @@ def password_reset(request):
         request,
         template_name='registration/password_reset.html',
         email_template_name='registration/password_reset_email.html',
-        post_reset_redirect='/%s/accounts/password_reset_done/' % BASE_URL
+        post_reset_redirect=reverse('pong_app.views.registration.password_reset_done')
     )
     return response
 
@@ -48,7 +49,7 @@ def password_reset_confirm(request, uidb36=None, token=None):
         uidb36=uidb36,
         token=token,
         template_name='registration/password_reset_confirm.html',
-        post_reset_redirect='/%s/accounts/password_reset_complete/' % BASE_URL,
+        post_reset_redirect=reverse('pong_app.views.registration.password_reset_complete'),
         extra_context=extra_context
     )
 
