@@ -39,7 +39,7 @@ urlpatterns = patterns('',
     url(r'^league_profile/(?P<league_id>\d+)/$', profiles.league_profile),
     #Authentication
     url(r'^accounts/login/$', login),
-    url(r'^accounts/logout/$', logout, {'next_page': '/')}),
+    url(r'^accounts/logout/$', logout, {'next_page': '/'}),
     url(r'^accounts/register/$', registration.register),
     url(r'^accounts/password_reset/$', registration.password_reset),
     url(r'^accounts/password_reset_confirm/(?P<uidb36>[0-9A-Za-z]+)/(?P<token>[\d\w-]+)$', registration.password_reset_confirm),
