@@ -12,16 +12,14 @@ import pong_app.views.updates as updates
 import pong_app.views.test as test
 import pong_app.views.registration as registration
 import pong_app.views.redirect as redirect
-from django.core.urlresolvers import reverse
+from django.conf import settings
 
-
-STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
 
 urlpatterns = patterns('',
     #Misc
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': STATIC_PATH}),
     url(r'^index/$', misc.index),
     url(r'^enter_result/(?P<league_id>\d+)/$', misc.enter_result),
+    url(r'^about/$', misc.about),
     #Make
     url(r'^make_user/$', makes.make_user),
     url(r'^make_team/$', makes.make_team),
@@ -57,3 +55,9 @@ urlpatterns = patterns('',
     #Catchall
     url(r'^.*$', redirect.redirectToHome)
 )
+
+if settings.DEBUG:
+    STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
+    urlpatterns = patterns('',
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': STATIC_PATH}) 
+    ) + urlpatterns
