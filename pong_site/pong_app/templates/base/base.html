@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
+<script src="{{ STATIC_URL }}jqplot/jquery.js"></script>
 <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+<link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
 <html lang="en">
 
 <div class="navbar"  id="navbar">
@@ -9,7 +10,7 @@
     <a class="brand" href="{% BASE_URL %}">Ping Pong</a>
     <Ul  class = "nav">
       {% if user.is_authenticated %}
-        <li><a href="{% BASE_URL %}">{{ user.username }}</a></li>
+        <li><a href="{% url 'pong_app.views.profiles.user_profile' user_id=user.id %}">{{ user.username }}</a></li>
         <li><a href="{% url 'pong_app.views.makes.make_league' %}">Make a League</a></li>
         <li><a href="{% url 'pong_app.views.makes.make_team' %}">Make a Team</a></li>
         <li><a href="{% url 'pong_app.views.misc.leagues' %}">Find a League</a></li>
