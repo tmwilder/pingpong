@@ -12,7 +12,7 @@
     <div id="chart1" style="height:20%;width:80%; "></div>
     <script>
       $(document).ready(function(){
-        var elo_time_data = [ {% for match in matches %} [new Date('{{ match.start_time.isoformat }}'), {{ match.start_elo1 }}], {% endfor %} ] ;
+        var elo_time_data = [ {% for elo_info in elos %} [new Date('{{ elo_info.start_time.isoformat }}'), {{ elo_info.start_elo }}], {% endfor %} ] ;
         $.jqplot('chart1', [elo_time_data], {
           title:'Matches for {{ team.name }} in league {{ league.name }}',
           axes: {xaxis: { renderer: $.jqplot.DateAxisRenderer,

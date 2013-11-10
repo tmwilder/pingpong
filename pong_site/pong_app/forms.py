@@ -1,8 +1,11 @@
+#Standard Library
+import datetime
+#Django
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-
-from pong_app.models import Match, TeamLeague, Team, League, TeamUser
+#Our app
+from pong_app.models import TeamLeague
 
 
 class UpdateUserInfo(forms.Form):
@@ -89,6 +92,7 @@ class InputResult(forms.Form):
         self.fields["team2"] = forms.ChoiceField(choices=teams)
 
     result = forms.ChoiceField(choices=[(1, "Team 1 Won"), (0, "Tie"), (-1, "Team 2 Won")])
+    start_time = forms.DateTimeField()
     match_info = forms.CharField(max_length="2000")
 
 

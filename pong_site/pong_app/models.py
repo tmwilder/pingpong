@@ -37,7 +37,7 @@ class Match(models.Model):
     start_elo1 = models.IntegerField()
     start_elo2 =  models.IntegerField()
     league = models.ForeignKey('League')
-    start_time = models.DateTimeField(auto_now_add=True)
+    start_time = models.DateTimeField()
     match_info = models.CharField(max_length="2000")
     class Meta:
         db_table = 'match'
