@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+
+<style type="text/css">
+  body {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+  .container {
+    width: 960px;
+  }
+  p.lead {
+    padding-top: 15px;
+  }
+  .navigation, .pitch, .section1, .section2, .faq, .footer {
+    padding: 10px 0px 10px 0px;
+  }
+  div.row{
+    border: 1px solid;
+  }
+</style>
+<div class="row heading">
+<div class="span12">
+  <h1>About</h1>
+</div>
+</div>
+<div class="row subheading">
+<div class="span12">
+  <p class="lead">PingPong is a web app for managing a rankings ladder.</p>
+</div>
+</div>
+<div class="row section1">
+<div class="span12">
+  PingPong was made to keep track of results in casual competition leagues and give objective rankings of skill.
+</div>
+</div>
+<div class="row section2">
+<div class="span12">
+  <h3> Instructions </h3>
+  To get started make a league, make some teams and add them to your league, and you're set to begin entering results. PingPong will automatically rank your teams as matches progress. Later, players in your league can make an account and join teams if they wish. This will let them track how their performance is doing across multiple teams.
+</div>
+</div>
+<div class="row faq">
+<div class="span12">
+  <h3> FAQ </h3>
+  <b>Q: What is elo? </b>
+  <p>
+    <b>A: </b> Elo is a common ratings system that describes skill. Each competitor has an elo rating, which goes up when they win and down when they lose. It is adjusted for the relative skill of your opponent, so if you beat someone with a much higher rating, your rating will go up a lot, and if you lose to someone with a much lower rating (Oh Dear!) your rating will go down. A lot. Check out <a href="http://en.wikipedia.org/wiki/Elo_rating_system"> the Wikipedia entry on elo</a> for more information.
+  </p>
+  <b>Q: Is this website free? </b>
+  <p>
+    <b>A: </b> Yes.
+  </p>
+</div>
+</div>
+<div class="row footer">
+  <div class="span12">
+    <h3> Credit </h3>
+      This site was designed and written by Tim Wilder and Justin Yan. Code for the project can be found <a href="http://www.github.com/tmwilder/pingpong"> here on GitHub.</a>
+
+  </div>
+</div>
+
+{% endblock %}
