@@ -15,8 +15,10 @@
         <li><a href="{% url 'pong_app.views.makes.make_team' %}">Make a Team</a></li>
         <li><a href="{% url 'pong_app.views.misc.leagues' %}">Find a League</a></li>
         <li><a href="{% url 'pong_app.views.misc.teams' %}">Find a Team</a></li>
+        <li><a href="{% url 'pong_app.views.misc.about' %}">About</a></li>
         <li><a href="{% url 'django.contrib.auth.views.logout' %}">Log Out</a></li>
       {% else %}
+        <li><a href="{% url 'pong_app.views.misc.about' %}">About</a></li>
         <li><a href="{% BASE_URL %}">Log In</a></li>
       {% endif %}
     </Ul>
