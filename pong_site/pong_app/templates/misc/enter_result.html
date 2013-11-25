@@ -1,15 +1,23 @@
 {% extends 'base/base.html' %}
 
+{% block extra_scripts %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}/jquery_ui/css/ui-lightness/jquery-ui-1.10.3.custom.css">
+    <script src="{{ STATIC_URL }}/jquery_ui/js/jquery-ui-1.10.3.custom.js"></script>
+    <script src="{{ STATIC_URL }}/js/enter_result.js"></script>
+{% endblock %}
 
 {% block content %}
 
 <div class="row-fluid">
   <div class="span12">
+
+    {{ result_msg }}
     <form action="{% url 'pong_app.views.misc.enter_result' league_id=league.id %}" method="post">
-      {{ result_msg }}
       {% csrf_token %}
       {{ form.as_p }}
-    <input type="submit" value="Submit" class="btn-primary" />
+      <input type="submit" value="Submit" />
+    </form>
+
     <a href="{% url 'pong_app.views.profiles.league_profile' league_id=league.id %}" class="btn">Back to {{ league.name }}</a>
     </form>
   </div>

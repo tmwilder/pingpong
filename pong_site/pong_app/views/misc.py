@@ -37,10 +37,15 @@ def enter_result(request, league_id):
         team2 = request.POST['team2']
         result = request.POST['result']
         match_info = request.POST['match_info']
-        start_time = request.POST['start_time']
         team1 = Team.objects.get(pk=team1)
         team2 = Team.objects.get(pk=team2)
         league = League.objects.get(pk=league_id)
+
+        start_time = request.POST['start_time']
+        try:
+            start_time = datetime.datetime.strptime(start_time, "%m/%d/%Y").strftime("%Y-%m-%d")
+        except ValueError:
+            start_time = datetime.datetime.utcnow().strftime("%Y-%m-%d")
 
         #assuming team+league = composite primary key
         if team1 != team2:
@@ -48,14 +53,6 @@ def enter_result(request, league_id):
             team2elo = TeamLeague.objects.get(team=team2, league=league).elo
 
             team1newelo, team2newelo = _elocalc(team1elo, team2elo, result)
-
-            t1 = TeamLeague.objects.get(team=team1, league=league)
-            t1.elo = team1newelo
-            t1.save()
-
-            t2 = TeamLeague.objects.get(team=team2, league=league)
-            t2.elo = team2newelo
-            t2.save()
 
             new_match = Match.objects.create(team1=team1,
                                              team2=team2,
@@ -66,9 +63,18 @@ def enter_result(request, league_id):
                                              match_info=match_info,
                                              start_time=start_time)
             new_match.save()
+
+            t1 = TeamLeague.objects.get(team=team1, league=league)
+            t1.elo = team1newelo
+            t1.save()
+
+            t2 = TeamLeague.objects.get(team=team2, league=league)
+            t2.elo = team2newelo
+            t2.save()
+
             context["result_msg"] = "Succesfully entered match result."
         else:
-            context["result_msg"] = "A team cannot play iteself! Please enter different teams."
+            context["result_msg"] = "A team cannot play itself! Please enter different teams."
 
     form = pong_app.forms.InputResult(league_id=league_id)
     context['form'] = form
